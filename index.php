@@ -14,7 +14,7 @@ use SVZ\ControllerA;
 include_once 'fileloader.php';
 
 $inj = new \SVZ\Injector();
-print_r($inj);
+
 
 $inj->provide(Controller::class, ClassProvider::init(ControllerA::class));
 
@@ -23,6 +23,10 @@ $inj->provide('%BASE_URL%', function () {
 });
 
 echo '<pre>';
+echo '-----------------------'.PHP_EOL;
+echo 'Injector:'.PHP_EOL;
+var_dump($inj);
+echo '-----------------------'.PHP_EOL;
+echo 'Controller:'.PHP_EOL;
 var_dump($inj->get(Controller::class));
-
 echo '</pre>';

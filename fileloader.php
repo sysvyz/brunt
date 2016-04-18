@@ -6,8 +6,12 @@
  * Time: 15:20
  */
 
-include_once 'src/exception/Exception.php';
 
+/*
+ * CORE
+ */
+
+include_once 'src/exception/Exception.php';
 include_once 'src/Injectable.php';
 include_once 'src/Injector.php';
 
@@ -16,6 +20,11 @@ include_once 'src/provider/Provider.php';
 include_once 'src/provider/ClassProvider.php';
 include_once 'src/provider/Reflector.php';
 
+
+
+/*
+ * MOCK
+ */
 include_once 'test/testobjects/class/Tire.php';
 include_once 'test/testobjects/class/Engine.php';
 include_once 'test/testobjects/class/Car.php';
