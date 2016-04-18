@@ -88,6 +88,8 @@ class ClassProvider implements ProviderInterface
         $className = $this->reflector->getClassName();
 
 
+        $injector->provide('%CLASS_NAME%',function()use ($className){return $className;});
+
         //build new injector for instance
         $isInjectable = $this->reflector->getReflectionClass()->implementsInterface(InjectableInterface::class);
 
