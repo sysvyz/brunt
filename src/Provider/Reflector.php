@@ -6,8 +6,12 @@
  * Time: 14:37
  */
 
-namespace SVZ;
+namespace Prescription\Provider;
 
+
+use Prescription\Injectable;
+use Prescription\InjectableInterface;
+use Prescription\Injector;
 
 class Reflector extends Injectable
 {
@@ -55,6 +59,8 @@ class Reflector extends Injectable
                 $type = $e->getType();
                 $isNative = $type->isBuiltin();
                 $name = $e->getName();
+
+                /** @var InjectableInterface $class (classname)*/
                 $dependencies = $class::_DI_DEPENDENCIES();
                 return [
                     'class' => $e->getClass(),

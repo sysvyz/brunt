@@ -6,8 +6,11 @@
  * Time: 21:46
  */
 
-namespace SVZ;
+namespace Prescription;
 
+
+use Prescription\Exception\ProviderNotFoundException;
+use Prescription\Provider\ClassProvider;
 
 class Injector
 {

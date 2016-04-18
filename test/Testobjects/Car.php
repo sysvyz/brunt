@@ -5,15 +5,12 @@
  * Date: 10.04.16
  * Time: 16:22
  */
-namespace SVZ;
+namespace PrescriptionTest\Testobjects;
+use Prescription\InjectableInterface;
+use Prescription\Injector;
+use Prescription\Provider\ClassProvider;
 
 
-/**
- * @property Engine engine*  Some comment
- * @property TireSet tireSet*
- * @property Logger logger*
- * @property string type
- */
 class Car implements InjectableInterface
 {
 

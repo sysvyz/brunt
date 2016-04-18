@@ -6,8 +6,11 @@
  * Time: 03:16
  */
 
-namespace SVZ;
+namespace PrescriptionTest\Testobjects;
 
+
+use Prescription\Injectable;
+use Prescription\Provider\ClassProvider;
 
 class Controller extends Injectable
 {

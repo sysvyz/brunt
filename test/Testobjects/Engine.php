@@ -5,8 +5,10 @@
  * Date: 10.04.16
  * Time: 16:23
  */
-namespace SVZ;
+namespace PrescriptionTest\Testobjects;
 
+
+use Prescription\Injectable;
 
 class Engine extends Injectable
 {

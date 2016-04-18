@@ -6,8 +6,10 @@
  * Time: 01:28
  */
 
-namespace SVZ;
+namespace Prescription\Provider;
 
+
+use Prescription\Injector;
 
 interface  ProviderInterface
 {

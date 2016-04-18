@@ -6,8 +6,10 @@
  * Time: 17:45
  */
 
-namespace SVZ;
+namespace PrescriptionTest\Testobjects;
 
+
+use Prescription\Injectable;
 
 class Request extends Injectable
 {

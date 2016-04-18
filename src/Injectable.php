@@ -6,7 +6,7 @@
  * Time: 01:46
  */
 
-namespace SVZ;
+namespace Prescription;
 
 interface InjectableInterface{
     public static function _DI_DEPENDENCIES();

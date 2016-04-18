@@ -7,9 +7,9 @@
  */
 
 
-use SVZ\ClassProvider;
-use SVZ\Controller;
-use SVZ\ControllerA;
+use Prescription\ClassProvider;
+use Prescription\Controller;
+use Prescription\ControllerA;
 
 include_once 'fileloader.php';
 

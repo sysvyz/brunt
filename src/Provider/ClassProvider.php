@@ -6,7 +6,12 @@
  * Time: 01:28
  */
 
-namespace SVZ;
+namespace Prescription\Provider;
+use Prescription\Exception\CircularDependencyException;
+use Prescription\Exception\InjectableException;
+use Prescription\InjectableInterface;
+use Prescription\Injector;
+
 class ClassProvider implements ProviderInterface
 {
     /**
@@ -82,12 +87,7 @@ class ClassProvider implements ProviderInterface
         //get class name
         $className = $this->reflector->getClassName();
 
-        if ($className == CircB::class) {
 
-            var_dump($injector);
-
-            die;
-        }
         //build new injector for instance
         $isInjectable = $this->reflector->getReflectionClass()->implementsInterface(InjectableInterface::class);
 
@@ -95,6 +95,7 @@ class ClassProvider implements ProviderInterface
             throw new InjectableException ($this->reflector->getClassName() . ' must implement ' . InjectableInterface::class);
         }
 
+        /** @var InjectableInterface $className */
         $providers = $className::_DI_PROVIDERS();
 
         $childInjector = $injector->getChild($providers);

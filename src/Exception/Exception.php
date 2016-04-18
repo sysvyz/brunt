@@ -1,5 +1,5 @@
 <?php
-namespace SVZ;
+namespace Prescription\Exception;
 /**
  * Created by PhpStorm.
  * User: mb

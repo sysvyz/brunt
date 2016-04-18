@@ -6,7 +6,11 @@
  * Time: 14:45
  */
 
-namespace SVZ;
+namespace PrescriptionTest\Testobjects;
+
+use Prescription\Injectable;
+use Prescription\Injector;
+use Prescription\Provider\ClassProvider;
 
 class Service extends Injectable
 {

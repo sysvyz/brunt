@@ -23,8 +23,9 @@
     "phpunit/phpunit": "5.3.*"
   },
   "autoload": {
-    "psr-0": {
-      "Prescription": "src"
+    "psr-4": {
+      "Prescription\\": "src",
+      "PrescriptionTest\\": "test"
     }
   }
 }

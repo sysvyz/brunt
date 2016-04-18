@@ -1,17 +1,19 @@
 <?php
-use SVZ\Car;
-use SVZ\CircA;
-use SVZ\CircB;
-use SVZ\CircC;
-use SVZ\CircularDependencyException;
-use SVZ\ClassProvider;
-use SVZ\Controller;
-use SVZ\ControllerA;
-use SVZ\Engine;
-use SVZ\FastCar;
-use SVZ\Injector;
-use SVZ\ProviderNotFoundException;
-use SVZ\ZendEngine;
+use Prescription\Injector;
+use Prescription\Provider\ClassProvider;
+
+use Prescription\Exception\CircularDependencyException;
+use Prescription\Exception\ProviderNotFoundException;
+
+use PrescriptionTest\Testobjects\Car;
+use PrescriptionTest\Testobjects\CircA;
+use PrescriptionTest\Testobjects\CircB;
+use PrescriptionTest\Testobjects\CircC;
+use PrescriptionTest\Testobjects\Controller;
+use PrescriptionTest\Testobjects\ControllerA;
+use PrescriptionTest\Testobjects\Engine;
+use PrescriptionTest\Testobjects\FastCar;
+use PrescriptionTest\Testobjects\ZendEngine;
 
 /**
  * Created by PhpStorm.

@@ -6,8 +6,10 @@
  * Time: 01:22
  */
 
-namespace SVZ;
+namespace PrescriptionTest\Testobjects;
 
+
+use Prescription\Injectable;
 
 class CircA extends Injectable
 {

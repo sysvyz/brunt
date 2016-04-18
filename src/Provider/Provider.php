@@ -1,5 +1,6 @@
 <?php
-namespace SVZ;
+namespace Prescription\Provider;
+use Prescription\Injector;
 
 /**
  * Created by PhpStorm.
