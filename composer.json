@@ -1,5 +1,36 @@
 {
+  "name": "sysvyz/prescription",
+  "description": "PHP7 Dependency Injection",
+  "type": "library",
+  "keywords": [
+    "di",
+    "dependency injection"
+  ],
+  "homepage": "https://github.com/mo-ba/prescription",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Moritz Bauer",
+      "email": "mb@sysvyz.org",
+      "homepage": "http://sysvyz.org",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
   "require-dev": {
     "phpunit/phpunit": "5.3.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Prescription": "src"
+    }
   }
+}
+
+
+{
+
+
 }

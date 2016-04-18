@@ -19,5 +19,3 @@ $inj->provide('%BASE_URL%', function () {
 
 var_dump($inj->get(Car::class));
 var_dump($inj->get(Controller::class));
-
-echo 'hallo';
