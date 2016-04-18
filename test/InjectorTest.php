@@ -13,7 +13,7 @@ use PrescriptionTest\Testobjects\Controller;
 use PrescriptionTest\Testobjects\ControllerA;
 use PrescriptionTest\Testobjects\Engine;
 use PrescriptionTest\Testobjects\FastCar;
-use PrescriptionTest\Testobjects\ZendEngine;
+use PrescriptionTest\Testobjects\HeavyEngine;
 
 /**
  * Created by PhpStorm.
@@ -63,7 +63,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
             /** @var Engine $engine */
             $engine = $injector->get(Engine::class);
             $this->assertInstanceOf(Engine::class, $engine);
-            $this->assertNotInstanceOf(ZendEngine::class, $engine);
+            $this->assertNotInstanceOf(HeavyEngine::class, $engine);
         } catch (ProviderNotFoundException $e) {
             $this->assertTrue(false);
         }
@@ -73,12 +73,12 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->addProviders([Engine::class => ClassProvider::init(ZendEngine::class)]);
+        $injector->addProviders([Engine::class => ClassProvider::init(HeavyEngine::class)]);
         try {
             /** @var Engine $engine */
             $engine = $injector->get(Engine::class);
             $this->assertInstanceOf(Engine::class, $engine);
-            $this->assertInstanceOf(ZendEngine::class, $engine);
+            $this->assertInstanceOf(HeavyEngine::class, $engine);
         } catch (ProviderNotFoundException $e) {
             $this->assertTrue(false);
         }

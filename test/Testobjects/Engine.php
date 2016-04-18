@@ -25,20 +25,3 @@ class Engine extends Injectable
 
 }
 
-class ZendEngine extends Engine
-{
-    public function __construct(){
-        parent::__construct();
-        $this->type = "ZendEngine";
-    }
-}
-
-class SmallEngine extends Engine
-{
-
-
-    public function __construct(){
-        parent::__construct();
-        $this->type = "SmallEngine";
-    }
-}

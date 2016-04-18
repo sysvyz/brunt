@@ -24,33 +24,3 @@ class Tire extends Injectable
     }
 
 }
-
-class FastTire extends Tire
-{
-    public function __construct()
-    {
-        parent::__construct();
-        $this->type = 'FastTire';
-    }
-
-}
-
-class HeavyTire extends Tire
-{
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->type = 'HeavyTire';
-    }
-}
-
-class SmallTire extends Tire
-{
-    public function __construct()
-    {
-        parent::__construct();
-        $this->type = 'SmallTire';
-    }
-
-}
