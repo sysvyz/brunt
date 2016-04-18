@@ -15,6 +15,6 @@ Since php7 reflection can be used to analyze constructors properly.
 ``include_once "fileloader.php";`` or use some other autoloader, 
 this library should be independent from any autoloading process
 
-### Providers
+<!--### Providers-->
 
-Each Injectable has a list of providers
+<!--Each Injectable has a list of providers-->
