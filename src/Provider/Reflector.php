@@ -54,8 +54,9 @@ class Reflector extends Injectable
         $class = $this->className;
         $constructor = $this->reflectionClass->getConstructor();
         $parameters = ($constructor) ? $constructor->getParameters() : [];
-        $ret = array_map(
-            function (\ReflectionParameter $e) use ($class) {
+        $injectable = $this->isInjectable();
+        $ret = $injectable ? array_map(
+            function (\ReflectionParameter $e) use ($class,$injectable) {
                 $type = $e->getType();
                 $isNative = $type->isBuiltin();
                 $name = $e->getName();
@@ -77,7 +78,7 @@ class Reflector extends Injectable
                 ];
             }, $parameters
 
-        );
+        ):[];
 
         return $ret;
     }
