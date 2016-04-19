@@ -5,27 +5,59 @@ Since php7 reflection can be used to analyze constructors properly.
 
 ## Usage
 
+### Composer
+
+```
+  "require": {
+    "sysvyz/prescription": "dev-master",
+  },
+```
+
+
 ### Test
+
+Unit tests in ``/test/``
 
 ``phpunit --bootstrap fileloader.php test``
 
 
 ### Include
 
-``include_once "fileloader.php";`` or use some other autoloader, 
-this library should be independent from any autoloading process
+``composer dump-autoload``
+#### Example 1: basic usage
+```php
+
+//1 Create root-injector
+$injector = new Injector(null);
+
+//2 Define providers
+//                          TOKEN           PROVIDER            CLASS
+$injector->addProviders([Engine::class => ClassProvider::init(Engine::class)]);
+
+//3 Get instance
+/** @var Engine $engine */
+$engine = $injector->get(Engine::class);
+```
+
+
+#### Example 2: magic get
+
+```php
+$engine = $injector->get(Engine::class);
+//is equivalent to
+$engine = $injector->{Engine::class};
+```
 
 ### Providers
-
 
 Each Injectable has a list of providers.
 Each Injector has a list of providers.
 If an Injector creates an Injectable, it gets responsible for all of it's providers
 
-Example:
+#### Example:
 ```
-RootInjector provides Component A and C
-ComponentA depends on Component B C
+RootInjector provides Components A and C
+ComponentA depends on Component B and C
 ComponentA provides Component C
 
 ComponentB depends on Component C

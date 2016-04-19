@@ -1,7 +1,7 @@
 ### Composer template
 composer.phar
 /vendor/
-
+/dump-autoload.sh
 ### NetBeans template
 nbproject/private/
 build/

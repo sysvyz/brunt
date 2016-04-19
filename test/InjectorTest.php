@@ -44,6 +44,17 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testProvider()
+    {
+        $injector = new Injector(null);
+
+        /** @var ClassProvider $provider */
+        $provider = ClassProvider::init(Engine::class);
+        $engine = $provider($injector);
+        $this->assertInstanceOf(Engine::class, $engine);
+
+    }
+
     public function testNoProvider()
     {
         $injector = new Injector(null);;
@@ -61,14 +72,12 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         // Arrange
         $injector = new Injector(null);
         $injector->addProviders([Engine::class => ClassProvider::init(Engine::class)]);
-        try {
-            /** @var Engine $engine */
-            $engine = $injector->get(Engine::class);
-            $this->assertInstanceOf(Engine::class, $engine);
-            $this->assertNotInstanceOf(HeavyEngine::class, $engine);
-        } catch (ProviderNotFoundException $e) {
-            $this->assertTrue(false);
-        }
+
+        /** @var Engine $engine */
+        $engine = $injector->get(Engine::class);
+        $this->assertInstanceOf(Engine::class, $engine);
+        $this->assertNotInstanceOf(HeavyEngine::class, $engine);
+
     }
 
     public function testPolymorphism()

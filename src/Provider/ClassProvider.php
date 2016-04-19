@@ -68,7 +68,11 @@ class ClassProvider implements ProviderInterface
 
     }
 
-
+    /**
+     * @param $class
+     * @param bool $singleton
+     * @return ClassProvider
+     */
     public static function init($class, $singleton = true)
     {
         return new static($class, $singleton);
