@@ -69,5 +69,5 @@ RootInjector
   │ └─ComponentC(1)
   └ComponentC(2)
 ```
-As illustrated above, A's Component C is an other Instance as B's Component C. This is because A and B Provide their own Cs.
+As illustrated above, A's Component C is an other Instance as B's Component C, because A and B provide their own Cs.
 
