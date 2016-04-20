@@ -10,6 +10,7 @@ namespace Prescription;
 
 
 use Prescription\Exception\ProviderNotFoundException;
+use Prescription\Provider\Binding;
 use Prescription\Provider\ClassProvider;
 
 class Injector
@@ -88,11 +89,9 @@ class Injector
         $this->providers[$token] = $callable;
     }
 
-    public function addProviders($providers = [])
+    public function providers($providers = [])
     {
         foreach ($providers as $name => $provider) {
-
-
             if (is_int($name) && is_string($provider)) {
                 $this->provide($provider, ClassProvider::init($provider));
             } else if (is_callable($provider)) {
@@ -100,14 +99,22 @@ class Injector
             } else if (is_string($provider)) {
                 $this->provide($name, ClassProvider::init($provider));
             }
-
         }
     }
+
+    public function bind($bindings){
+        if(is_array($bindings)){
+            array_walk($bindings,[$this,'bind']);
+        }else if($bindings instanceof Binding){
+            $this->providers[$bindings->getToken()] = $bindings->getProvider();
+        }
+    }
+
 
     public function getChild($providers = [])
     {
         $child = new self($this);
-        $child->addProviders($providers);
+        $child->providers($providers);
         return $child;
     }
 

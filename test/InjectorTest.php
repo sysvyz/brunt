@@ -1,5 +1,7 @@
 <?php
 use Prescription\Injector;
+use \Prescription\Provider;
+use Prescription\Provider\Binding;
 use Prescription\Provider\ClassProvider;
 
 use Prescription\Exception\CircularDependencyException;
@@ -14,8 +16,11 @@ use PrescriptionTest\Testobjects\ControllerA;
 use PrescriptionTest\Testobjects\Engine;
 use PrescriptionTest\Testobjects\FastCar;
 use PrescriptionTest\Testobjects\HeavyEngine;
+use PrescriptionTest\Testobjects\HeavyTire;
 use PrescriptionTest\Testobjects\NonInjectable;
 use PrescriptionTest\Testobjects\NonInjectableWrapper;
+use function Prescription\Provider\bind;
+use PrescriptionTest\Testobjects\SmallTire;
 
 /**
  * Created by PhpStorm.
@@ -71,7 +76,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->addProviders([Engine::class => ClassProvider::init(Engine::class)]);
+        $injector->providers([Engine::class => ClassProvider::init(Engine::class)]);
 
         /** @var Engine $engine */
         $engine = $injector->get(Engine::class);
@@ -84,7 +89,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->addProviders([Engine::class => ClassProvider::init(HeavyEngine::class)]);
+        $injector->providers([Engine::class => ClassProvider::init(HeavyEngine::class)]);
         try {
             /** @var Engine $engine */
             $engine = $injector->get(Engine::class);
@@ -99,7 +104,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->addProviders([Engine::class => ClassProvider::init(Engine::class)]);
+        $injector->providers([Engine::class => ClassProvider::init(Engine::class)]);
         try {
             /** @var Engine $engine */
             $engine = $injector->{Engine::class};
@@ -115,7 +120,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->addProviders([Engine::class => ClassProvider::init(Engine::class)]);
+        $injector->providers([Engine::class => ClassProvider::init(Engine::class)]);
         try {
             /** @var Engine $engine */
             $engine = $injector->get(Engine::class);
@@ -131,7 +136,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->addProviders([Engine::class => ClassProvider::init(Engine::class, false)]);
+        $injector->providers([Engine::class => ClassProvider::init(Engine::class, false)]);
 
         /** @var Engine $engine */
         $engine = $injector->get(Engine::class);
@@ -148,7 +153,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->addProviders([
+        $injector->providers([
             Car::class => ClassProvider::init(FastCar::class),
             Engine::class => ClassProvider::init(Engine::class)
         ]);
@@ -167,13 +172,48 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         $this->assertNotSame($car->tire2, $car->tire3);
 
 
+        $this->assertInstanceOf(SmallTire::class, $car->tire0);
+        $this->assertInstanceOf(SmallTire::class, $car->tire1);
+        $this->assertInstanceOf(HeavyTire::class, $car->tire2);
+        $this->assertInstanceOf(HeavyTire::class, $car->tire3);
     }
+
+
+    public function testBindings()
+    {
+        // Arrange
+        $injector = new Injector(null);
+        $injector->bind([
+            bind(Car::class)->toClass(FastCar::class),
+            bind(Engine::class)->toClass(Engine::class),
+        ]);
+
+        /** @var Car $car */
+        $car = $injector->get(Car::class);
+        /** @var Engine $engine */
+        $engine = $injector->get(Engine::class);
+
+        $this->assertSame($car->engine, $engine);
+        $this->assertNotSame($car->tire0, $car->tire1);
+        $this->assertNotSame($car->tire0, $car->tire2);
+        $this->assertNotSame($car->tire0, $car->tire3);
+        $this->assertNotSame($car->tire1, $car->tire2);
+        $this->assertNotSame($car->tire1, $car->tire3);
+        $this->assertNotSame($car->tire2, $car->tire3);
+
+        $this->assertInstanceOf(SmallTire::class, $car->tire0);
+        $this->assertInstanceOf(SmallTire::class, $car->tire1);
+        $this->assertInstanceOf(HeavyTire::class, $car->tire2);
+        $this->assertInstanceOf(HeavyTire::class, $car->tire3);
+
+    }
+
 
     public function testProviders()
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->addProviders([
+        $injector->providers([
             Controller::class => ClassProvider::init(ControllerA::class),
             '%BASE_URL%' => function () {
                 return 'http://sysvyz.org/';
@@ -197,7 +237,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         // Arrange
         $injector = new Injector(null);
         try {
-            $injector->addProviders([
+            $injector->providers([
                 CircA::class => ClassProvider::init(CircA::class),
             ]);
 
@@ -215,7 +255,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         // Arrange
         $injector = new Injector(null);
         try {
-            $injector->addProviders([
+            $injector->providers([
                 CircB::class => ClassProvider::init(CircB::class),
                 CircC::class => ClassProvider::init(CircC::class),
             ]);
@@ -235,7 +275,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         // Arrange
         $injector = new Injector(null);
 
-        $injector->addProviders(array(
+        $injector->providers(array(
             NonInjectableWrapper::class => ClassProvider::init(NonInjectableWrapper::class),
             NonInjectable::class => function () {
                 return new NonInjectable(5);

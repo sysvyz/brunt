@@ -11,7 +11,7 @@ namespace Prescription\Provider;
 
 use Prescription\Injector;
 
-class VariableProvider implements ProviderInterface
+class ValueProvider implements Provider
 {
     /**
      * @var

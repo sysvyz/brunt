@@ -12,7 +12,7 @@ use Prescription\Exception\InjectableException;
 use Prescription\InjectableInterface;
 use Prescription\Injector;
 
-class ClassProvider implements ProviderInterface
+class ClassProvider implements Provider
 {
     /**
      * @var Reflector
@@ -22,14 +22,15 @@ class ClassProvider implements ProviderInterface
      * @var bool
      */
     private $singleton;
+
+    /**
+     * @var mixed
+     */
     private $instance = null;
     /**
      * @var string
      */
     private $class;
-
-    private $counter = 0;
-    private $counter2 = 0;
 
 
     /**
