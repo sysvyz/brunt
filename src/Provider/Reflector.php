@@ -75,6 +75,7 @@ class Reflector extends Injectable
                         && isset($dependencies[$name])
                             ? $dependencies[$name]
                             : NULL,
+
                 ];
             }, $parameters
 

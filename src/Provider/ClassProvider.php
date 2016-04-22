@@ -98,12 +98,15 @@ class ClassProvider implements Provider
         //build new injector for instance
         $isInjectable = $this->reflector->getReflectionClass()->implementsInterface(InjectableInterface::class);
 
+        $providers = [];
         if (!$isInjectable) {
-            throw new InjectableException ($this->reflector->getClassName() . ' must implement ' . InjectableInterface::class);
+            //throw new InjectableException ($this->reflector->getClassName() . ' must implement ' . InjectableInterface::class);
+        }else{
+            $providers = $className::_DI_PROVIDERS();
         }
 
         /** @var InjectableInterface $className */
-        $providers = $className::_DI_PROVIDERS();
+
 
         $childInjector = $injector->getChild($providers);
 
@@ -114,6 +117,7 @@ class ClassProvider implements Provider
         $params = [];
 
         foreach ($dependencies as $dependency) {
+
 
             $token = ($dependency['isNative'])
                 ? $dependency['native']
