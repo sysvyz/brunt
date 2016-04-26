@@ -1,6 +1,6 @@
-# Prescription
+# Burnt
 
-Prescription is a simple but powerful dependency injection framework. 
+Burnt is a simple but powerful dependency injection framework. 
 Since php7 reflection can be used to analyze constructors properly.
 
 ## Usage
@@ -9,7 +9,7 @@ Since php7 reflection can be used to analyze constructors properly.
 
 ```
   "require": {
-    "sysvyz/prescription": "dev-master",
+    "sysvyz/burnt": "dev-master",
   },
 ```
 

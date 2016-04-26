@@ -1,12 +1,12 @@
 {
-  "name": "sysvyz/prescription",
+  "name": "sysvyz/brunt",
   "description": "PHP7 Dependency Injection",
   "type": "library",
   "keywords": [
     "di",
     "dependency injection"
   ],
-  "homepage": "https://github.com/mo-ba/prescription",
+  "homepage": "https://github.com/sysvyz/brunt",
   "license": "MIT",
   "authors": [
     {
