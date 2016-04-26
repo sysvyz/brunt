@@ -18,6 +18,8 @@ use PrescriptionTest\Testobjects\FastCar;
 use PrescriptionTest\Testobjects\HeavyEngine;
 use PrescriptionTest\Testobjects\HeavyTire;
 use PrescriptionTest\Testobjects\NonInjectable;
+use PrescriptionTest\Testobjects\NonInjectableB;
+use PrescriptionTest\Testobjects\NonInjectableC;
 use PrescriptionTest\Testobjects\NonInjectableWrapper;
 use function Prescription\Provider\bind;
 use PrescriptionTest\Testobjects\SmallTire;
@@ -275,12 +277,29 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         // Arrange
         $injector = new Injector(null);
 
-        $injector->providers(array(
-            NonInjectableWrapper::class => ClassProvider::init(NonInjectableWrapper::class),
-            NonInjectable::class => function () {
-                return new NonInjectable(5);
-            },
-        ));
+        $injector->providers([
+            NonInjectableB::class => ClassProvider::init(NonInjectableB::class),
+        ]);
+        /** @var NonInjectableB $entity */
+        $entity = $injector->get(NonInjectableB::class);
+        $this->assertInstanceOf(NonInjectableB::class, $entity);
+
+    }
+
+
+    public function testNonInjectableDependency()
+    {
+        // Arrange
+        $injector = new Injector(null);
+
+        $injector->providers(
+            [
+                NonInjectableWrapper::class => ClassProvider::init(NonInjectableWrapper::class),
+                NonInjectable::class => function () {
+                    return new NonInjectable(5);
+                },
+            ]
+        );
 
         /** @var NonInjectableWrapper $wrapper */
         $wrapper = $injector->get(NonInjectableWrapper::class);
@@ -288,5 +307,25 @@ class InjectorTest extends PHPUnit_Framework_TestCase
 
 
     }
+
+    public function testNonInjectableDependencyFail()
+    {
+        // Arrange
+        $injector = new Injector(null);
+
+        $injector->providers([
+            NonInjectableWrapper::class => ClassProvider::init(NonInjectableWrapper::class),
+        ]);
+
+        /** @var NonInjectableWrapper $wrapper */
+        try {
+
+            $wrapper = $injector->get(NonInjectableWrapper::class);
+            $this->assertTrue(false);
+        } catch (ProviderNotFoundException $e) {
+            $this->assertTrue(true);
+        }
+    }
+
 
 }

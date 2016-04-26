@@ -52,11 +52,13 @@ class ClassProvider implements Provider
     {
         //get class name
         $className = $reflector->getClassName();
-        if ($className == Injector::class)
+        if ($className == Injector::class){
             return;
+        }
 
-        if (in_array($className, $path))
+        if (in_array($className, $path)){
             throw new CircularDependencyException ($className . ' must not depend on it self');
+        }
 
 
         array_push($path, $reflector->getClassName());
