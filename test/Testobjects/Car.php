@@ -14,6 +14,7 @@ use Prescription\Provider\ClassProvider;
 class Car implements InjectableInterface
 {
 
+
     public $engine;
     public $tire0;
     public $tire1;
