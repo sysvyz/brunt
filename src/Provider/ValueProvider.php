@@ -6,33 +6,32 @@
  * Time: 12:24
  */
 
-namespace Brunt\Provider;
+namespace Brunt\Provider {
 
 
-use Brunt\Injector;
+    use Brunt\Injector;
 
-class ValueProvider implements Provider
-{
-    /**
-     * @var
-     */
-    private $value;
-
-
-    /**
-     * VariableProvider constructor.
-     */
-    public function __construct($value)
+    class ValueProvider implements Provider
     {
-        $this->value = $value;
-    }
 
-    function __invoke(Injector $injector)
-    {
-       return $this->value;
-    }
+        private $value;
 
-    public static function init($value){
-        return self($value);
+
+        /**
+         * VariableProvider constructor.
+         */
+        public function __construct($value)
+        {
+            $this->value = $value;
+        }
+
+        function __invoke(Injector $injector)
+        {
+            return $this->value;
+        }
+
+        public static function init($value){
+            return self($value);
+        }
     }
 }

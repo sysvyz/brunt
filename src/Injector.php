@@ -6,123 +6,114 @@
  * Time: 21:46
  */
 
-namespace Brunt;
+namespace Brunt {
 
-use Brunt\Exception\ProviderNotFoundException;
-use Brunt\Provider\ClassProvider;
+    use Brunt\Exception\ProviderNotFoundException;
+    use Brunt\Provider\ClassProvider;
 
-class Injector
-{
-
-    private $token = null;
-    private $injector;
-    private $providers = [];
-
-    /**
-     * Injector constructor.
-     * @param $injector
-     */
-    public function __construct(Injector $injector = null)
+    class Injector
     {
-        $this->injector = $injector;
-    }
 
-    /**
-     * @return Injector parent ionjector
-     */
-    public function getParent()
-    {
-        return $this->injector;
-    }
+        private $token = null;
+        private $injector;
+        private $providers = [];
 
-
-    /**
-     * @param string $token
-     * @return $this|mixed instance
-     */
-    public function get(string $token)
-    {
-        if ($token == self::class) {
-            return $this;
+        /**
+         * Injector constructor.
+         * @param $injector
+         */
+        public function __construct(Injector $injector = null)
+        {
+            $this->injector = $injector;
         }
 
-        return $this->_get($token);
-    }
-
-
-    /**
-     * the real function
-     *
-     * @param string $token
-     * @return mixed instance
-     */
-    private function _get(string $token)
-    {
-        //if provider exists this injector is responsible
-        if (isset($this->providers[$token])) {
-            //execute provider
-            $instance = $this->providers[$token]($this);
-
-            //parent injector exists
-        } else if ($this->injector) {
-            //search in hierarchy
-            $instance = $this->injector->_get($token);
-        } else {
-            throw new ProviderNotFoundException($token . '...provider not found');
+        /**
+         * @return Injector parent ionjector
+         */
+        public function getParent()
+        {
+            return $this->injector;
         }
 
-        return $instance;
-    }
 
-    function __get($name)
-    {
-        return $this->get($name);
-    }
+        /**
+         * @param string $token
+         * @return $this|mixed instance
+         */
+        public function get(string $token)
+        {
+            if ($token == self::class) {
+                return $this;
+            }
+
+            return $this->_get($token);
+        }
 
 
-    public function provide(string $token, callable $callable)
-    {
-        $this->providers[$token] = $callable;
-    }
+        /**
+         * the real function
+         *
+         * @param string $token
+         * @return mixed instance
+         */
+        private function _get(string $token)
+        {
+            //if provider exists this injector is responsible
+            if (isset($this->providers[$token])) {
+                //execute provider
+                $instance = $this->providers[$token]($this);
 
-    public function providers($providers = [])
-    {
-        foreach ($providers as $name => $provider) {
-            if (is_int($name) && is_string($provider)) {
-                $this->provide($provider, ClassProvider::init($provider));
-            } else if (is_callable($provider)) {
-                $this->provide($name, $provider);
-            } else if (is_string($provider)) {
-                $this->provide($name, ClassProvider::init($provider));
+                //parent injector exists
+            } else if ($this->injector) {
+                //search in hierarchy
+                $instance = $this->injector->_get($token);
+            } else {
+                throw new ProviderNotFoundException($token . '...provider not found');
+            }
+
+            return $instance;
+        }
+
+        function __get($name)
+        {
+            return $this->get($name);
+        }
+
+
+        public function provide(string $token, callable $callable)
+        {
+            $this->providers[$token] = $callable;
+        }
+
+        public function providers(array $providers = [])
+        {
+            foreach ($providers as $name => $provider) {
+                if (is_int($name) && is_string($provider)) {
+                    $this->provide($provider, ClassProvider::init($provider));
+                } else if (is_callable($provider)) {
+                    $this->provide($name, $provider);
+                } else if (is_string($provider)) {
+                    $this->provide($name, ClassProvider::init($provider));
+                }
             }
         }
-    }
 
-    public function bind($bindings)
-    {
-        if (is_array($bindings)) {
-            array_walk($bindings, [$this, 'bind']);
-        } else if ($bindings instanceof Binding) {
-            $this->providers[$bindings->getToken()] = $bindings->getProvider();
+        public function bind($bindings)
+        {
+            if (is_array($bindings)) {
+                array_walk($bindings, [$this, 'bind']);
+            } else if ($bindings instanceof Binding) {
+                $this->providers[$bindings->getToken()] = $bindings->getProvider();
+            }
         }
-    }
 
 
-    public function getChild($providers = [])
-    {
-        $child = new self($this);
-        $child->providers($providers);
-        return $child;
-    }
+        public function getChild($providers = [])
+        {
+            $child = new self($this);
+            $child->providers($providers);
+            return $child;
+        }
 
-
-    public static function _DI_DEPENDENCIES()
-    {
-        // TODO: Implement _DI_DEPENDENCIES() method.
-    }
-
-    public static function _DI_PROVIDERS()
-    {
-        // TODO: Implement _DI_PROVIDERS() method.
     }
 }

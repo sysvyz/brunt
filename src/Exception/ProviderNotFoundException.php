@@ -6,12 +6,13 @@
  * Time: 14:09
  */
 
-namespace Brunt\Exception;
+namespace Brunt\Exception {
 
 
-use RuntimeException;
+    use RuntimeException;
 
-class ProviderNotFoundException extends RuntimeException
-{
+    class ProviderNotFoundException extends RuntimeException
+    {
 
+    }
 }

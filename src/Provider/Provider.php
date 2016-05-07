@@ -6,12 +6,13 @@
  * Time: 01:28
  */
 
-namespace Brunt\Provider;
+namespace Brunt\Provider {
 
 
-use Brunt\Injector;
+    use Brunt\Injector;
 
-interface  Provider
-{
-    function __invoke(Injector $injector);
+    interface  Provider
+    {
+        function __invoke(Injector $injector);
+    }
 }

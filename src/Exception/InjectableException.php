@@ -6,12 +6,13 @@
  * Time: 14:09
  */
 
-namespace Brunt\Exception;
+namespace Brunt\Exception {
 
 
-use RuntimeException;
+    use RuntimeException;
 
-class InjectableException extends RuntimeException
-{
+    class InjectableException extends RuntimeException
+    {
 
+    }
 }

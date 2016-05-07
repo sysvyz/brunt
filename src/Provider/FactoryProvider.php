@@ -1,34 +1,35 @@
 <?php
-namespace Brunt\Provider;
-use Brunt\Injector;
-
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 17.04.16
- * Time: 01:25
- */
-class FactoryProvider implements Provider{
-
-    private $callable = [];
+namespace Brunt\Provider {
+    use Brunt\Injector;
 
     /**
-     * DIProvider constructor.
-     * @param $callable
+     * Created by PhpStorm.
+     * User: mb
+     * Date: 17.04.16
+     * Time: 01:25
      */
-    public function __construct(callable $callable)
-    {
-        $this->callable[0] = $callable;
-    }
+    class FactoryProvider implements Provider{
 
-    function __invoke(Injector $injector)
-    {
-        return $this->callable[0]($injector);
-    }
+        private $callable = [];
 
-    public static function init(callable $callable)
-    {
-        return new static($callable);
-    }
+        /**
+         * DIProvider constructor.
+         * @param $callable
+         */
+        public function __construct(callable $callable)
+        {
+            $this->callable[0] = $callable;
+        }
 
+        function __invoke(Injector $injector)
+        {
+            return $this->callable[0]($injector);
+        }
+
+        public static function init(callable $callable)
+        {
+            return new static($callable);
+        }
+
+    }
 }
