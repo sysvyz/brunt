@@ -1,15 +1,15 @@
-# Burnt
+# Brunt
 
-Burnt is a simple but powerful dependency injection framework. 
+Brunt is a simple but powerful dependency injection framework. 
 Since php7 reflection can be used to analyze constructors properly.
 
 ## Usage
 
 ### Composer
 
-```
+```json
   "require": {
-    "sysvyz/burnt": "dev-master",
+    "sysvyz/brunt": "dev-master",
   },
 ```
 
@@ -23,7 +23,8 @@ Unit tests in ``/test/``
 
 ### Include
 
-``composer dump-autoload``
+simply use ``composer dump-autoload``
+
 #### Example 1: basic usage
 ```php
 
@@ -48,26 +49,30 @@ $engine = $injector->get(Engine::class);
 $engine = $injector->{Engine::class};
 ```
 
-### Providers
+#### Example 3: Binding
 
-Each Injectable has a list of providers.
-Each Injector has a list of providers.
-If an Injector creates an Injectable, it gets responsible for all of it's providers
+Bindings are a more convenient way to define Providers 
 
-#### Example:
 ```
-RootInjector provides Components A and C
-ComponentA depends on Component B and C
-ComponentA provides Component C
+  $injector->bind([
+  
+        bind('%SomeValue%')
+        ->toValue(3.1415),
+        
+        bind(Car::class)
+        ->toClass(Car::class),
+        
+        bind(Request::class)
+            ->toFactory(function (Injector $injector) {
+                return Request::createFromGlobals();
+            })
+  ])
 
-ComponentB depends on Component C
-ComponentB provides Component C
-
-RootInjector
-└─ComponentA(1)
-  ├─ComponentB(1)      
-  │ └─ComponentC(1)
-  └ComponentC(2)
 ```
-As illustrated above, A's Component C is an other Instance as B's Component C, because A and B provide their own Cs.
+
+#### Example Repo:
+
+[working example using brunt](https://github.com/sysvyz/brunt-example)
+
+
 
