@@ -6,7 +6,7 @@
  * Time: 19:48
  */
 
-namespace Prescription\Store;
+namespace Brunt\Store;
 /**
  * @return null|GlobalStore
  */

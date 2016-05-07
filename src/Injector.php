@@ -6,12 +6,12 @@
  * Time: 21:46
  */
 
-namespace Prescription;
+namespace Brunt;
 
 
-use Prescription\Exception\ProviderNotFoundException;
-use Prescription\Provider\Binding;
-use Prescription\Provider\ClassProvider;
+use Brunt\Exception\ProviderNotFoundException;
+use Brunt\Provider\Binding;
+use Brunt\Provider\ClassProvider;
 
 class Injector
 {

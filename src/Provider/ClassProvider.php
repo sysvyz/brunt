@@ -6,11 +6,11 @@
  * Time: 01:28
  */
 
-namespace Prescription\Provider;
+namespace Brunt\Provider;
 
-use Prescription\Exception\CircularDependencyException;
-use Prescription\Injector;
-use Prescription\Provider\Reflector as RF;
+use Brunt\Exception\CircularDependencyException;
+use Brunt\Injector;
+use Brunt\Provider\Reflector as RF;
 
 
 class ClassProvider implements Provider

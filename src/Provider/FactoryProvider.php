@@ -1,6 +1,6 @@
 <?php
-namespace Prescription\Provider;
-use Prescription\Injector;
+namespace Brunt\Provider;
+use Brunt\Injector;
 
 /**
  * Created by PhpStorm.

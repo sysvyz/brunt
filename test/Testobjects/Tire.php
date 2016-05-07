@@ -5,8 +5,8 @@
  * Date: 10.04.16
  * Time: 16:24
  */
-namespace PrescriptionTest\Testobjects;
-use Prescription\Injectable;
+namespace BruntTest\Testobjects;
+use Brunt\Injectable;
 
 
 /**

@@ -6,7 +6,7 @@
  * Time: 14:07
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
 

@@ -6,11 +6,11 @@
  * Time: 14:37
  */
 
-namespace Prescription\Provider;
+namespace Brunt\Provider;
 
-use Prescription\Exception\InjectableException;
-use Prescription\InjectableInterface;
-use Prescription\Injector;
+use Brunt\Exception\InjectableException;
+use Brunt\InjectableInterface;
+use Brunt\Injector;
 
 class Reflector
 {

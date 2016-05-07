@@ -6,7 +6,7 @@
  * Time: 01:46
  */
 
-namespace Prescription;
+namespace Brunt;
 
 abstract class Injectable implements InjectableInterface
 {

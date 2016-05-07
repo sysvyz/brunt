@@ -6,10 +6,10 @@
  * Time: 01:22
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
-use Prescription\Injectable;
+use Brunt\Injectable;
 
 class CircA extends Injectable
 {

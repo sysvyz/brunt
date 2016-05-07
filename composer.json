@@ -24,8 +24,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Prescription\\": "src",
-      "PrescriptionTest\\": "test"
+      "Brunt\\": "src",
+      "BruntTest\\": "test"
     }
   }
 }

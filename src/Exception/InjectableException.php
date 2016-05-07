@@ -6,7 +6,7 @@
  * Time: 14:09
  */
 
-namespace Prescription\Exception;
+namespace Brunt\Exception;
 
 
 use RuntimeException;

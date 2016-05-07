@@ -6,7 +6,7 @@
  * Time: 14:04
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
 class SmallEngine extends Engine

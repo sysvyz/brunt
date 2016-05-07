@@ -6,10 +6,10 @@
  * Time: 01:28
  */
 
-namespace Prescription\Provider;
+namespace Brunt\Provider;
 
 
-use Prescription\Injector;
+use Brunt\Injector;
 
 interface  Provider
 {

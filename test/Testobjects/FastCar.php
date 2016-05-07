@@ -6,11 +6,11 @@
  * Time: 14:00
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
-use Prescription\Injector;
-use Prescription\Provider\ClassProvider;
+use Brunt\Injector;
+use Brunt\Provider\ClassProvider;
 
 class FastCar extends Car
 {

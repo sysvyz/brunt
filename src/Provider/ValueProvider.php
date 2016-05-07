@@ -6,10 +6,10 @@
  * Time: 12:24
  */
 
-namespace Prescription\Provider;
+namespace Brunt\Provider;
 
 
-use Prescription\Injector;
+use Brunt\Injector;
 
 class ValueProvider implements Provider
 {

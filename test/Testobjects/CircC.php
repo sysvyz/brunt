@@ -6,10 +6,10 @@
  * Time: 14:05
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
-use Prescription\Injectable;
+use Brunt\Injectable;
 
 class CircC extends Injectable
 {

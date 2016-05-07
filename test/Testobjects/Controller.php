@@ -6,11 +6,11 @@
  * Time: 03:16
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
-use Prescription\Injectable;
-use Prescription\Provider\ClassProvider;
+use Brunt\Injectable;
+use Brunt\Provider\ClassProvider;
 
 class Controller extends Injectable
 {

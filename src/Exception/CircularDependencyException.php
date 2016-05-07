@@ -1,5 +1,5 @@
 <?php
-namespace Prescription\Exception;
+namespace Brunt\Exception;
 use RuntimeException;
 
 /**

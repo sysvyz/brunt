@@ -1,10 +1,10 @@
 <?php
 
-use Prescription\Provider\Reflector;
-use PrescriptionTest\Testobjects\Car;
-use PrescriptionTest\Testobjects\ProviderTestObject;
-use PrescriptionTest\Testobjects\ProviderTestObjectB;
-use PrescriptionTest\Testobjects\ProviderTestObjectC;
+use Brunt\Provider\Reflector;
+use BruntTest\Testobjects\Car;
+use BruntTest\Testobjects\ProviderTestObject;
+use BruntTest\Testobjects\ProviderTestObjectB;
+use BruntTest\Testobjects\ProviderTestObjectC;
 
 
 /**

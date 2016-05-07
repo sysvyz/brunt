@@ -7,9 +7,9 @@
  */
 
 
-use Prescription\ClassProvider;
-use Prescription\Controller;
-use Prescription\ControllerA;
+use Brunt\ClassProvider;
+use Brunt\Controller;
+use Brunt\ControllerA;
 
 include_once 'fileloader.php';
 

@@ -6,7 +6,7 @@
  * Time: 14:03
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
 class HeavyEngine extends Engine

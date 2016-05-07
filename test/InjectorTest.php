@@ -1,25 +1,25 @@
 <?php
-use Prescription\Exception\CircularDependencyException;
-use Prescription\Exception\ProviderNotFoundException;
-use Prescription\Injector;
-use Prescription\Provider;
-use Prescription\Provider\ClassProvider;
-use Prescription\Provider\FactoryProvider;
-use PrescriptionTest\Testobjects\Car;
-use PrescriptionTest\Testobjects\CircA;
-use PrescriptionTest\Testobjects\CircB;
-use PrescriptionTest\Testobjects\CircC;
-use PrescriptionTest\Testobjects\Controller;
-use PrescriptionTest\Testobjects\ControllerA;
-use PrescriptionTest\Testobjects\Engine;
-use PrescriptionTest\Testobjects\FastCar;
-use PrescriptionTest\Testobjects\HeavyEngine;
-use PrescriptionTest\Testobjects\HeavyTire;
-use PrescriptionTest\Testobjects\NonInjectable;
-use PrescriptionTest\Testobjects\NonInjectableB;
-use PrescriptionTest\Testobjects\NonInjectableWrapper;
-use PrescriptionTest\Testobjects\SmallTire;
-use function Prescription\Provider\bind;
+use Brunt\Exception\CircularDependencyException;
+use Brunt\Exception\ProviderNotFoundException;
+use Brunt\Injector;
+use Brunt\Provider;
+use Brunt\Provider\ClassProvider;
+use Brunt\Provider\FactoryProvider;
+use BruntTest\Testobjects\Car;
+use BruntTest\Testobjects\CircA;
+use BruntTest\Testobjects\CircB;
+use BruntTest\Testobjects\CircC;
+use BruntTest\Testobjects\Controller;
+use BruntTest\Testobjects\ControllerA;
+use BruntTest\Testobjects\Engine;
+use BruntTest\Testobjects\FastCar;
+use BruntTest\Testobjects\HeavyEngine;
+use BruntTest\Testobjects\HeavyTire;
+use BruntTest\Testobjects\NonInjectable;
+use BruntTest\Testobjects\NonInjectableB;
+use BruntTest\Testobjects\NonInjectableWrapper;
+use BruntTest\Testobjects\SmallTire;
+use function Brunt\Provider\bind;
 
 /**
  * Created by PhpStorm.

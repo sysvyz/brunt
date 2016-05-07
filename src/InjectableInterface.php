@@ -6,7 +6,7 @@
  * Time: 03:39
  */
 
-namespace Prescription;
+namespace Brunt;
 
 interface InjectableInterface{
     public static function _DI_DEPENDENCIES();

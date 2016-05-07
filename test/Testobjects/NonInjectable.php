@@ -6,7 +6,7 @@
  * Time: 15:29
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
 class NonInjectable

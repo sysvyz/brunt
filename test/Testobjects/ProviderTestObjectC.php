@@ -6,7 +6,7 @@
  * Time: 03:15
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
 class ProviderTestObjectC extends ProviderTestObject

@@ -6,7 +6,7 @@
  * Time: 14:06
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
 class ControllerA extends Controller

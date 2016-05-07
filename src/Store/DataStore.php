@@ -6,7 +6,7 @@
  * Time: 19:39
  */
 
-namespace Prescription\Store;
+namespace Brunt\Store;
 
 interface StoreInterface
 {

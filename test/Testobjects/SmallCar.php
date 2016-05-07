@@ -6,7 +6,7 @@
  * Time: 14:01
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 class SmallCar extends Car
 {

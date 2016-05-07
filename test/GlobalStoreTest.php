@@ -1,6 +1,6 @@
 <?php
-use Prescription\Store\GlobalStore;
-use Prescription\Store;
+use Brunt\Store\GlobalStore;
+use Brunt\Store;
 
 /**
  * Created by PhpStorm.

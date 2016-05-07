@@ -5,12 +5,12 @@
  * Date: 10.04.16
  * Time: 16:22
  */
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
-use Prescription\InjectableInterface;
-use Prescription\Injector;
-use Prescription\Provider\ClassProvider;
-use Prescription\Provider\FactoryProvider;
+use Brunt\InjectableInterface;
+use Brunt\Injector;
+use Brunt\Provider\ClassProvider;
+use Brunt\Provider\FactoryProvider;
 
 
 class Car implements InjectableInterface

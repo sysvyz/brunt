@@ -6,10 +6,10 @@
  * Time: 15:29
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
-use Prescription\Injectable;
+use Brunt\Injectable;
 
 class NonInjectableWrapper extends Injectable
 {

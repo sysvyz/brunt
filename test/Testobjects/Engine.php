@@ -5,10 +5,10 @@
  * Date: 10.04.16
  * Time: 16:23
  */
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
-use Prescription\Injectable;
+use Brunt\Injectable;
 
 class Engine extends Injectable
 {

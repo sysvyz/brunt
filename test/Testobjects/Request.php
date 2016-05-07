@@ -6,10 +6,10 @@
  * Time: 17:45
  */
 
-namespace PrescriptionTest\Testobjects;
+namespace BruntTest\Testobjects;
 
 
-use Prescription\Injectable;
+use Brunt\Injectable;
 
 class Request extends Injectable
 {

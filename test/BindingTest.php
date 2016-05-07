@@ -1,10 +1,10 @@
 <?php
-use Prescription\Injector;
-use Prescription\Provider\Binding;
-use Prescription\Provider\ClassProvider;
-use Prescription\Provider\FactoryProvider;
-use Prescription\Provider\ValueProvider;
-use PrescriptionTest\Testobjects\Tire;
+use Brunt\Injector;
+use Brunt\Provider\Binding;
+use Brunt\Provider\ClassProvider;
+use Brunt\Provider\FactoryProvider;
+use Brunt\Provider\ValueProvider;
+use BruntTest\Testobjects\Tire;
 
 
 /**

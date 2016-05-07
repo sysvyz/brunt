@@ -6,7 +6,7 @@
  * Time: 20:22
  */
 
-namespace Prescription\Provider {
+namespace Brunt\Provider {
 
 
 
