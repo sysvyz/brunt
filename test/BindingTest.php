@@ -1,6 +1,6 @@
 <?php
 use Brunt\Injector;
-use Brunt\Provider\Binding;
+use Brunt\Binding;
 use Brunt\Provider\ClassProvider;
 use Brunt\Provider\FactoryProvider;
 use Brunt\Provider\ValueProvider;

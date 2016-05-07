@@ -49,7 +49,15 @@ class ClassProvider implements Provider
         self::validate($this->reflector);
     }
 
-
+    /**
+     * detect circular dependencies -> maybe not in production?
+     * if A depends on B and B on A then this cant be resolved.
+     * dependencies MUST be A DAG https://en.wikipedia.org/wiki/Directed_acyclic_graph
+     *
+     *
+     * @param Reflector $reflector
+     * @param array $path
+     */
     private static function validate(RF $reflector, $path = [])
     {
         //get class name
@@ -79,6 +87,17 @@ class ClassProvider implements Provider
         return new static($class, $singleton);
     }
 
+
+    /**
+     * Get the current Injector,.
+     * Read Dependencies And Providers
+     * Make a new (Child)Injector for the requested Object with Providers
+     * Build Dependencies recursively
+     * Build requested Object
+     *
+     * @param Injector $injector
+     * @return mixed
+     */
     function __invoke(Injector $injector)
     {
         //return singleton if instance is set and singleton mode
@@ -87,17 +106,15 @@ class ClassProvider implements Provider
         }
 
         $providers = $this->reflector->getProviders();
-        $dependencies = $this->reflector->resolveDependencies();
-
         $childInjector = $injector->getChild($providers);
 
+        $dependencies = $this->reflector->resolveDependencies();
         //recursive build dependencies
         $params = (array_map(function ($dependency) use ($childInjector) {
             return $childInjector->get($dependency['token']);
         }, $dependencies));
 
         $className = $this->reflector->getClassName();
-
         return $this->instance = new $className(...$params);
     }
 }

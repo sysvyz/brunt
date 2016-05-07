@@ -8,9 +8,7 @@
 
 namespace Brunt;
 
-
 use Brunt\Exception\ProviderNotFoundException;
-use Brunt\Provider\Binding;
 use Brunt\Provider\ClassProvider;
 
 class Injector
@@ -100,10 +98,11 @@ class Injector
         }
     }
 
-    public function bind($bindings){
-        if(is_array($bindings)){
-            array_walk($bindings,[$this,'bind']);
-        }else if($bindings instanceof Binding){
+    public function bind($bindings)
+    {
+        if (is_array($bindings)) {
+            array_walk($bindings, [$this, 'bind']);
+        } else if ($bindings instanceof Binding) {
             $this->providers[$bindings->getToken()] = $bindings->getProvider();
         }
     }

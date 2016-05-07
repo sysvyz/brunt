@@ -6,10 +6,18 @@
  * Time: 20:22
  */
 
-namespace Brunt\Provider {
+namespace Brunt {
+
+    use Brunt\Provider\ClassProvider;
+    use Brunt\Provider\FactoryProvider;
+    use Brunt\Provider\ValueProvider;
 
 
-
+    /**
+     * Class Binding
+     * @package Brunt\Provider
+     *
+     */
     class Binding
     {
         /**

@@ -19,7 +19,7 @@ use BruntTest\Testobjects\NonInjectable;
 use BruntTest\Testobjects\NonInjectableB;
 use BruntTest\Testobjects\NonInjectableWrapper;
 use BruntTest\Testobjects\SmallTire;
-use function Brunt\Provider\bind;
+use function Brunt\bind;
 
 /**
  * Created by PhpStorm.
