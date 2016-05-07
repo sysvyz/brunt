@@ -56,7 +56,7 @@ class Reflector
      */
     public function getDependencies()
     {
-        if ($this->hasProviders()) {
+        if ($this->hasDependencies()) {
             $className = $this->className;
             return $className::_DI_DEPENDENCIES();
         }
