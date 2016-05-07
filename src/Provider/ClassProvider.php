@@ -49,20 +49,21 @@ class ClassProvider implements Provider
         self::validate($this->reflector);
     }
 
+
     private static function validate(RF $reflector, $path = [])
     {
         //get class name
         $className = $reflector->getClassName();
-        if ($className == Injector::class){
+        if ($className == Injector::class) {
             return;
         }
-        if (in_array($className, $path)){
+        if (in_array($className, $path)) {
             throw new CircularDependencyException ($className . ' must not depend on it self');
         }
         array_push($path, $reflector->getClassName());
         foreach ($reflector->getConstructorParams() as $dependency) {
-            if($dependency->getType() && !$dependency->getType()->isBuiltin()){
-                $nextReflector = new RF($dependency->getType().'');
+            if ($dependency->getType() && !$dependency->getType()->isBuiltin()) {
+                $nextReflector = new RF($dependency->getType() . '');
                 self::validate($nextReflector, $path);
             }
         }
@@ -91,9 +92,9 @@ class ClassProvider implements Provider
         $childInjector = $injector->getChild($providers);
 
         //recursive build dependencies
-        $params = (array_map(function($dependency) use($childInjector){
+        $params = (array_map(function ($dependency) use ($childInjector) {
             return $childInjector->get($dependency['token']);
-        },$dependencies));
+        }, $dependencies));
 
         $className = $this->reflector->getClassName();
 

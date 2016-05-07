@@ -7,13 +7,15 @@
  */
 
 
-use Brunt\ClassProvider;
-use Brunt\Controller;
-use Brunt\ControllerA;
+
+use Brunt\Injector;
+use Brunt\Provider\ClassProvider;
+use BruntTest\Testobjects\Controller;
+use BruntTest\Testobjects\ControllerA;
 
 include_once 'fileloader.php';
 
-$inj = new \SVZ\Injector();
+$inj = new Injector();
 
 
 $inj->provide(Controller::class, ClassProvider::init(ControllerA::class));
