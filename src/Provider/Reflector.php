@@ -8,12 +8,11 @@
 
 namespace Prescription\Provider;
 
-
-use Prescription\Injectable;
+use Prescription\Exception\InjectableException;
 use Prescription\InjectableInterface;
 use Prescription\Injector;
 
-class Reflector extends Injectable
+class Reflector
 {
 
     private $reflectionClass;
@@ -36,54 +35,6 @@ class Reflector extends Injectable
         return $this->reflectionClass->implementsInterface(InjectableInterface::class);
     }
 
-    public function getReference()
-    {
-        return [
-            'class' => $this->reflectionClass->getName(),
-            'interfaces' => $this->reflectionClass->getInterfaceNames(),
-            'ext' => $this->reflectionClass->getExtensionName(),
-            'dependencies' => $this->getDependencies(),
-            'constructor' => $this->reflectionClass->getConstructor(),
-            'isInjectable' => $this->isInjectable(),
-
-        ];
-    }
-
-    public function getDependencies()
-    {
-        $class = $this->className;
-        $constructor = $this->reflectionClass->getConstructor();
-        $parameters = ($constructor) ? $constructor->getParameters() : [];
-        $injectable = $this->isInjectable();
-        $ret = $injectable ? array_map(
-            function (\ReflectionParameter $e) use ($class,$injectable) {
-                $type = $e->getType();
-                $isNative = $type->isBuiltin();
-                $name = $e->getName();
-
-                /** @var InjectableInterface $class (classname)*/
-                $dependencies = $class::_DI_DEPENDENCIES();
-                return [
-                    'class' => $e->getClass(),
-                    'type' => $type,
-                    'typeString' => $type . '',
-                    'isNative' => $isNative,
-                    'name' => $name,
-                    'position' => $e->getPosition(),
-                    'native' =>
-                        $isNative
-                        && isset($dependencies[$name])
-                            ? $dependencies[$name]
-                            : NULL,
-
-                ];
-            }, $parameters
-
-        ):[];
-
-        return $ret;
-    }
-
     /**
      * @return string
      */
@@ -98,5 +49,86 @@ class Reflector extends Injectable
     public function getReflectionClass()
     {
         return $this->reflectionClass;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDependencies()
+    {
+        if ($this->hasProviders()) {
+            $className = $this->className;
+            return $className::_DI_DEPENDENCIES();
+        }
+        return [];
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDependencies()
+    {
+        return $this->reflectionClass->hasMethod('_DI_DEPENDENCIES');
+    }
+
+    /**
+     * @return array
+     */
+    public function getProviders()
+    {
+        if ($this->hasProviders()) {
+            $className = $this->className;
+            return $className::_DI_PROVIDERS();
+        }
+        return [];
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasProviders()
+    {
+        return $this->reflectionClass->hasMethod('_DI_PROVIDERS');
+    }
+
+    /**
+     *
+     */
+    public function resolveDependencies()
+    {
+        $dependencies = $this->getDependencies();
+
+        return array_map(function (\ReflectionParameter $param) use ($dependencies) {
+            $paramName = $param->name;
+
+            $type = $param->getType();
+
+            $token = $type . '';
+            $native = !$type || $type->isBuiltin();
+            if ($native) {
+                if (isset($dependencies[$paramName])) {
+                    $token = $dependencies[$paramName];
+                } else {
+                    $this->_throwNativeParamNotFound($paramName);
+                }
+            }
+
+            return ['param' => $paramName, 'token' => $token, 'isNative' => $native];
+
+        }, $this->getConstructorParams());
+    }
+
+    private function _throwNativeParamNotFound($paramName)
+    {
+        throw new InjectableException("native param '$paramName' of '$this->className' not found");
+    }
+
+    /**
+     * @return \ReflectionParameter[]
+     */
+    public function getConstructorParams()
+    {
+        $constructor = $this->reflectionClass->getConstructor();
+        return $constructor ? $constructor->getParameters() : [];
     }
 }

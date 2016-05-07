@@ -1,6 +1,6 @@
 <?php
 
-use Prescription\Provider\Rmk\Reflector;
+use Prescription\Provider\Reflector;
 use PrescriptionTest\Testobjects\Car;
 use PrescriptionTest\Testobjects\ProviderTestObject;
 use PrescriptionTest\Testobjects\ProviderTestObjectB;
@@ -13,7 +13,7 @@ use PrescriptionTest\Testobjects\ProviderTestObjectC;
  * Date: 17.04.16
  * Time: 15:35
  */
-class ReflectorRmkTest extends PHPUnit_Framework_TestCase
+class ReflectorTest extends PHPUnit_Framework_TestCase
 {
 
     public function testReflector()
@@ -36,8 +36,6 @@ class ReflectorRmkTest extends PHPUnit_Framework_TestCase
     public function testResolve()
     {
         $ref1 = new Reflector(Car::class);
-       print_r($ref1->resolveDependencies());
-
     }
 
 

@@ -7,10 +7,11 @@
  */
 
 namespace Prescription\Provider;
+
 use Prescription\Exception\CircularDependencyException;
-use Prescription\Exception\InjectableException;
-use Prescription\InjectableInterface;
 use Prescription\Injector;
+use Prescription\Provider\Reflector as RF;
+
 
 class ClassProvider implements Provider
 {
@@ -48,27 +49,23 @@ class ClassProvider implements Provider
         self::validate($this->reflector);
     }
 
-    private static function validate(Reflector $reflector, $path = [])
+    private static function validate(RF $reflector, $path = [])
     {
         //get class name
         $className = $reflector->getClassName();
         if ($className == Injector::class){
             return;
         }
-
         if (in_array($className, $path)){
             throw new CircularDependencyException ($className . ' must not depend on it self');
         }
-
-
         array_push($path, $reflector->getClassName());
-        foreach ($reflector->getDependencies() as $dependency) {
-            if (!$dependency['isNative']) {
-                $nextReflector = new Reflector($dependency['typeString']);
+        foreach ($reflector->getConstructorParams() as $dependency) {
+            if($dependency->getType() && !$dependency->getType()->isBuiltin()){
+                $nextReflector = new RF($dependency->getType().'');
                 self::validate($nextReflector, $path);
             }
         }
-
     }
 
     /**
@@ -83,58 +80,23 @@ class ClassProvider implements Provider
 
     function __invoke(Injector $injector)
     {
-
-
         //return singleton if instance is set and singleton mode
         if ($this->singleton && $this->instance !== null) {
             return $this->instance;
         }
 
-
-        //get class name
-        $className = $this->reflector->getClassName();
-
-
-        $injector->provide('%CLASS_NAME%',function()use ($className){return $className;});
-
-        //build new injector for instance
-        $isInjectable = $this->reflector->getReflectionClass()->implementsInterface(InjectableInterface::class);
-
-        $providers = [];
-        if (!$isInjectable) {
-            //throw new InjectableException ($this->reflector->getClassName() . ' must implement ' . InjectableInterface::class);
-        }else{
-            $providers = $className::_DI_PROVIDERS();
-        }
-
-        /** @var InjectableInterface $className */
-
+        $providers = $this->reflector->getProviders();
+        $dependencies = $this->reflector->resolveDependencies();
 
         $childInjector = $injector->getChild($providers);
 
-        //get dependencies
-        $dependencies = $this->reflector->getDependencies();
-
         //recursive build dependencies
-        $params = [];
+        $params = (array_map(function($dependency) use($childInjector){
+            return $childInjector->get($dependency['token']);
+        },$dependencies));
 
-        foreach ($dependencies as $dependency) {
+        $className = $this->reflector->getClassName();
 
-
-            $token = ($dependency['isNative'])
-                ? $dependency['native']
-                : $dependency['typeString'];
-
-
-            $params[] = $childInjector->get($token);
-
-
-        }
-
-        //build instance
-        $this->instance = new $className(...$params);
-
-        return $this->instance;
+        return $this->instance = new $className(...$params);
     }
-
 }

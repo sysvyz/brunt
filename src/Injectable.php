@@ -8,8 +8,6 @@
 
 namespace Prescription;
 
-
-
 abstract class Injectable implements InjectableInterface
 {
     public static function _DI_DEPENDENCIES(){

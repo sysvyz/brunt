@@ -1,12 +1,10 @@
 <?php
-use Prescription\Injector;
-use \Prescription\Provider;
-use Prescription\Provider\Binding;
-use Prescription\Provider\ClassProvider;
-
 use Prescription\Exception\CircularDependencyException;
 use Prescription\Exception\ProviderNotFoundException;
-
+use Prescription\Injector;
+use Prescription\Provider;
+use Prescription\Provider\ClassProvider;
+use Prescription\Provider\FactoryProvider;
 use PrescriptionTest\Testobjects\Car;
 use PrescriptionTest\Testobjects\CircA;
 use PrescriptionTest\Testobjects\CircB;
@@ -19,10 +17,9 @@ use PrescriptionTest\Testobjects\HeavyEngine;
 use PrescriptionTest\Testobjects\HeavyTire;
 use PrescriptionTest\Testobjects\NonInjectable;
 use PrescriptionTest\Testobjects\NonInjectableB;
-use PrescriptionTest\Testobjects\NonInjectableC;
 use PrescriptionTest\Testobjects\NonInjectableWrapper;
-use function Prescription\Provider\bind;
 use PrescriptionTest\Testobjects\SmallTire;
+use function Prescription\Provider\bind;
 
 /**
  * Created by PhpStorm.
@@ -295,9 +292,9 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         $injector->providers(
             [
                 NonInjectableWrapper::class => ClassProvider::init(NonInjectableWrapper::class),
-                NonInjectable::class => function () {
+                NonInjectable::class => FactoryProvider::init(function () {
                     return new NonInjectable(5);
-                },
+                }) ,
             ]
         );
 

@@ -60,8 +60,6 @@ class Injector
      */
     private function _get(string $token)
     {
-
-
         //if provider exists this injector is responsible
         if (isset($this->providers[$token])) {
             //execute provider
