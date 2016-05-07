@@ -6,9 +6,11 @@
  * Time: 16:22
  */
 namespace PrescriptionTest\Testobjects;
+
 use Prescription\InjectableInterface;
 use Prescription\Injector;
 use Prescription\Provider\ClassProvider;
+use Prescription\Provider\FactoryProvider;
 
 
 class Car implements InjectableInterface
@@ -52,9 +54,9 @@ class Car implements InjectableInterface
     {
         return [
             Tire::class => ClassProvider::init(SmallTire::class, false),
-            '%CAR_NAME%'=> function(){
+            '%CAR_NAME%'=> FactoryProvider::init(function (){
                 return 'CAR';
-            },
+            }),
         ];
     }
 }
