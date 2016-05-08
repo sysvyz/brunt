@@ -9,7 +9,9 @@
 namespace Brunt {
 
     use Brunt\Provider\ClassProvider;
+    use Brunt\Provider\ConcreteProvider;
     use Brunt\Provider\FactoryProvider;
+    use Brunt\Provider\Provider;
     use Brunt\Provider\ValueProvider;
 
 
@@ -26,7 +28,7 @@ namespace Brunt {
         private $token;
 
         /**
-         * @var Provider
+         * @var ConcreteProvider
          */
         private $provider;
 
@@ -39,9 +41,13 @@ namespace Brunt {
             $this->token = $token;
         }
 
-        public static function init($class)
+        /**
+         * @param $token
+         * @return Binding
+         */
+        public static function init($token)
         {
-            return new self($class);
+            return new self($token);
         }
 
         public function toClass(string $className,bool $singleton = true)
@@ -61,7 +67,14 @@ namespace Brunt {
             $this->provider = new FactoryProvider($callable);
             return $this;
         }
-
+        /**
+         * @return Provider
+         */
+        public function asSingleton()
+        {
+            $this->provider = $this->provider->singleton();
+            return $this;
+        }
         /**
          * @return string
          */
@@ -79,9 +92,17 @@ namespace Brunt {
             return $this->provider;
         }
 
+
+
+
+        /**
+         * @param $name
+         * @param $arguments
+         * @return Binding
+         */
         public static function __callStatic($name, $arguments)
         {
-            // TODO: Implement __callStatic() method.
+            return Binding::init($name);
         }
 
 

@@ -114,12 +114,23 @@ class InjectorTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(false);
         }
     }
-
     public function testSingleton()
+    {
+        $injector = new Injector(null);
+
+        /** @var ClassProvider $provider */
+        $provider = ClassProvider::init(Engine::class);
+        $singletonProvider = new Provider\SingletonProvider($provider);
+
+        $this->assertSame($singletonProvider($injector), $singletonProvider($injector));
+
+    }
+
+    public function testSingletonOld()
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->providers([Engine::class => ClassProvider::init(Engine::class)]);
+        $injector->providers([Engine::class => ClassProvider::init(Engine::class)->singleton()]);
         try {
             /** @var Engine $engine */
             $engine = $injector->get(Engine::class);
@@ -154,7 +165,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         $injector = new Injector(null);
         $injector->providers([
             Car::class => ClassProvider::init(FastCar::class),
-            Engine::class => ClassProvider::init(Engine::class)
+            Engine::class => ClassProvider::init(Engine::class)->singleton()
         ]);
 
         /** @var Car $car */
@@ -184,7 +195,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         $injector = new Injector(null);
         $injector->bind([
             bind(Car::class)->toClass(FastCar::class),
-            bind(Engine::class)->toClass(Engine::class),
+            bind(Engine::class)->toClass(Engine::class)->asSingleton(),
         ]);
 
         /** @var Car $car */

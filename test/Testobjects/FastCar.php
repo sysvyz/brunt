@@ -12,6 +12,10 @@ namespace BruntTest\Testobjects;
 use Brunt\Injector;
 use Brunt\Provider\ClassProvider;
 
+/**
+ * Class FastCar
+ * @package BruntTest\Testobjects
+ */
 class FastCar extends Car
 {
     public function __construct(Engine $engine, Injector $injector)

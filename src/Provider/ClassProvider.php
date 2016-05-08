@@ -10,30 +10,34 @@ namespace Brunt\Provider {
 
     use Brunt\Exception\CircularDependencyException;
     use Brunt\Injector;
-    use Brunt\Provider\Reflector as RF;
+    use Brunt\Reflector;
 
 
-    class ClassProvider implements Provider
+    class ClassProvider extends ConcreteProvider
     {
         /**
          * @var Reflector
          */
         private $reflector;
-        /**
-         * @var bool
-         */
-        private $singleton;
 
-        /**
-         * @var mixed
-         */
-        private $instance = null;
         /**
          * @var string
          */
         private $class;
 
 
+        /**
+         *
+         * convenience function wrapper for constructor
+         *
+         * @param $class
+         * @param bool $singleton
+         * @return ClassProvider
+         */
+        public static function init($class, $singleton = true)
+        {
+            return new self($class, $singleton);
+        }
         /**
          * ClassProvider constructor.
          * @param string $class
@@ -51,14 +55,18 @@ namespace Brunt\Provider {
 
         /**
          * detect circular dependencies -> maybe not in production?
-         * if A depends on B and B on A then this cant be resolved.
+         * if A depends on B and B on A then the injector cant resolve this by himself.
          * dependencies MUST be A DAG https://en.wikipedia.org/wiki/Directed_acyclic_graph
+         * Validator uses depth-first-search to find loops - there are better ways.
          *
+         * todo research: claim: it could be possible to have circular dependencies with bounds or inheritance if they converge somehow
+         * circular dependencies should be avoided or if REALLY (recursive structures i.e. lists, trees, graphs) necessary build it with FactoryProviders
+         * http://misko.hevery.com/2008/08/01/circular-dependency-in-constructors-and-dependency-injection/
          *
          * @param Reflector $reflector
          * @param array $path
          */
-        private static function validate(RF $reflector, $path = [])
+        private static function validate(Reflector $reflector, $path = [])
         {
             //get class name
             $className = $reflector->getClassName();
@@ -71,25 +79,15 @@ namespace Brunt\Provider {
             array_push($path, $reflector->getClassName());
             foreach ($reflector->getConstructorParams() as $dependency) {
                 if ($dependency->getType() && !$dependency->getType()->isBuiltin()) {
-                    $nextReflector = new RF($dependency->getType() . '');
+                    $nextReflector = new Reflector($dependency->getType() . '');
                     self::validate($nextReflector, $path);
                 }
             }
         }
 
-        /**
-         * @param $class
-         * @param bool $singleton
-         * @return ClassProvider
-         */
-        public static function init($class, $singleton = true)
-        {
-            return new static($class, $singleton);
-        }
 
 
         /**
-         * Get the current Injector,.
          * Read Dependencies And Providers
          * Make a new (Child)Injector for the requested Object with Providers
          * Build Dependencies recursively
@@ -100,10 +98,6 @@ namespace Brunt\Provider {
          */
         function __invoke(Injector $injector)
         {
-            //return singleton if instance is set and singleton mode
-            if ($this->singleton && $this->instance !== null) {
-                return $this->instance;
-            }
 
             $providers = $this->reflector->getProviders();
             $childInjector = $injector->getChild($providers);
@@ -115,7 +109,7 @@ namespace Brunt\Provider {
             }, $dependencies));
 
             $className = $this->reflector->getClassName();
-            return $this->instance = new $className(...$params);
+            return new $className(...$params);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Brunt\Provider {
 
     use Brunt\Injector;
 
-    class ValueProvider implements Provider
+    class ValueProvider  extends ConcreteProvider
     {
 
         private $value;

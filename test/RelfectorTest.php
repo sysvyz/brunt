@@ -1,6 +1,6 @@
 <?php
 
-use Brunt\Provider\Reflector;
+use Brunt\Reflector;
 use BruntTest\Testobjects\Car;
 use BruntTest\Testobjects\ProviderTestObject;
 use BruntTest\Testobjects\ProviderTestObjectB;

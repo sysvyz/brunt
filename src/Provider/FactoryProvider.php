@@ -1,5 +1,6 @@
 <?php
 namespace Brunt\Provider {
+
     use Brunt\Injector;
 
     /**
@@ -8,7 +9,7 @@ namespace Brunt\Provider {
      * Date: 17.04.16
      * Time: 01:25
      */
-    class FactoryProvider implements Provider{
+    class FactoryProvider  extends ConcreteProvider{
 
         private $callable = [];
 

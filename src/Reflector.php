@@ -6,11 +6,9 @@
  * Time: 14:37
  */
 
-namespace Brunt\Provider {
+namespace Brunt {
 
     use Brunt\Exception\InjectableException;
-    use Brunt\InjectableInterface;
-    use Brunt\Injector;
 
     class Reflector
     {

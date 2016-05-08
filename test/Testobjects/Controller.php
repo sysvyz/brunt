@@ -28,10 +28,10 @@ class Controller extends Injectable
     public static function _DI_PROVIDERS()
     {
         return [
-            RequestService::class => ClassProvider::init(RequestService::class),
-            ServiceY::class => ClassProvider::init(ServiceY::class),
-            ServiceZ::class => ClassProvider::init(ServiceZ::class),
-            Request::class => ClassProvider::init(Request::class),
+            RequestService::class => ClassProvider::init(RequestService::class)->singleton(),
+            ServiceY::class => ClassProvider::init(ServiceY::class)->singleton(),
+            ServiceZ::class => ClassProvider::init(ServiceZ::class)->singleton(),
+            Request::class => ClassProvider::init(Request::class)->singleton(),
         ] + parent::_DI_PROVIDERS();
     }
 }
