@@ -47,7 +47,6 @@ namespace Brunt {
 
             return $this->_get($token);
         }
-
         /**
          * the real function
          *

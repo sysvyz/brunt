@@ -14,7 +14,7 @@ namespace Brunt\Provider {
         private $callable = [];
 
         /**
-         * DIProvider constructor.
+         * FactoryProvider constructor.
          * @param $callable
          */
         public function __construct(callable $callable)
@@ -22,14 +22,22 @@ namespace Brunt\Provider {
             $this->callable[0] = $callable;
         }
 
+        /**
+         * @param Injector $injector
+         * @return mixed
+         */
         function __invoke(Injector $injector)
         {
             return $this->callable[0]($injector);
         }
 
+        /**
+         * @param callable $callable
+         * @return FactoryProvider
+         */
         public static function init(callable $callable)
         {
-            return new static($callable);
+            return new self($callable);
         }
 
     }

@@ -28,11 +28,6 @@ namespace Brunt {
             $this->className = $className;
         }
 
-        public function isInjectable()
-        {
-            return $this->reflectionClass->implementsInterface(InjectableInterface::class);
-        }
-
         /**
          * @return string
          */
@@ -50,6 +45,14 @@ namespace Brunt {
         }
 
         /**
+         * @return bool
+         */
+        public function hasDependencies()
+        {
+            return $this->reflectionClass->hasMethod('_DI_DEPENDENCIES');
+        }
+
+        /**
          * @return array
          */
         public function getDependencies()
@@ -64,10 +67,11 @@ namespace Brunt {
         /**
          * @return bool
          */
-        public function hasDependencies()
+        public function hasProviders()
         {
-            return $this->reflectionClass->hasMethod('_DI_DEPENDENCIES');
+            return $this->reflectionClass->hasMethod('_DI_PROVIDERS');
         }
+
 
         /**
          * @return array
@@ -82,15 +86,7 @@ namespace Brunt {
         }
 
         /**
-         * @return bool
-         */
-        public function hasProviders()
-        {
-            return $this->reflectionClass->hasMethod('_DI_PROVIDERS');
-        }
-
-        /**
-         *
+         *  PHP7 magic
          */
         public function resolveDependencies()
         {
@@ -101,7 +97,7 @@ namespace Brunt {
 
                 $type = $param->getType();
 
-                $token = $type . '';
+                $token = '';
                 $native = !$type || $type->isBuiltin();
                 if ($native) {
                     if (isset($dependencies[$paramName])) {
@@ -109,6 +105,8 @@ namespace Brunt {
                     } else {
                         $this->_throwNativeParamNotFound($paramName);
                     }
+                } else {
+                    $token = $type . '';
                 }
 
                 return ['param' => $paramName, 'token' => $token, 'isNative' => $native];

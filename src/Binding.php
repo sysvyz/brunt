@@ -70,9 +70,16 @@ namespace Brunt {
         /**
          * @return Provider
          */
-        public function asSingleton()
+        public function singleton()
         {
             $this->provider = $this->provider->singleton();
+            return $this;
+        }        /**
+     * @return Provider
+     */
+        public function lazy()
+        {
+            $this->provider = $this->provider->lazy();
             return $this;
         }
         /**

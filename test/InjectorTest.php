@@ -114,6 +114,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(false);
         }
     }
+
     public function testSingleton()
     {
         $injector = new Injector(null);
@@ -195,7 +196,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         $injector = new Injector(null);
         $injector->bind([
             bind(Car::class)->toClass(FastCar::class),
-            bind(Engine::class)->toClass(Engine::class)->asSingleton(),
+            bind(Engine::class)->toClass(Engine::class)->singleton(),
         ]);
 
         /** @var Car $car */
@@ -234,7 +235,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         /** @var ControllerA $ctrl */
         $ctrl = $injector->get(Controller::class);
 
-        $ctrl->serviceZ;
+        $this->assertInstanceOf(ControllerA::class, $ctrl);
         $this->assertSame($ctrl->requestService, $ctrl->serviceZ->requestService);
         $this->assertNotSame($ctrl->requestService, $ctrl->serviceZ->serviceY->requestService);
         $this->assertNotEquals($ctrl->requestService->url, $ctrl->serviceZ->serviceY->requestService->url);
@@ -259,6 +260,60 @@ class InjectorTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(true);
         }
     }
+
+    public function testLazy()
+    {
+        // Arrange
+        $injector = new Injector(null);
+
+        $injector->providers([
+            Engine::class => ClassProvider::init(Engine::class)->lazy(),
+        ]);
+
+        $proxy = $injector->get(Engine::class);
+
+        $this->assertInstanceOf(Engine::class, $proxy->getInstance());
+
+    }
+
+    public function testLazySingleton()
+    {
+        // Arrange
+        $injector = new Injector(null);
+
+        $injector->providers([
+            Engine::class => ClassProvider::init(Engine::class)->lazy()->singleton(),
+        ]);
+
+        $proxy2 = $injector->get(Engine::class);
+        $proxy1 = $injector->get(Engine::class);
+
+        $this->assertInstanceOf(Engine::class, $proxy1->getInstance());
+        $this->assertInstanceOf(Engine::class, $proxy2->getInstance());
+        $this->assertNotSame($proxy1, $proxy2);
+        $this->assertSame($proxy1->getInstance(), $proxy2->getInstance());
+
+    }
+
+    public function testSingletonLazy()
+    {
+        // Arrange
+        $injector = new Injector(null);
+
+        $injector->providers([
+            Engine::class => ClassProvider::init(Engine::class)->singleton()->lazy(),
+        ]);
+
+        $proxy2 = $injector->get(Engine::class);
+        $proxy1 = $injector->get(Engine::class);
+
+        $this->assertInstanceOf(Engine::class, $proxy1->getInstance());
+        $this->assertInstanceOf(Engine::class, $proxy2->getInstance());
+        $this->assertNotSame($proxy1, $proxy2);
+        $this->assertSame($proxy1->getInstance(), $proxy2->getInstance());
+
+    }
+
 
     public function testCircularReference()
     {
@@ -305,7 +360,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
                 NonInjectableWrapper::class => ClassProvider::init(NonInjectableWrapper::class),
                 NonInjectable::class => FactoryProvider::init(function () {
                     return new NonInjectable(5);
-                }) ,
+                }),
             ]
         );
 

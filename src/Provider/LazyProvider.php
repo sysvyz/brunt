@@ -10,15 +10,14 @@ namespace Brunt\Provider;
 
 
 use Brunt\Injector;
+use Brunt\Provider\Lazy\LazyProxyObject;
 
-class SingletonProvider implements Provider
+class LazyProvider implements Provider
 {
     /**
      * @var Provider
      */
     private $provider;
-
-    private $instance;
 
     /**
      *
@@ -40,7 +39,6 @@ class SingletonProvider implements Provider
      */
     public function __construct(Provider $provider)
     {
-        $this->instance = null;
         $this->provider = $provider;
     }
 
@@ -51,13 +49,7 @@ class SingletonProvider implements Provider
      */
     function __invoke(Injector $injector)
     {
-
-        if ($this->instance === null) {
-            $p = $this->provider;
-            $this->instance = $p($injector);
-        }
-        return $this->instance;
-
+        return new LazyProxyObject($this->provider,$injector);
     }
 
     /**
@@ -65,9 +57,12 @@ class SingletonProvider implements Provider
      */
     public function singleton()
     {
+        $this->provider = $this->provider->singleton();
         return $this;
     }
-    public function lazy(){
-        return new LazyProvider($this);
+
+    public function lazy()
+    {
+       return $this;
     }
 }
