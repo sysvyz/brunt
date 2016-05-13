@@ -1,7 +1,7 @@
 # Brunt
 
 Brunt is a simple but powerful dependency injection framework. 
-Since php7 reflection can be used to analyze constructors properly.
+Since php7, reflection can be used to analyze constructors properly.
 
 ## Usage
 

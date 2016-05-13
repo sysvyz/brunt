@@ -31,6 +31,8 @@ namespace Brunt {
          * @var ConcreteProvider
          */
         private $provider;
+        private $isSingleton= false;
+        private $isLazy = false;
 
         /**
          * Binding constructor.
@@ -70,16 +72,20 @@ namespace Brunt {
         /**
          * @return Provider
          */
+        /**
+         * @return Provider
+         */
         public function singleton()
         {
-            $this->provider = $this->provider->singleton();
+            $this->isSingleton = true;
             return $this;
         }        /**
      * @return Provider
      */
         public function lazy()
         {
-            $this->provider = $this->provider->lazy();
+            $this->isLazy = true;
+
             return $this;
         }
         /**
@@ -96,8 +102,20 @@ namespace Brunt {
          */
         public function getProvider()
         {
+            if($this->provider == null){
+                $this->toClass($this->token);
+            }
+            if($this->isSingleton){
+                $this->provider = $this->provider->singleton();
+            }
+            if($this->isLazy){
+                $this->provider = $this->provider->lazy();
+            }
+
+
             return $this->provider;
         }
+
 
 
 
