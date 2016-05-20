@@ -35,9 +35,9 @@ namespace Brunt {
             return $this->injector;
         }
 
-        /**
+             /**
          * @param string $token
-         * @return $this|mixed instance
+         * @return mixed instance
          */
         public function get(string $token)
         {
@@ -45,7 +45,8 @@ namespace Brunt {
                 return $this;
             }
 
-            return $this->_get($token);
+            $provider = $this->_get($token);
+            return $provider($this);
         }
         /**
          * the real function
@@ -58,17 +59,17 @@ namespace Brunt {
             //if provider exists this injector is responsible
             if (isset($this->providers[$token])) {
                 //execute provider
-                $instance = $this->providers[$token]($this);
+                $provider = $this->providers[$token];
             } else if ($this->injector) {
                 //if parent injector exists
                 //recursive search in parent injector
-                $instance = $this->injector->_get($token);
+                $provider = $this->injector->_get($token);
             } else {
                 //until root injector has no provider
                 throw new ProviderNotFoundException($token . '...provider not found');
             }
 
-            return $instance;
+            return $provider;
         }
 
         function __get($name)
