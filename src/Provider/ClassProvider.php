@@ -10,7 +10,7 @@ namespace Brunt\Provider {
 
     use Brunt\Exception\CircularDependencyException;
     use Brunt\Injector;
-    use Brunt\Reflector;
+    use Brunt\Reflection\Reflector;
 
 
     class ClassProvider extends ConcreteProvider

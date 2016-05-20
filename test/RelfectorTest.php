@@ -1,10 +1,14 @@
 <?php
 
-use Brunt\Reflector;
+use Brunt\Injector;
+use Brunt\Provider\ClassProvider;
+use Brunt\Reflection\Reflector;
 use BruntTest\Testobjects\Car;
+use BruntTest\Testobjects\MethodReflectionTestObject;
 use BruntTest\Testobjects\ProviderTestObject;
 use BruntTest\Testobjects\ProviderTestObjectB;
 use BruntTest\Testobjects\ProviderTestObjectC;
+use BruntTest\Testobjects\ProxyTestProxy;
 
 
 /**
@@ -21,6 +25,7 @@ class ReflectorTest extends PHPUnit_Framework_TestCase
         $ref = new Reflector(Car::class);
         $this->assertInstanceOf(Reflector::class, $ref);
     }
+
     public function testHasProvider()
     {
         $ref1 = new Reflector(ProviderTestObject::class);
@@ -38,5 +43,16 @@ class ReflectorTest extends PHPUnit_Framework_TestCase
         $ref1 = new Reflector(Car::class);
     }
 
+    public function testReflectionGetMethods()
+    {
+        $ref1 = new Reflector(MethodReflectionTestObject::class);
+        $class = $ref1->getCompactReferenceClass();
+
+        $this->assertSame($class->getClassName(),MethodReflectionTestObject::class );
+        
+    }
+
 
 }
+
+
