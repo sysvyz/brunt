@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 19.05.16
- * Time: 22:07
- */
+
 
 namespace Brunt\Reflection\CR\Renderer;
 

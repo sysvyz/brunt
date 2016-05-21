@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 10.04.16
- * Time: 16:22
- */
+
 namespace BruntTest\Testobjects;
 
 use Brunt\InjectableInterface;

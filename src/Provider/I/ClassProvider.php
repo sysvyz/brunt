@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 21.05.16
- * Time: 01:51
- */
+
 
 namespace Brunt\Provider\I;
 
@@ -15,7 +10,9 @@ use Brunt\Reflection\Reflector;
 
 interface ClassProvider extends Provider
 {
-
+    /**
+     * @return string
+     */
     public function getClass();
 
     /**

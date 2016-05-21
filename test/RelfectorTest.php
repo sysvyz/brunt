@@ -1,22 +1,13 @@
 <?php
 
-use Brunt\Injector;
-use Brunt\Provider\ClassProvider;
 use Brunt\Reflection\Reflector;
 use BruntTest\Testobjects\Car;
 use BruntTest\Testobjects\MethodReflectionTestObject;
 use BruntTest\Testobjects\ProviderTestObject;
 use BruntTest\Testobjects\ProviderTestObjectB;
 use BruntTest\Testobjects\ProviderTestObjectC;
-use BruntTest\Testobjects\ProxyTestProxy;
 
 
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 17.04.16
- * Time: 15:35
- */
 class ReflectorTest extends PHPUnit_Framework_TestCase
 {
 

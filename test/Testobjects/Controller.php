@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 17.04.16
- * Time: 03:16
- */
+
 
 namespace BruntTest\Testobjects;
 

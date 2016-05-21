@@ -21,12 +21,6 @@ use BruntTest\Testobjects\NonInjectableWrapper;
 use BruntTest\Testobjects\SmallTire;
 use function Brunt\bind;
 
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 17.04.16
- * Time: 15:35
- */
 class InjectorTest extends PHPUnit_Framework_TestCase
 {
     public function testInjector()

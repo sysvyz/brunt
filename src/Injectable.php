@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 17.04.16
- * Time: 01:46
- */
+
 
 namespace Brunt {
 

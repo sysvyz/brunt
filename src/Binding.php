@@ -1,13 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 20.04.16
- * Time: 20:22
- */
 
 namespace Brunt {
 
+    use Brunt\Exception\ProviderNotFoundException;
+    use Brunt\Provider\ClassFactoryProvider;
     use Brunt\Provider\ClassProvider;
     use Brunt\Provider\ConcreteProvider;
     use Brunt\Provider\FactoryProvider;
@@ -31,8 +27,10 @@ namespace Brunt {
          * @var ConcreteProvider
          */
         private $provider;
-        private $isSingleton= false;
+        private $isSingleton = false;
         private $isLazy = false;
+
+        private $isTokenIsClass = false;
 
         /**
          * Binding constructor.
@@ -41,6 +39,8 @@ namespace Brunt {
         public function __construct(string $token)
         {
             $this->token = $token;
+
+            $this->isTokenIsClass = class_exists($token);
         }
 
         /**
@@ -52,42 +52,56 @@ namespace Brunt {
             return new self($token);
         }
 
-        public function toClass(string $className,bool $singleton = true)
+        /**
+         * @return Binding
+         */
+        public function toClass(string $className)
         {
-            $this->provider = new ClassProvider($className,$singleton);
+            $this->provider = new ClassProvider($className);
             return $this;
         }
 
+        /**
+         * @return Binding
+         */
         public function toValue($value)
         {
             $this->provider = new ValueProvider($value);
             return $this;
         }
 
+        /**
+         * @return Binding
+         */
         public function toFactory(callable $callable)
         {
-            $this->provider = new FactoryProvider($callable);
+            if ($this->isTokenIsClass) {
+                $this->provider = new ClassFactoryProvider($callable,$this->token);
+            } else {
+                $this->provider = new FactoryProvider($callable);
+            }
             return $this;
         }
+
         /**
-         * @return Provider
-         */
-        /**
-         * @return Provider
+         * @return Binding
          */
         public function singleton()
         {
             $this->isSingleton = true;
             return $this;
-        }        /**
-     * @return Provider
-     */
+        }
+
+        /**
+         * @return Binding
+         */
         public function lazy()
         {
             $this->isLazy = true;
 
             return $this;
         }
+
         /**
          * @return string
          */
@@ -102,22 +116,22 @@ namespace Brunt {
          */
         public function getProvider()
         {
-            if($this->provider == null){
+            if ($this->provider == null && $this->isTokenIsClass) {
                 $this->toClass($this->token);
             }
-            if($this->isSingleton){
+            if ($this->provider == null) {
+                throw new ProviderNotFoundException($this->token . ' is no class');
+            }
+            if ($this->isSingleton) {
                 $this->provider = $this->provider->singleton();
             }
-            if($this->isLazy){
+            if ($this->isLazy) {
                 $this->provider = $this->provider->lazy();
             }
 
 
             return $this->provider;
         }
-
-
-
 
 
         /**

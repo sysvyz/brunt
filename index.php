@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 17.04.16
- * Time: 18:14
- */
 
 
 

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 19.04.16
- * Time: 12:24
- */
+
 
 namespace Brunt\Provider {
 

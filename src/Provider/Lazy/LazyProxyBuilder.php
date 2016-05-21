@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 21.05.16
- * Time: 01:00
- */
+
 
 namespace Brunt\Provider\Lazy;
 

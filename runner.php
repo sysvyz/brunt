@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 14.04.16
- * Time: 17:36
- */
+
 namespace Brunt;
 use Brunt\Provider\ClassProvider;
 use BruntTest\Testobjects\Car;

@@ -9,12 +9,6 @@ use BruntTest\Testobjects\Engine;
 use BruntTest\Testobjects\Tire;
 
 
-/**
- * Created by PhpStorm.
- * User: mb
- * Date: 17.04.16
- * Time: 15:35
- */
 class BindingTest extends PHPUnit_Framework_TestCase
 {
 

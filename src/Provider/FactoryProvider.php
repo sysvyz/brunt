@@ -2,13 +2,7 @@
 namespace Brunt\Provider {
 
     use Brunt\Injector;
-
-    /**
-     * Created by PhpStorm.
-     * User: mb
-     * Date: 17.04.16
-     * Time: 01:25
-     */
+    
     class FactoryProvider  extends ConcreteProvider{
 
         private $callable = [];
