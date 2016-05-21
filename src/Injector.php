@@ -93,13 +93,16 @@ namespace Brunt {
             }
         }
 
-        public function bind($bindings)
+        public function bind(... $bindings)
         {
-            if (is_array($bindings)) {
-                array_walk($bindings, [$this, 'bind']);
-            } else if ($bindings instanceof Binding) {
-                $this->providers[$bindings->getToken()] = $bindings->getProvider();
+            foreach ($bindings as $binding) {
+                if (is_array($binding)) {
+                    array_walk($binding, [$this, 'bind']);
+                } else if ($binding instanceof Binding) {
+                    $this->providers[$binding->getToken()] = $binding->getProvider();
+                }
             }
+
         }
 
         public function getChild($providers = [])
