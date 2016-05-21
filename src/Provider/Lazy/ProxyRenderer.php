@@ -176,10 +176,18 @@ class ProxyRenderer extends CRRenderer
      */
     protected function renderParam(CRParam $param, $depth = 0, $indent = " ")
     {
+
+
+
         $s = "";
         if ($param->hasType()) {
             $s .= $param->getType() . ' ';
         }
+          if ($param->getParameter()->isPassedByReference()) {
+              $s .= '&';
+          }
+
+
         $s .= "$" . $param->getName();
         if ($param->getParameter()->isOptional()) {
 //REALLY?
