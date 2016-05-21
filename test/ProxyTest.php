@@ -4,25 +4,17 @@
 namespace BruntTest;
 
 
-use Brunt\Exception\ProxyBuildErrorException;
 use Brunt\Injector;
 use Brunt\Provider\ClassProvider;
 use Brunt\Provider\Lazy\LazyProxyBuilder;
 use Brunt\Provider\Lazy\ProxyRenderer;
 use Brunt\Reflection\Reflector;
 use BruntTest\Testobjects\MethodReflectionTestObject;
-use BruntTest\Testobjects\ProxyTestProxy;
 use PHPUnit_Framework_TestCase;
 
 class ProxyTest extends PHPUnit_Framework_TestCase
 {
 
-
-    public function testProxy()
-    {
-        $b = new  ProxyTestProxy();
-
-    }
 
     public function testProxyRenderer()
     {
@@ -33,16 +25,12 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
         $injector = new Injector(null);
         $provider = ClassProvider::init(MethodReflectionTestObject::class);
-       
+
         /** @var MethodReflectionTestObject $proxy */
         $proxy = null;
-        
-        eval($renderedClass . '$proxy = new RandomProxyName_ds8bfgFHGTG4($provider, $injector);');
 
-        $this->assertSame($proxy->getPri(), 409);
-        $this->assertSame($proxy->privateMethod(), "__call:privateMethod"); //private cant be called, call -> __call instead
-        $this->assertSame($proxy->publicMethod(), 'publicMethod');
-        $this->assertSame($proxy . "", '_TO_STRING_');
+        eval($renderedClass . '$proxy = new RandomProxyName_ds8bfgFHGTG4($provider, $injector);');
+        $this->assertInstanceOf(MethodReflectionTestObject::class, $proxy);
 
     }
 
@@ -54,20 +42,21 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         $builder = new LazyProxyBuilder();
         /** @var MethodReflectionTestObject $proxy */
         $proxy = $builder->create($injector, $provider);
-        
 
-        $testFunction = function (MethodReflectionTestObject $a){
-            $this->assertInstanceOf(MethodReflectionTestObject::class,$a);
-            $this->assertSame($a->getPri(), 409);
-            $this->assertSame($a->privateMethod(), "__call:privateMethod"); //private cant be called, call -> __call instead
-            $this->assertSame($a->publicMethod(), 'publicMethod');
-            $this->assertSame($a . "", '_TO_STRING_');
+
+        $testFunction = function (MethodReflectionTestObject $a) {
+            $this->assertInstanceOf(MethodReflectionTestObject::class, $a);
+            return true;
         };
-
-        $testFunction($proxy);
+        $this->assertSame($proxy->getPri(), 409);
+        $this->assertSame($proxy->privateMethod(), "__call:privateMethod"); //private cant be called, call -> __call instead
+        $this->assertSame($proxy->publicMethod(), 'publicMethod');
+        $this->assertSame($proxy->publicMethodWithoutModifier(), 'publicMethodWithoutModifier');
+        $this->assertSame($proxy . "", '_TO_STRING_');
+        
+        $this->assertTrue($testFunction($proxy));
 
     }
-
 
 
 }
