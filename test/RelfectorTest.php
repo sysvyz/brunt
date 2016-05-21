@@ -1,5 +1,6 @@
 <?php
 
+namespace BruntTest;
 use Brunt\Reflection\Reflector;
 use BruntTest\Testobjects\Car;
 use BruntTest\Testobjects\MethodReflectionTestObject;
@@ -8,7 +9,7 @@ use BruntTest\Testobjects\ProviderTestObjectB;
 use BruntTest\Testobjects\ProviderTestObjectC;
 
 
-class ReflectorTest extends PHPUnit_Framework_TestCase
+class ReflectorTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testReflector()

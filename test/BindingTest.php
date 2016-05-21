@@ -1,15 +1,16 @@
 <?php
+namespace BruntTest;
 use Brunt\Injector;
 use Brunt\Binding;
 use Brunt\Provider\ClassProvider;
 use Brunt\Provider\FactoryProvider;
+use Brunt\Provider\LazyProvider;
 use Brunt\Provider\ValueProvider;
-use BruntTest\Testobjects\Car;
 use BruntTest\Testobjects\Engine;
 use BruntTest\Testobjects\Tire;
 
 
-class BindingTest extends PHPUnit_Framework_TestCase
+class BindingTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBinding()
@@ -17,7 +18,6 @@ class BindingTest extends PHPUnit_Framework_TestCase
         $binding = new Binding(Tire::class);
         $binding->toClass(Tire::class);
         $provider = $binding->getProvider();
-
 
         $this->assertEquals($binding->getToken(), Tire::class);
         $this->assertInstanceOf(ClassProvider::class, $provider);
@@ -38,6 +38,21 @@ class BindingTest extends PHPUnit_Framework_TestCase
         $entity = $provider($injector);
 
         $this->assertInstanceOf(ClassProvider::class, $provider);
+        $this->assertInstanceOf(Tire::class, $entity);
+    }
+
+    public function testLazyClassProvider()
+    {
+        $injector = new Injector(null);
+
+        $binding = new Binding(Tire::class);
+
+        $binding->toClass(Tire::class)->lazy();
+
+        $provider = $binding->getProvider();
+        $entity = $provider($injector);
+
+        $this->assertInstanceOf(LazyProvider::class, $provider);
         $this->assertInstanceOf(Tire::class, $entity);
     }
 
@@ -69,10 +84,10 @@ class BindingTest extends PHPUnit_Framework_TestCase
         };
         $binding->toValue($func);
         $provider = $binding->getProvider();
-        $injectetFunc = $provider($injector);
+        $injectedFunc = $provider($injector);
         $this->assertInstanceOf(ValueProvider::class, $provider);
-        $this->assertInstanceOf(Closure::class, $injectetFunc);
-        $this->assertEquals($injectetFunc(5), 15);
+        $this->assertInstanceOf(\Closure::class, $injectedFunc);
+        $this->assertEquals($injectedFunc(5), 15);
     }
 
     public function testFactoryProvider()

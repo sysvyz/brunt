@@ -6,6 +6,7 @@ use Brunt\InjectableInterface;
 use Brunt\Injector;
 use Brunt\Provider\ClassProvider;
 use Brunt\Provider\FactoryProvider;
+use Brunt\Provider\ValueFactoryProvider;
 
 
 class Car implements InjectableInterface
@@ -49,7 +50,7 @@ class Car implements InjectableInterface
     {
         return [
             Tire::class => ClassProvider::init(SmallTire::class, false),
-            '%CAR_NAME%'=> FactoryProvider::init(function (){
+            '%CAR_NAME%'=> ValueFactoryProvider::init(function (){
                 return 'CAR';
             }),
         ];

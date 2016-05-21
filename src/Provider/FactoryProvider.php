@@ -2,8 +2,9 @@
 namespace Brunt\Provider {
 
     use Brunt\Injector;
-    
-    class FactoryProvider  extends ConcreteProvider{
+
+    abstract class FactoryProvider extends ConcreteProvider
+    {
 
         private $callable = [];
 
@@ -16,6 +17,7 @@ namespace Brunt\Provider {
             $this->callable[0] = $callable;
         }
 
+    
         /**
          * @param Injector $injector
          * @return mixed
@@ -23,15 +25,6 @@ namespace Brunt\Provider {
         function __invoke(Injector $injector)
         {
             return $this->callable[0]($injector);
-        }
-
-        /**
-         * @param callable $callable
-         * @return FactoryProvider
-         */
-        public static function init(callable $callable)
-        {
-            return new self($callable);
         }
 
     }

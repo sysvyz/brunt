@@ -22,10 +22,10 @@ class SingletonProvider implements Provider
      * @param bool $singleton
      * @return SingletonProvider
      */
-    public static function init($class, $singleton = true)
+    public static function init($class)
     {
 
-        return new self($class, $singleton);
+        return new self($class);
     }
 
     /**

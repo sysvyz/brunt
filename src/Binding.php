@@ -8,6 +8,7 @@ namespace Brunt {
     use Brunt\Provider\ConcreteProvider;
     use Brunt\Provider\FactoryProvider;
     use Brunt\Provider\Provider;
+    use Brunt\Provider\ValueFactoryProvider;
     use Brunt\Provider\ValueProvider;
 
 
@@ -76,9 +77,9 @@ namespace Brunt {
         public function toFactory(callable $callable)
         {
             if ($this->isTokenIsClass) {
-                $this->provider = new ClassFactoryProvider($callable,$this->token);
+                $this->provider = new ClassFactoryProvider($this->token,$callable);
             } else {
-                $this->provider = new FactoryProvider($callable);
+                $this->provider = new ValueFactoryProvider($callable);
             }
             return $this;
         }
