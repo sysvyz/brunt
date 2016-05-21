@@ -17,7 +17,7 @@ trait ProxyTrait
     /**
      * @var Provider
      */
-    private $provider;
+    private $provider_9a5f1a83;
     /**
      * @var mixed
      */
@@ -25,7 +25,7 @@ trait ProxyTrait
     /**
      * @var Injector
      */
-    private $injector;
+    private $injector_b291a118;
 
 
     /**
@@ -36,25 +36,24 @@ trait ProxyTrait
     public function __construct(Provider $provider, Injector $injector)
     {
 
-        $r = new \ReflectionClass($this);
-        $reserved = ['provider','injector','instance_eae9cc3e'];
-
-        foreach ($r->getProperties() as $item) {
+        $reserved = ['provider_9a5f1a83', 'injector_b291a118', 'instance_eae9cc3e'];
+        foreach ((new \ReflectionClass($this))->getProperties() as $item) {
             $name = $item->getName();
-            if(!in_array($name, $reserved)){
+            if (!in_array($name, $reserved) && !$item->isStatic()) {
+             
                 unset($this->{$name});
             }
         }
 
-        $this->provider = $provider;
-        $this->injector = $injector;
+        $this->provider_9a5f1a83 = $provider;
+        $this->injector_b291a118 = $injector;
         $this->instance_eae9cc3e = null;
 
     }
 
     public function __call($name, $arguments)
     {
-        $this->getInstance()->$name(...$arguments);
+        return $this->getInstance()->$name(...$arguments);
     }
 
     public function __get($name)
@@ -64,22 +63,18 @@ trait ProxyTrait
 
     public function __set($name, $value)
     {
-        if($this->init){
-            $this->getInstance()->$name = $value;
-        }else{
-            $this->$name = $value;
-        }
+        return $this->getInstance()->$name = $value;
     }
 
     public function __toString()
     {
-        return $this->getInstance().'';
+        return $this->getInstance() . '';
     }
 
     function __isset($name)
     {
-
-        return $this->getInstance()->__isset($name);    }
+        return $this->getInstance()->__isset($name);
+    }
 
     function __unset($name)
     {
@@ -96,10 +91,9 @@ trait ProxyTrait
     public function getInstance()
     {
         if ($this->instance_eae9cc3e == null) {
-            $provider = $this->provider;
-            $this->instance_eae9cc3e = $provider($this->injector);
+            $provider = $this->provider_9a5f1a83;
+            $this->instance_eae9cc3e = $provider($this->injector_b291a118);
         }
-
         return $this->instance_eae9cc3e;
     }
 

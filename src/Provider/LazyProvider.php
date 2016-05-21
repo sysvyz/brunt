@@ -20,17 +20,15 @@ class LazyProvider implements Provider
     private $provider;
 
     /**
-     *
      * convenience function wrapper for constructor
      *
      * @param $class
-     * @param bool $singleton
      * @return SingletonProvider
      */
-    public static function init($class, $singleton = true)
+    public static function init($class)
     {
 
-        return new self($class, $singleton);
+        return new self($class);
     }
 
     /**

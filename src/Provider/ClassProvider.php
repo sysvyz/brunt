@@ -11,19 +11,20 @@ namespace Brunt\Provider {
     use Brunt\Exception\CircularDependencyException;
     use Brunt\Injector;
     use Brunt\Reflection\Reflector;
+    use \Brunt\Provider\I\ClassProvider as ClassProviderInterface;
 
 
-    class ClassProvider extends ConcreteProvider
+    class ClassProvider extends ConcreteProvider implements ClassProviderInterface
     {
         /**
          * @var Reflector
          */
-        private $reflector;
+        protected $reflector;
 
         /**
          * @var string
          */
-        private $class;
+        protected $class;
 
 
         /**
@@ -31,22 +32,20 @@ namespace Brunt\Provider {
          * convenience function wrapper for constructor
          *
          * @param $class
-         * @param bool $singleton
          * @return ClassProvider
          */
-        public static function init($class, $singleton = true)
+        public static function init($class)
         {
-            return new self($class, $singleton);
+            return new self($class);
         }
         /**
          * ClassProvider constructor.
          * @param string $class
          * @param bool $singleton
          */
-        public function __construct($class, $singleton = true)
+        public function __construct($class)
         {
             $this->reflector = new Reflector($class);
-            $this->singleton = $singleton;
             $this->class = $class;
 
             //todo disable for production?
@@ -111,5 +110,29 @@ namespace Brunt\Provider {
             $className = $this->reflector->getClassName();
             return new $className(...$params);
         }
+
+        /**
+         * @return string
+         */
+        public function getClass()
+        {
+            return $this->class;
+        }
+
+        /**
+         * @return Reflector
+         */
+        public function getReflector()
+        {
+            return $this->reflector;
+        }
+
+        public function lazy(){
+            return new LazyClassProvider($this);
+        }
+        public function singleton(){
+            return new SingletonClassProvider($this);
+        }
+        
     }
 }

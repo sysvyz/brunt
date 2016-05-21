@@ -10,11 +10,11 @@ namespace Brunt {
 
     use Brunt\Exception\ProviderNotFoundException;
     use Brunt\Provider\ClassProvider;
+    use Brunt\Provider\Lazy\LazyProxyBuilder;
 
     class Injector
     {
 
-        private $token = null;
         private $injector;
         private $providers = [];
 
@@ -25,6 +25,8 @@ namespace Brunt {
         public function __construct(Injector $injector = null)
         {
             $this->injector = $injector;
+
+            $this->providers([LazyProxyBuilder::class => ClassProvider::init(LazyProxyBuilder::class)->singleton()]);
         }
 
         /**
@@ -46,6 +48,7 @@ namespace Brunt {
             }
 
             $provider = $this->_get($token);
+
             return $provider($this);
         }
         /**

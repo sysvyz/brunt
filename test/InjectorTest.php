@@ -83,6 +83,18 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         $this->assertNotInstanceOf(HeavyEngine::class, $engine);
 
     }
+    public function testGetLazy()
+    {
+        // Arrange
+        $injector = new Injector(null);
+        $injector->providers([Engine::class => ClassProvider::init(Engine::class)->lazy()]);
+
+        /** @var Engine $engine */
+        $engine = $injector->get(Engine::class);
+        $this->assertInstanceOf(Engine::class, $engine);
+        $this->assertNotInstanceOf(HeavyEngine::class, $engine);
+
+    }
 
     public function testPolymorphism()
     {
@@ -99,6 +111,20 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testLazyPolymorphism()
+    {
+        // Arrange
+        $injector = new Injector(null);
+        $injector->providers([Engine::class => ClassProvider::init(HeavyEngine::class)->lazy()]);
+        try {
+            /** @var Engine $engine */
+            $engine = $injector->get(Engine::class);
+            $this->assertInstanceOf(Engine::class, $engine);
+            $this->assertInstanceOf(HeavyEngine::class, $engine);
+        } catch (ProviderNotFoundException $e) {
+            $this->assertTrue(false);
+        }
+    }
     public function testMagicGet()
     {
         // Arrange
@@ -115,7 +141,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testSingleton()
+    public function testSingletonProvider()
     {
         $injector = new Injector(null);
 
@@ -127,7 +153,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testSingletonOld()
+    public function testSingleton()
     {
         // Arrange
         $injector = new Injector(null);
@@ -147,7 +173,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->providers([Engine::class => ClassProvider::init(Engine::class, false)]);
+        $injector->providers([Engine::class => ClassProvider::init(Engine::class)]);
 
         /** @var Engine $engine */
         $engine = $injector->get(Engine::class);
@@ -231,6 +257,27 @@ class InjectorTest extends PHPUnit_Framework_TestCase
             }
         ]);
 
+        /** @var ControllerA $ctrl */
+        $ctrl = $injector->get(Controller::class);
+
+        $this->assertInstanceOf(ControllerA::class, $ctrl);
+        $this->assertSame($ctrl->requestService, $ctrl->serviceZ->requestService);
+        $this->assertNotSame($ctrl->requestService, $ctrl->serviceZ->serviceY->requestService);
+        $this->assertNotEquals($ctrl->requestService->url, $ctrl->serviceZ->serviceY->requestService->url);
+
+    }
+
+
+    public function testProvidersLazy()
+    {
+        // Arrange
+        $injector = new Injector(null);
+        $injector->providers([
+            Controller::class => ClassProvider::init(ControllerA::class)->lazy(),
+            '%BASE_URL%' => function () {
+                return 'http://sysvyz.org/';
+            }
+        ]);
 
         /** @var ControllerA $ctrl */
         $ctrl = $injector->get(Controller::class);

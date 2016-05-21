@@ -16,9 +16,9 @@ class SingletonProvider implements Provider
     /**
      * @var Provider
      */
-    private $provider;
+    protected $provider;
 
-    private $instance;
+    protected $instance;
 
     /**
      *
