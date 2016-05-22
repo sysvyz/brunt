@@ -1,27 +1,18 @@
 <?php
 namespace BruntTest;
-use Brunt\Exception\CircularDependencyException;
+
 use Brunt\Exception\ProviderNotFoundException;
 use Brunt\Injector;
 use Brunt\Provider;
 use Brunt\Provider\ClassProvider;
-use Brunt\Provider\FactoryProvider;
 use BruntTest\Testobjects\Car;
-use BruntTest\Testobjects\CircA;
-use BruntTest\Testobjects\CircB;
-use BruntTest\Testobjects\CircC;
-use BruntTest\Testobjects\Controller;
-use BruntTest\Testobjects\ControllerA;
 use BruntTest\Testobjects\Engine;
 use BruntTest\Testobjects\FastCar;
 use BruntTest\Testobjects\HeavyEngine;
 use BruntTest\Testobjects\HeavyTire;
-use BruntTest\Testobjects\NonInjectable;
-use BruntTest\Testobjects\NonInjectableB;
-use BruntTest\Testobjects\NonInjectableWrapper;
 use BruntTest\Testobjects\SmallTire;
-use function Brunt\bind;
 use PHPUnit_Framework_TestCase;
+use function Brunt\binding;
 
 class InjectorTest extends PHPUnit_Framework_TestCase
 {
@@ -79,6 +70,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         $this->assertNotInstanceOf(HeavyEngine::class, $engine);
 
     }
+
     public function testGetLazy()
     {
         // Arrange
@@ -121,6 +113,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(false);
         }
     }
+
     public function testMagicGet()
     {
         // Arrange
@@ -186,10 +179,10 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->providers([
-            Car::class => ClassProvider::init(FastCar::class),
-            Engine::class => ClassProvider::init(Engine::class)->singleton()
-        ]);
+
+        $injector->{Car::class}(ClassProvider::init(FastCar::class));
+        $injector->{Engine::class}(ClassProvider::init(Engine::class)->singleton());
+
 
         /** @var Car $car */
         $car = $injector->get(Car::class);
@@ -216,10 +209,10 @@ class InjectorTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->bind([
-            bind(Car::class)->toClass(FastCar::class),
-            bind(Engine::class)->toClass(Engine::class)->singleton(),
-        ]);
+        $injector->bind(
+            binding(Car::class)->toClass(FastCar::class),
+            binding(Engine::class)->toClass(Engine::class)->singleton()
+        );
 
         /** @var Car $car */
         $car = $injector->get(Car::class);

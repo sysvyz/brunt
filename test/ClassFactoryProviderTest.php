@@ -12,11 +12,7 @@ namespace BruntTest;
 use Brunt\Binding;
 use Brunt\Injector;
 use Brunt\Provider\ClassFactoryProvider;
-use Brunt\Provider\ClassProvider;
-use Brunt\Provider\FactoryProvider;
 use Brunt\Provider\Lazy\ProxyTrait;
-use BruntTest\Testobjects\Controller;
-use BruntTest\Testobjects\ControllerA;
 use BruntTest\Testobjects\Engine;
 use BruntTest\Testobjects\HeavyEngine;
 
@@ -99,12 +95,10 @@ class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->providers([
-            Engine::class => ClassFactoryProvider::init(HeavyEngine::class,function (){
+        $injector->{Engine::class}(ClassFactoryProvider::init(HeavyEngine::class,function (){
                 return new Engine();
             })->lazy()
-
-        ]);
+        );
 
         /** @var Engine $engine */
         $engine = $injector->get(Engine::class);

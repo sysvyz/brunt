@@ -4,16 +4,16 @@ namespace Brunt\Provider;
 
 
 use Brunt\Injector;
+use Brunt\Provider\I\ClassProvider as ClassProviderInterface;
 use Brunt\Provider\Lazy\LazyProxyBuilder;
-use \Brunt\Provider\I\ClassProvider as ClassProviderInterface;
 
-class LazyClassProvider extends LazyProvider implements  ClassProviderInterface
+class LazyClassProvider extends LazyProvider implements ClassProviderInterface
 {
     /**
      * @var ClassProvider
      */
     protected $provider;
-    
+
     /**
      * SingletonProvider constructor.
      * @param Provider $provider
@@ -23,21 +23,18 @@ class LazyClassProvider extends LazyProvider implements  ClassProviderInterface
         $this->provider = $provider;
         parent::__construct($provider);
     }
-
-
+    
     /**
      * @param Injector $injector
      * @return mixed
      */
     function __invoke(Injector $injector)
     {
-
         /** @var LazyProxyBuilder $builder */
         $builder = $injector->{LazyProxyBuilder::class};
-
-
         return $builder->create($injector, $this->provider);
     }
+
     /**
      * @return SingletonProvider
      */

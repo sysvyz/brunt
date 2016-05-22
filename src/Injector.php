@@ -23,63 +23,6 @@ namespace Brunt {
             $this->providers([LazyProxyBuilder::class => ClassProvider::init(LazyProxyBuilder::class)->singleton()]);
         }
 
-        /**
-         * @return Injector parent ionjector
-         */
-        public function getParent()
-        {
-            return $this->injector;
-        }
-
-             /**
-         * @param string $token
-         * @return mixed instance
-         */
-        public function get(string $token)
-        {
-            if ($token == self::class) {
-                return $this;
-            }
-
-            $provider = $this->_get($token);
-
-            return $provider($this);
-        }
-        /**
-         * the real function
-         *
-         * @param string $token
-         * @return mixed instance
-         */
-        private function _get(string $token)
-        {
-            //if provider exists this injector is responsible
-            if (isset($this->providers[$token])) {
-                //execute provider
-                $provider = $this->providers[$token];
-            } else if ($this->injector) {
-                //if parent injector exists
-                //recursive search in parent injector
-                $provider = $this->injector->_get($token);
-            } else {
-                //until root injector has no provider
-                throw new ProviderNotFoundException($token . '...provider not found');
-            }
-
-            return $provider;
-        }
-
-        function __get($name)
-        {
-            return $this->get($name);
-        }
-
-
-        public function provide(string $token, callable $callable)
-        {
-            $this->providers[$token] = $callable;
-        }
-
         public function providers(array $providers = [])
         {
             foreach ($providers as $name => $provider) {
@@ -91,6 +34,61 @@ namespace Brunt {
                     $this->provide($name, ClassProvider::init($provider));
                 }
             }
+        }
+
+        public function provide(string $token, callable $callable)
+        {
+            $this->providers[$token] = $callable;
+        }
+
+        /**
+         * @return Injector parent ionjector
+         */
+        public function getParent()
+        {
+            return $this->injector;
+        }
+
+        function __get($name)
+        {
+            return $this->get($name);
+        }
+
+        /**
+         * @param string $token
+         * @return mixed instance
+         */
+        public function get(string $token)
+        {
+            if ($token == self::class) {
+                return $this;
+            }
+
+            $provider = $this->getProvider($token);
+
+            return $provider($this);
+        }
+
+        /**
+         * @param string $token
+         * @return mixed instance
+         */
+        public function getProvider(string $token)
+        {
+            //if provider exists this injector is responsible
+            if (isset($this->providers[$token])) {
+                //execute provider
+                $provider = $this->providers[$token];
+            } else if ($this->injector) {
+                //if parent injector exists
+                //then recursive search in parent injector
+                $provider = $this->injector->getProvider($token);
+            } else {
+                //until root injector has no provider
+                throw new ProviderNotFoundException($token . '...provider not found');
+            }
+
+            return $provider;
         }
 
         public function bind(... $bindings)
@@ -112,5 +110,18 @@ namespace Brunt {
             return $child;
         }
 
+
+        function __call($name, $arguments)
+        {
+            $this->provide($name,$arguments[0]);
+        }
+
+        /**
+         *
+         */
+        function __invoke(string $name)
+        {
+           return $this->get($name);
+        }
     }
 }

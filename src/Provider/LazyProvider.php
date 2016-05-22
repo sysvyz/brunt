@@ -2,7 +2,6 @@
 
 namespace Brunt\Provider;
 
-
 use Brunt\Injector;
 use Brunt\Provider\Lazy\LazyProxyObject;
 
@@ -14,18 +13,6 @@ class LazyProvider implements Provider
     private $provider;
 
     /**
-     * convenience function wrapper for constructor
-     *
-     * @param $class
-     * @return SingletonProvider
-     */
-    public static function init($class)
-    {
-
-        return new self($class);
-    }
-
-    /**
      * SingletonProvider constructor.
      * @param Provider $provider
      */
@@ -34,6 +21,16 @@ class LazyProvider implements Provider
         $this->provider = $provider;
     }
 
+    /**
+     * convenience function wrapper for constructor
+     *
+     * @param $class
+     * @return SingletonProvider
+     */
+    public static function init($class)
+    {
+        return new self($class);
+    }
 
     /**
      * @param Injector $injector
@@ -41,7 +38,7 @@ class LazyProvider implements Provider
      */
     function __invoke(Injector $injector)
     {
-        return new LazyProxyObject($this->provider,$injector);
+        return new LazyProxyObject($this->provider, $injector);
     }
 
     /**
@@ -55,6 +52,6 @@ class LazyProvider implements Provider
 
     public function lazy()
     {
-       return $this;
+        return $this;
     }
 }
