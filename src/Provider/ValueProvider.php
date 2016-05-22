@@ -8,7 +8,9 @@ namespace Brunt\Provider {
 
     class ValueProvider  extends ConcreteProvider
     {
-
+        /**
+         * @var mixed
+         */
         private $value;
 
 
@@ -20,13 +22,28 @@ namespace Brunt\Provider {
             $this->value = $value;
         }
 
+        /**
+         * @param Injector $injector
+         * @return mixed
+         */
         function __invoke(Injector $injector)
         {
             return $this->value;
         }
 
+        /**
+         * @param $value
+         * @return ValueProvider
+         */
         public static function init($value){
-            return self($value);
+            return new self($value);
+        }
+
+        /**
+         * @return $this
+         */
+        public function lazy(){
+            return $this;
         }
     }
 }

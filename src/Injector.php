@@ -42,7 +42,7 @@ namespace Brunt {
         }
 
         /**
-         * @return Injector parent ionjector
+         * @return Injector parent injector
          */
         public function getParent()
         {
@@ -117,11 +117,11 @@ namespace Brunt {
         }
 
         /**
-         *
+         * @param array $bindings
          */
-        function __invoke(string $name)
+        function __invoke(... $bindings)
         {
-           return $this->get($name);
+           $this->bind($bindings);
         }
     }
 }

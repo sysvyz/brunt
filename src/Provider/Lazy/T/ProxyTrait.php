@@ -1,11 +1,12 @@
 <?php
 
 
-namespace Brunt\Provider\Lazy;
-
-
+namespace Brunt\Provider\Lazy\T;
 use Brunt\Injector;
 use Brunt\Provider\Provider;
+
+
+
 
 trait ProxyTrait
 {
@@ -35,7 +36,7 @@ trait ProxyTrait
         foreach ((new \ReflectionClass($this))->getProperties() as $item) {
             $name = $item->getName();
             if (!in_array($name, $reserved) && !$item->isStatic()) {
-             
+
                 unset($this->{$name});
             }
         }
@@ -49,6 +50,15 @@ trait ProxyTrait
     public function __call($name, $arguments)
     {
         return $this->getInstance()->$name(...$arguments);
+    }
+
+    public function getInstance()
+    {
+        if ($this->instance_eae9cc3e == null) {
+            $provider = $this->provider_9a5f1a83;
+            $this->instance_eae9cc3e = $provider($this->injector_b291a118);
+        }
+        return $this->instance_eae9cc3e;
     }
 
     public function __get($name)
@@ -76,21 +86,11 @@ trait ProxyTrait
         return $this->getInstance()->__unset($name);
     }
 
-
     function __invoke(...$args)
     {
         return $this->getInstance()->__invoke(...$args);
     }
 
-
-    public function getInstance()
-    {
-        if ($this->instance_eae9cc3e == null) {
-            $provider = $this->provider_9a5f1a83;
-            $this->instance_eae9cc3e = $provider($this->injector_b291a118);
-        }
-        return $this->instance_eae9cc3e;
-    }
-
+  
 
 }

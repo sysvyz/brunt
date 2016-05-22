@@ -4,6 +4,7 @@
 namespace Brunt\Provider\Lazy;
 
 
+use Brunt\Provider\Lazy\T\ProxyTrait;
 use Brunt\Reflection\CR\CRClass;
 use Brunt\Reflection\CR\CRField;
 use Brunt\Reflection\CR\CRMethod;
@@ -56,7 +57,7 @@ class ProxyRenderer extends CRRenderer
             ' extends ' . $class->getClassName() .
             $this->braces(
                 '',
-                $this->renderTraits(['Brunt\Provider\Lazy\ProxyTrait'], $depth + 1, $indent),
+                $this->renderTraits($class, $depth + 1, $indent),
                 //  $this->renderFields($class->getMethods(), $depth + 1, $indent),
                 $this->renderMethods($class->getMethods(), $depth + 1, $indent),
                 ''
@@ -71,8 +72,14 @@ class ProxyRenderer extends CRRenderer
         return 'getInstance()';
     }
 
-    protected function renderTraits(array $traits, $depth = 0, $indent = " ")
+    protected function renderTraits(CRClass $class, $depth = 0, $indent = " ")
     {
+        $r = $class->getReflectionClass();
+        $traits = [$r->implementsInterface(\ArrayAccess::class)?
+           'Brunt\Provider\Lazy\T\ProxyArrayAccessTrait': ProxyTrait::class ,
+
+        ];
+
         return implode($this->statementSeperator(), array_map(function ($trait) {
             return 'use ' . $trait . ';';
         }, $traits));

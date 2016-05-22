@@ -32,6 +32,7 @@ namespace Brunt {
         private $isLazy = false;
 
         private $isTokenIsClass = false;
+        private $isValue = false;
 
         /**
          * Binding constructor.
@@ -54,11 +55,18 @@ namespace Brunt {
         }
 
         /**
+         * @param $implementation
          * @return Binding
          */
-        public function toClass(string $className)
+        public function toClass($implementation)
         {
-            $this->provider = new ClassProvider($className);
+            if(is_callable($implementation)){
+                $this->provider = new ClassFactoryProvider($this->token,$implementation);
+            }else{
+                $this->provider = new ClassProvider($implementation);
+            }
+
+
             return $this;
         }
 
@@ -67,6 +75,7 @@ namespace Brunt {
          */
         public function toValue($value)
         {
+            $this->isValue = true;
             $this->provider = new ValueProvider($value);
             return $this;
         }
@@ -152,7 +161,7 @@ namespace Brunt {
     /**
      * convenience function for bindings
      * @param string $token
-     * @deprecated 
+     * @deprecated
      * @return Binding
      */
     function bind(string $token)
