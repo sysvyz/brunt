@@ -2,10 +2,10 @@
 
 
 namespace Brunt\Provider\Lazy\T;
+
 use Brunt\Injector;
+use Brunt\Provider\I\ClassProvider;
 use Brunt\Provider\Provider;
-
-
 
 
 trait ProxyTrait
@@ -31,13 +31,22 @@ trait ProxyTrait
      */
     public function __construct(Provider $provider, Injector $injector)
     {
+        if ($provider instanceof ClassProvider) {
+            $reflectionClass = $provider->getReflector()->getReflectionClass();
+            foreach ($reflectionClass->getProperties() as $item) {
+                if (!$item->isPrivate() && !$item->isStatic()) {
+                    unset($this->{$item->getName()});
+                }
+            }
+        } else {
+            $reflectionClass = new \ReflectionClass($this);
+            $reserved = ['provider_9a5f1a83', 'injector_b291a118', 'instance_eae9cc3e'];
+            foreach ($reflectionClass->getProperties() as $item) {
+                $name = $item->getName();
+                if (!in_array($name, $reserved) && !$item->isStatic() && !$item->isPrivate()) {
 
-        $reserved = ['provider_9a5f1a83', 'injector_b291a118', 'instance_eae9cc3e'];
-        foreach ((new \ReflectionClass($this))->getProperties() as $item) {
-            $name = $item->getName();
-            if (!in_array($name, $reserved) && !$item->isStatic()) {
-
-                unset($this->{$name});
+                    unset($this->{$name});
+                }
             }
         }
 
@@ -78,19 +87,19 @@ trait ProxyTrait
 
     function __isset($name)
     {
-        return $this->getInstance()->__isset($name);
+        return isset($this->getInstance()->$name);
     }
 
     function __unset($name)
     {
-        return $this->getInstance()->__unset($name);
+        unset($this->getInstance()->$name);
     }
 
     function __invoke(...$args)
     {
-        return $this->getInstance()->__invoke(...$args);
+        $i = $this->getInstance();
+        return $i(...$args);
     }
 
-  
 
 }

@@ -1,13 +1,19 @@
 <?php
 namespace BruntTest;
-use Brunt\Injector;
+
 use Brunt\Binding;
+
+use function Brunt\binding as bind;
+
+use Brunt\Injector;
 use Brunt\Provider\ClassProvider;
 use Brunt\Provider\FactoryProvider;
 use Brunt\Provider\LazyProvider;
 use Brunt\Provider\ValueProvider;
 use BruntTest\Testobjects\Engine;
+use BruntTest\Testobjects\HeavyTire;
 use BruntTest\Testobjects\Tire;
+
 
 
 class BindingTest extends \PHPUnit_Framework_TestCase
@@ -119,6 +125,36 @@ class BindingTest extends \PHPUnit_Framework_TestCase
         $engine = $provider(new Injector());
         $this->assertInstanceOf(Engine::class, $engine);
 
+    }
+
+    public function testClassFactoryProvider()
+    {
+        $injector = new Injector(null);
+
+        $binding = new Binding(Tire::class);
+
+        $binding->toClass(function (Injector $injector) {
+            return new HeavyTire();
+        })->lazy();
+
+        $provider = $binding->getProvider();
+        $entity = $provider($injector);
+
+        $this->assertInstanceOf(LazyProvider::class, $provider);
+        $this->assertInstanceOf(Tire::class, $entity);
+
+        ProxyTest::_isProxyTrait($entity);
+    }
+
+
+    public function testBindingFuunfctionProvider()
+    {
+        $injector = new Injector(null);
+
+        $injector(bind(HeavyTire::class));
+        $entity = $injector->{HeavyTire::class};
+        $this->assertInstanceOf(Tire::class, $entity);
+        $this->assertInstanceOf(HeavyTire::class, $entity);
     }
 
 }

@@ -11,12 +11,16 @@ class MethodReflectionTestObject
     public $pub = 653;
     protected $pro = 586;
     private $pri = 409;
+    private $provider;
+    public $injector;
 
     /**
      * MethodReflectionTestObject constructor.
      */
     public function __construct()
     {
+        $this->provider = 'PROVIDER';
+        $this->injector = 'INJECTOR';
     }
 
     public static function publicStaticMethod()
@@ -28,6 +32,13 @@ class MethodReflectionTestObject
     {
 
     }
+    /**
+     * @return string
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
 
     /**
      * @return int
@@ -36,6 +47,7 @@ class MethodReflectionTestObject
     {
         return $this->pri;
     }
+
 
     /**
      * @return int

@@ -25,9 +25,9 @@ class LazyProvider implements Provider
      * convenience function wrapper for constructor
      *
      * @param $class
-     * @return SingletonProvider
+     * @return LazyProvider
      */
-    public static function init($class)
+    public static function init($class):LazyProvider
     {
         return new self($class);
     }
@@ -36,7 +36,7 @@ class LazyProvider implements Provider
      * @param Injector $injector
      * @return mixed
      */
-    function __invoke(Injector $injector)
+    function __invoke(Injector $injector):LazyProxyObject
     {
         return new LazyProxyObject($this->provider, $injector);
     }

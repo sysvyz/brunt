@@ -40,7 +40,7 @@ class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($testFunction($engine));
         $this->assertInstanceOf(Engine::class,$engine);
         $this->assertEquals("Engine",$engine->type);
-        $this->_notProxyTrait($engine);
+        ProxyTest::_isNotProxyTrait($engine);
 
     }
 
@@ -65,7 +65,7 @@ class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($testFunction($engine));
         $this->assertInstanceOf(Engine::class,$engine);
         $this->assertEquals("Engine",$engine->type);
-        $this->_testProxyTrait($engine);
+        ProxyTest::_isProxyTrait($engine);
     }
 
     public function testProviderLazyInheritance()
@@ -88,7 +88,7 @@ class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($testFunction($engine));
         $this->assertInstanceOf(Engine::class,$engine);
         $this->assertEquals("HeavyEngine",$engine->type);
-        $this->_testProxyTrait($engine);
+        ProxyTest::_isProxyTrait($engine);
     }
 
     public function testProviderInheritanceLazy()
@@ -109,7 +109,7 @@ class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($testFunction($engine));
         $this->assertInstanceOf(Engine::class,$engine);
         $this->assertEquals("Engine",$engine->type);
-        $this->_testProxyTrait($engine);
+        ProxyTest::_isProxyTrait($engine);
     }
     public function testBindingInheritanceLazy()
     {
@@ -132,15 +132,9 @@ class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($testFunction($engine));
         $this->assertInstanceOf(Engine::class,$engine);
         $this->assertEquals("Engine",$engine->type);
-        $this->_testProxyTrait($engine);
+
+        ProxyTest::_isProxyTrait($engine);
     }
 
-    private function _testProxyTrait($proxy){
-        $r = new \ReflectionClass($proxy);
-        $this->assertContains(ProxyTrait::class, $r->getTraitNames());
-    }
-    private function _notProxyTrait($proxy){
-        $r = new \ReflectionClass($proxy);
-        $this->assertNotContains(ProxyTrait::class, $r->getTraitNames());
-    }
+   
 }

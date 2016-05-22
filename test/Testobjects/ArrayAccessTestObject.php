@@ -1,17 +1,40 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: mb
+ * Date: 22.05.16
+ * Time: 09:36
+ */
+
+namespace BruntTest\Testobjects;
 
 
-namespace Brunt\Provider\Lazy\T;
-use Brunt\Injector;
-use Brunt\Provider\Provider;
+use ArrayIterator;
+use Traversable;
 
-
-
-
-trait ProxyArrayAccessTrait
+class ArrayAccessTestObject implements \ArrayAccess , \IteratorAggregate
 {
+    private $arr;
 
-    use ProxyTrait;
+    /**
+     * ArrayAccessTestObject constructor.
+     * @param $arr
+     */
+    public function __construct()
+    {
+    }
+
+
+    public static function init(array $array = []){
+        return (new self())->hydrate($array);
+    }
+
+    public function hydrate(array $array){
+        $this->arr = $array;
+        return $this;
+    }
+
+
 
     /**
      * Whether a offset exists
@@ -27,7 +50,7 @@ trait ProxyArrayAccessTrait
      */
     public function offsetExists($offset)
     {
-        return isset($this->getInstance()[$offset]);
+        return isset($this->arr[$offset]);
     }
 
     /**
@@ -41,7 +64,8 @@ trait ProxyArrayAccessTrait
      */
     public function offsetGet($offset)
     {
-        return $this->getInstance()[$offset];
+
+        return ($this->arr[$offset]);
     }
 
     /**
@@ -58,8 +82,7 @@ trait ProxyArrayAccessTrait
      */
     public function offsetSet($offset, $value)
     {
-        print_r('offsetSet');
-        $this->getInstance()[$offset] = $value;
+        $this->arr[$offset] = $value;
     }
 
     /**
@@ -73,7 +96,8 @@ trait ProxyArrayAccessTrait
      */
     public function offsetUnset($offset)
     {
-        unset ($this->getInstance()[$offset]);
+
+        unset($this->arr[$offset]);
     }
 
     /**
@@ -85,7 +109,6 @@ trait ProxyArrayAccessTrait
      */
     public function getIterator()
     {
-        $this->getInstance()->getIterator();
+        return new ArrayIterator($this->arr);
     }
-
 }

@@ -7,7 +7,10 @@ namespace BruntTest;
 use Brunt\Injector;
 use Brunt\Provider\ClassProvider;
 use Brunt\Provider\Lazy\LazyProxyBuilder;
+use Brunt\Provider\Lazy\LazyProxyObject;
 use Brunt\Provider\Lazy\ProxyRenderer;
+use Brunt\Provider\Lazy\T\ProxyTrait;
+use Brunt\Provider\ValueFactoryProvider;
 use Brunt\Reflection\Reflector;
 use BruntTest\Testobjects\MethodReflectionTestObject;
 use PHPUnit_Framework_TestCase;
@@ -15,6 +18,17 @@ use PHPUnit_Framework_TestCase;
 class ProxyTest extends PHPUnit_Framework_TestCase
 {
 
+    public static function _isProxyTrait($proxy)
+    {
+        $r = new \ReflectionClass($proxy);
+        self::assertFalse(empty(array_intersect([ProxyTrait::class], $r->getTraitNames())));
+    }
+
+    public static function _isNotProxyTrait($proxy)
+    {
+        $r = new \ReflectionClass($proxy);
+        self::assertTrue(empty(array_intersect([ProxyTrait::class], $r->getTraitNames())));
+    }
 
     public function testProxyRenderer()
     {
@@ -35,7 +49,7 @@ class ProxyTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testProxyBuilder()
+    public function testProxyByBuilder()
     {
         $injector = new Injector(null);
         $provider = ClassProvider::init(MethodReflectionTestObject::class);
@@ -48,12 +62,60 @@ class ProxyTest extends PHPUnit_Framework_TestCase
             $this->assertInstanceOf(MethodReflectionTestObject::class, $a);
             return true;
         };
-        $this->assertSame($proxy->getPri(), 409);
-        $this->assertSame($proxy->privateMethod(), "__call:privateMethod"); //private cant be called, call -> __call instead
-        $this->assertSame($proxy->publicMethod(), 'publicMethod');
-        $this->assertSame($proxy->publicMethodWithoutModifier(), 'publicMethodWithoutModifier');
-        $this->assertSame($proxy . "", '_TO_STRING_');
-        
+        $this->assertEquals($proxy->getPri(), 409);
+        $this->assertEquals($proxy->privateMethod(), "__call:privateMethod"); //private cant be called, call -> __call instead
+        $this->assertEquals($proxy->publicMethod(), 'publicMethod');
+        $this->assertEquals($proxy->publicMethodWithoutModifier(), 'publicMethodWithoutModifier');
+        $this->assertEquals($proxy . "", '_TO_STRING_');
+        $this->assertEquals($proxy->getProvider(), 'PROVIDER');
+
+        $this->assertTrue($testFunction($proxy));
+
+    }
+    public function testProxyByLazyMethod()
+    {
+        $injector = new Injector(null);
+        $provider = ClassProvider::init(MethodReflectionTestObject::class)->lazy();
+      
+        /** @var MethodReflectionTestObject $proxy */
+        $proxy = $provider($injector);
+
+
+        $testFunction = function (MethodReflectionTestObject $a) {
+            $this->assertInstanceOf(MethodReflectionTestObject::class, $a);
+            return true;
+        };
+        $this->assertEquals($proxy->getPri(), 409);
+        $this->assertEquals($proxy->privateMethod(), "__call:privateMethod"); //private cant be called, call -> __call instead
+        $this->assertEquals($proxy->publicMethod(), 'publicMethod');
+        $this->assertEquals($proxy->publicMethodWithoutModifier(), 'publicMethodWithoutModifier');
+        $this->assertEquals($proxy . "", '_TO_STRING_');
+        $this->assertEquals($proxy->getProvider(), 'PROVIDER');
+
+        $this->assertTrue($testFunction($proxy));
+
+    }
+
+    public function testProxy()
+    {
+        $injector = new Injector(null);
+        $provider = ValueFactoryProvider::init(function () {
+            return new MethodReflectionTestObject();
+        })->lazy();
+
+        /** @var MethodReflectionTestObject $proxy */
+        $proxy = $provider($injector);
+        $testFunction = function (LazyProxyObject $a) {
+            $this->assertInstanceOf(LazyProxyObject::class, $a);
+            return true;
+        };
+        $this->assertEquals($proxy->getPri(), 409);
+        $this->assertEquals($proxy->privateMethod(), "__call:privateMethod"); //private cant be called, call -> __call instead
+        $this->assertEquals($proxy->publicMethod(), 'publicMethod');
+        $this->assertEquals($proxy->publicMethodWithoutModifier(), 'publicMethodWithoutModifier');
+        $this->assertEquals($proxy . "", '_TO_STRING_');
+        $this->assertEquals($proxy->getProvider(), 'PROVIDER');
+
         $this->assertTrue($testFunction($proxy));
 
     }

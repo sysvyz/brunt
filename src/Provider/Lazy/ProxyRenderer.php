@@ -18,8 +18,6 @@ class ProxyRenderer extends CRRenderer
      * @var CRClass
      */
     private $class;
-    private $depth;
-    private $indent;
     /**
      * @var Reflector
      */
@@ -75,10 +73,7 @@ class ProxyRenderer extends CRRenderer
     protected function renderTraits(CRClass $class, $depth = 0, $indent = " ")
     {
         $r = $class->getReflectionClass();
-        $traits = [$r->implementsInterface(\ArrayAccess::class)?
-           'Brunt\Provider\Lazy\T\ProxyArrayAccessTrait': ProxyTrait::class ,
-
-        ];
+        $traits = [ ProxyTrait::class  ];
 
         return implode($this->statementSeperator(), array_map(function ($trait) {
             return 'use ' . $trait . ';';
