@@ -2,6 +2,7 @@
 
 namespace Brunt {
 
+    use Brunt\Exception\InjectableException;
     use Brunt\Exception\ProviderNotFoundException;
     use Brunt\Provider\ClassProvider;
     use Brunt\Provider\Lazy\LazyProxyBuilder;
@@ -85,10 +86,45 @@ namespace Brunt {
                 $provider = $this->injector->getProvider($token);
             } else {
                 //until root injector has no provider
+
+                if (class_exists($token)) {
+                    $object = new ClassProvider($token);
+                    return $object;
+                    try {
+
+                        return function (Injector $injector) use ($object){
+                            return $object;
+                        };
+                    } catch (InjectableException $e) {
+                        print_r('aaaaaaaaaaaaaaaaaaa');
+                        throw new ProviderNotFoundException($token . '...provider not found', $e);
+                    }
+                }
+
                 throw new ProviderNotFoundException($token . '...provider not found');
             }
 
             return $provider;
+        }
+
+        public function getChild($providers = [])
+        {
+            $child = new self($this);
+            $child->providers($providers);
+            return $child;
+        }
+
+        function __call($name, $arguments)
+        {
+            $this->provide($name, $arguments[0]);
+        }
+
+        /**
+         * @param array $bindings
+         */
+        function __invoke(... $bindings)
+        {
+            $this->bind($bindings);
         }
 
         public function bind(... $bindings)
@@ -101,27 +137,6 @@ namespace Brunt {
                 }
             }
 
-        }
-
-        public function getChild($providers = [])
-        {
-            $child = new self($this);
-            $child->providers($providers);
-            return $child;
-        }
-
-
-        function __call($name, $arguments)
-        {
-            $this->provide($name,$arguments[0]);
-        }
-
-        /**
-         * @param array $bindings
-         */
-        function __invoke(... $bindings)
-        {
-           $this->bind($bindings);
         }
     }
 }

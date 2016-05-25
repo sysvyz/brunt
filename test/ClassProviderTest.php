@@ -10,6 +10,7 @@ namespace BruntTest;
 
 
 use Brunt\Exception\CircularDependencyException;
+use Brunt\Exception\InjectableException;
 use Brunt\Exception\ProviderNotFoundException;
 use Brunt\Injector;
 use Brunt\Provider\ClassFactoryProvider;
@@ -215,7 +216,7 @@ class ClassProviderTest extends \PHPUnit_Framework_TestCase
 
             $wrapper = $injector->get(NonInjectableWrapper::class);
             $this->assertTrue(false);
-        } catch (ProviderNotFoundException $e) {
+        } catch (InjectableException $e) {
             $this->assertTrue(true);
         }
     }
