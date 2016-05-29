@@ -3,7 +3,7 @@
 
 
 use Brunt\Injector;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
 use BruntTest\Testobjects\Controller;
 use BruntTest\Testobjects\ControllerA;
 

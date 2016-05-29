@@ -11,11 +11,9 @@ namespace BruntTest;
 
 use Brunt\Exception\CircularDependencyException;
 use Brunt\Exception\InjectableException;
-use Brunt\Exception\ProviderNotFoundException;
 use Brunt\Injector;
-use Brunt\Provider\ClassFactoryProvider;
-use Brunt\Provider\ClassProvider;
-use Brunt\Provider\FactoryProvider;
+use Brunt\Provider\Classes\ClassFactoryProvider;
+use Brunt\Provider\Classes\ClassProvider;
 use BruntTest\Testobjects\CircA;
 use BruntTest\Testobjects\CircB;
 use BruntTest\Testobjects\CircC;

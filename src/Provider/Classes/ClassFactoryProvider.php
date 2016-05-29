@@ -1,8 +1,10 @@
 <?php
-namespace Brunt\Provider {
+namespace Brunt\Provider\Classes {
 
-    use Brunt\Injector;
-    use Brunt\Provider\I\ClassProvider as ClassProviderInterface;
+    use Brunt\Provider\FactoryProvider;
+    use Brunt\Provider\I\ClassProviderInterface;
+    use Brunt\Provider\Lazy\LazyClassProvider;
+    use Brunt\Provider\Singleton\SingletonClassProvider;
     use Brunt\Reflection\Reflector;
 
 
@@ -41,6 +43,9 @@ namespace Brunt\Provider {
             return new LazyClassProvider($this);
         }
 
+        /**
+         * @return SingletonClassProvider
+         */
         public function singleton(){
             return new SingletonClassProvider($this);
         }

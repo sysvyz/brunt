@@ -1,22 +1,24 @@
 <?php
 
-namespace Brunt\Provider;
+namespace Brunt\Provider\Lazy;
 
 use Brunt\Injector;
+use Brunt\Provider\I\ProviderInterface;
 use Brunt\Provider\Lazy\LazyProxyObject;
+use Brunt\Provider\SingletonProvider;
 
-class LazyProvider implements Provider
+class LazyProvider implements ProviderInterface
 {
     /**
-     * @var Provider
+     * @var ProviderInterface
      */
     private $provider;
 
     /**
      * SingletonProvider constructor.
-     * @param Provider $provider
+     * @param ProviderInterface $provider
      */
-    public function __construct(Provider $provider)
+    public function __construct(ProviderInterface $provider)
     {
         $this->provider = $provider;
     }

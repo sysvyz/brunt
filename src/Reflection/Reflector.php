@@ -12,7 +12,7 @@ namespace Brunt\Reflection {
     {
 
         private $reflectionClass;
-        private $className;
+
 
         /**
          * DIReflector constructor.
@@ -20,10 +20,15 @@ namespace Brunt\Reflection {
          * @param Injector $inj
          */
 
-        public function __construct(string $className)
+        public function __construct($class)
         {
-            $this->reflectionClass = new \ReflectionClass($className);
-            $this->className = $className;
+            if (is_string($class)) {
+                $this->reflectionClass = new \ReflectionClass($class);
+
+            } else if ($class instanceof \ReflectionClass) {
+                $this->reflectionClass = $class;
+
+            }
         }
 
         /**
@@ -31,7 +36,7 @@ namespace Brunt\Reflection {
          */
         public function getClassName()
         {
-            return $this->className;
+            return $this->reflectionClass->getName();
         }
 
         /**
@@ -43,21 +48,13 @@ namespace Brunt\Reflection {
         }
 
         /**
-         * @return bool
-         */
-        public function hasDependencies()
-        {
-            return $this->reflectionClass->hasMethod('_DI_DEPENDENCIES');
-        }
-
-        /**
          * @return array
          */
-        public function getDependencies()
+        public function getProviders()
         {
-            if ($this->hasDependencies()) {
-                $className = $this->className;
-                return $className::_DI_DEPENDENCIES();
+            if ($this->hasProviders()) {
+                $className = $this->getClassName();
+                return $className::_DI_PROVIDERS();
             }
             return [];
         }
@@ -70,28 +67,15 @@ namespace Brunt\Reflection {
             return $this->reflectionClass->hasMethod('_DI_PROVIDERS');
         }
 
-
-        /**
-         * @return array
-         */
-        public function getProviders()
-        {
-            if ($this->hasProviders()) {
-                $className = $this->className;
-                return $className::_DI_PROVIDERS();
-            }
-            return [];
-        }
-
         /**
          *  PHP7 magic
          */
-        public function resolveDependencies()
+        public function resolveDependencies($params,$prefix = '')
         {
             $dependencies = $this->getDependencies();
 
-            return array_map(function (\ReflectionParameter $param) use ($dependencies) {
-                $paramName = $param->name;
+            return array_map(function (\ReflectionParameter $param) use ($dependencies,$prefix) {
+                $paramName = ($prefix?$prefix.'.':'').$param->name;
 
                 $type = $param->getType();
 
@@ -109,12 +93,32 @@ namespace Brunt\Reflection {
 
                 return ['param' => $paramName, 'token' => $token, 'isNative' => $native];
 
-            }, $this->getConstructorParams());
+            }, $params);
+        }
+
+        /**
+         * @return array
+         */
+        public function getDependencies()
+        {
+            if ($this->hasDependencies()) {
+                $className = $this->getClassName();
+                return $className::_DI_DEPENDENCIES();
+            }
+            return [];
+        }
+
+        /**
+         * @return bool
+         */
+        public function hasDependencies()
+        {
+            return $this->reflectionClass->hasMethod('_DI_DEPENDENCIES');
         }
 
         private function _throwNativeParamNotFound($paramName)
         {
-            throw new InjectableException("native param '$paramName' of '$this->className' not found");
+            throw new InjectableException("native param '$paramName' of '".$this->getClassName()."' not found");
         }
 
         /**
@@ -128,7 +132,7 @@ namespace Brunt\Reflection {
 
         public function getCompactReferenceClass()
         {
-            
+
             $methods = $this->reflectionClass->getMethods();
             $ms = [];
             foreach ($methods as $method) {

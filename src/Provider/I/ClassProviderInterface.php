@@ -4,11 +4,10 @@
 namespace Brunt\Provider\I;
 
 
-use Brunt\Provider\Provider;
 use Brunt\Reflection\Reflector;
 
 
-interface ClassProvider extends Provider
+interface ClassProviderInterface extends ProviderInterface
 {
     /**
      * @return string

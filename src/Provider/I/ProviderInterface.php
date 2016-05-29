@@ -1,16 +1,16 @@
 <?php
 
-namespace Brunt\Provider {
+namespace Brunt\Provider\I {
 
 
     use Brunt\Injector;
 
-    interface  Provider
+    interface  ProviderInterface
     {
         function __invoke(Injector $injector);
 
         /**
-         * @return SingletonProvider
+         * @return SingletonProviderInterface
          */
         public function singleton();
         public function lazy();

@@ -1,38 +1,28 @@
 <?php
 
-namespace Brunt\Provider;
+namespace Brunt\Provider\Singleton;
 
 
 use Brunt\Injector;
+use Brunt\Provider\I\ProviderInterface;
+use Brunt\Provider\Lazy\LazyProvider;
 
-class SingletonProvider implements Provider
+class SingletonProvider implements ProviderInterface
 {
     /**
-     * @var Provider
+     * @var ProviderInterface
      */
     protected $provider;
 
     protected $instance;
 
-    /**
-     *
-     * convenience function wrapper for constructor
-     *
-     * @param $class
-     * @param bool $singleton
-     * @return SingletonProvider
-     */
-    public static function init($class)
-    {
 
-        return new self($class);
-    }
 
     /**
      * SingletonProvider constructor.
-     * @param Provider $provider
+     * @param ProviderInterface $provider
      */
-    public function __construct(Provider $provider)
+    public function __construct(ProviderInterface $provider)
     {
         $this->instance = null;
         $this->provider = $provider;
@@ -45,7 +35,7 @@ class SingletonProvider implements Provider
      */
     function __invoke(Injector $injector)
     {
-
+     
         if ($this->instance === null) {
             $p = $this->provider;
             $this->instance = $p($injector);

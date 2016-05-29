@@ -3,12 +3,12 @@ namespace BruntTest;
 
 use Brunt\Binding;
 
-use function Brunt\binding as bind;
+use function Brunt\bind;
 
 use Brunt\Injector;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
 use Brunt\Provider\FactoryProvider;
-use Brunt\Provider\LazyProvider;
+use Brunt\Provider\Lazy\LazyProvider;
 use Brunt\Provider\ValueProvider;
 use BruntTest\Testobjects\Engine;
 use BruntTest\Testobjects\HeavyTire;

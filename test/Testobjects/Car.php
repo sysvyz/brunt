@@ -4,7 +4,7 @@ namespace BruntTest\Testobjects;
 
 use Brunt\InjectableInterface;
 use Brunt\Injector;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
 use Brunt\Provider\FactoryProvider;
 use Brunt\Provider\ValueFactoryProvider;
 

@@ -5,7 +5,7 @@ namespace BruntTest;
 
 
 use Brunt\Injector;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
 use Brunt\Provider\Lazy\LazyProxyBuilder;
 use Brunt\Provider\Lazy\LazyProxyObject;
 use Brunt\Provider\Lazy\ProxyRenderer;

@@ -9,12 +9,12 @@
 namespace BruntTest;
 
 
-use Brunt\Binding;
 use Brunt\Injector;
-use Brunt\Provider\ClassFactoryProvider;
-use Brunt\Provider\Lazy\ProxyTrait;
-use BruntTest\Testobjects\Engine;
-use BruntTest\Testobjects\HeavyEngine;
+use Brunt\Provider\Classes\ClassFactoryProvider;
+use Brunt\Provider\Classes\ClassProvider;
+use Brunt\Provider\Lazy\T\ProxyTrait;
+use BruntTest\Testobjects\HeavyTire;
+use BruntTest\Testobjects\Tire;
 
 class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,116 +25,105 @@ class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
         // Arrange
         $injector = new Injector(null);
         $injector->providers([
-            Engine::class => ClassFactoryProvider::init(Engine::class,function (){
-                return new Engine();
+            Tire::class => ClassFactoryProvider::init(Tire::class,function (Injector $injector) {
+                return new HeavyTire();
             })
-
         ]);
-
-        /** @var Engine $engine */
-        $engine = $injector->get(Engine::class);
-        $testFunction = function (Engine $engine){
-            return true;
-        };
-
-        $this->assertTrue($testFunction($engine));
-        $this->assertInstanceOf(Engine::class,$engine);
-        $this->assertEquals("Engine",$engine->type);
-        ProxyTest::_isNotProxyTrait($engine);
-
+        /** @var Tire $entity */
+        $entity = $injector->{Tire::class};
+        $this->assertInstanceOf(HeavyTire::class,$entity);
+        $this->assertEquals($entity->type,'HeavyTire');
+        $this->assertNotSame($entity,$injector->{Tire::class});
     }
-
-
-    public function testProviderLazy()
+    public function testProvidersLazy()
     {
         // Arrange
         $injector = new Injector(null);
         $injector->providers([
-            Engine::class => ClassFactoryProvider::init(Engine::class,function (){
-                return new Engine();
+            Tire::class => ClassFactoryProvider::init(Tire::class,function (Injector $injector) {//no HeavyTire
+                return new HeavyTire();
             })->lazy()
-
         ]);
-
-        /** @var Engine $engine */
-        $engine = $injector->get(Engine::class);
-        $testFunction = function (Engine $engine){
-            return true;
-        };
-
-        $this->assertTrue($testFunction($engine));
-        $this->assertInstanceOf(Engine::class,$engine);
-        $this->assertEquals("Engine",$engine->type);
-        ProxyTest::_isProxyTrait($engine);
+        /** @var Tire $entity */
+        $entity = $injector->{Tire::class};
+        $this->assertInstanceOf(Tire::class,$entity);
+        $this->assertNotInstanceOf(HeavyTire::class,$entity);  //not
+        $this->assertEquals($entity->type,'HeavyTire');
+        $this->assertNotSame($entity,$injector->{Tire::class});
     }
 
-    public function testProviderLazyInheritance()
+    public function testProvidersLazyConcreteProxy()
     {
         // Arrange
         $injector = new Injector(null);
         $injector->providers([
-            Engine::class => ClassFactoryProvider::init(Engine::class,function (){
-                return new HeavyEngine();
+            Tire::class => ClassFactoryProvider::init(HeavyTire::class,function (Injector $injector) {//as HeavyTire
+                return new HeavyTire();
             })->lazy()
-
         ]);
-
-        /** @var Engine $engine */
-        $engine = $injector->get(Engine::class);
-        $testFunction = function (Engine $engine){
-            return true;
-        };
-
-        $this->assertTrue($testFunction($engine));
-        $this->assertInstanceOf(Engine::class,$engine);
-        $this->assertEquals("HeavyEngine",$engine->type);
-        ProxyTest::_isProxyTrait($engine);
+        /** @var Tire $entity */
+        $entity = $injector->{Tire::class};
+        $this->assertInstanceOf(Tire::class,$entity);
+        $this->assertInstanceOf(HeavyTire::class,$entity);//is HeavyTire
+        $this->assertEquals($entity->type,'HeavyTire');
+        $this->assertNotSame($entity,$injector->{Tire::class});
     }
 
-    public function testProviderInheritanceLazy()
+    public function testProvidersSingleton()
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->{Engine::class}(ClassFactoryProvider::init(HeavyEngine::class,function (){
-                return new Engine();
-            })->lazy()
-        );
-
-        /** @var Engine $engine */
-        $engine = $injector->get(Engine::class);
-        $testFunction = function (Engine $engine){
-            return true;
-        };
-
-        $this->assertTrue($testFunction($engine));
-        $this->assertInstanceOf(Engine::class,$engine);
-        $this->assertEquals("Engine",$engine->type);
-        ProxyTest::_isProxyTrait($engine);
+        $injector->providers([
+            Tire::class => ClassFactoryProvider::init(Tire::class,function (Injector $injector) {
+                return new HeavyTire();
+            })->singleton()
+        ]);
+        /** @var Tire $entity */
+        $entity = $injector->{Tire::class};
+        $this->assertInstanceOf(HeavyTire::class,$entity);
+        $this->assertEquals($entity->type,'HeavyTire');
+        $this->assertSame($entity,$injector->{Tire::class});
     }
-    public function testBindingInheritanceLazy()
+
+
+    public function testProvidersLazySingleton()
     {
         // Arrange
         $injector = new Injector(null);
-        $injector->bind([
-            Binding::init(Engine::class)->toFactory(function (){
-                return new Engine();
-            })->lazy()
 
+        $p = ClassFactoryProvider::init(HeavyTire::class,function (Injector $injector) {//no HeavyTire
+            return new HeavyTire();
+        })->singleton();
+        var_dump($p);
+        $injector->providers([
+            Tire::class => $p->lazy()
         ]);
+        /** @var Tire $entity */
+        $entity = $injector->{Tire::class};
+        $this->assertInstanceOf(Tire::class,$entity);
+        $this->assertInstanceOf(HeavyTire::class,$entity);  //not
+        $this->assertEquals($entity->type,'HeavyTire');
+        $entity2 = $injector->{Tire::class};
+        $this->assertEquals($entity2->type,'HeavyTire');
 
-        /** @var Engine $engine */
-        $engine = $injector->get(Engine::class);
-        $testFunction = function (Engine $engine){
-            return true;
-        };
-
-
-        $this->assertTrue($testFunction($engine));
-        $this->assertInstanceOf(Engine::class,$engine);
-        $this->assertEquals("Engine",$engine->type);
-
-        ProxyTest::_isProxyTrait($engine);
+        $this->assertSame($entity->getInstance(),$entity2->getInstance());
     }
 
-   
+    public function testProvidersLazySingleton2()
+    {
+        // Arrange
+        $injector = new Injector(null);
+        $injector->providers([
+            Tire::class => ClassProvider::init(HeavyTire::class)->singleton()->lazy()
+        ]);
+        /** @var Tire|ProxyTrait $entity */
+        $entity = $injector->{Tire::class};
+        $this->assertInstanceOf(Tire::class,$entity);
+        $this->assertInstanceOf(HeavyTire::class,$entity);  //not
+        $this->assertEquals($entity->type,'HeavyTire');
+        $this->assertSame($entity->getInstance(),$injector->{Tire::class}->getInstance());
+        $entity->a = "a";
+        $this->assertEquals("a",$injector->{Tire::class}->a);
+    }
+
 }

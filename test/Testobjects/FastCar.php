@@ -5,7 +5,7 @@ namespace BruntTest\Testobjects;
 
 
 use Brunt\Injector;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
 
 /**
  * Class FastCar

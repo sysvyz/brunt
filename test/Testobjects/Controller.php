@@ -5,7 +5,7 @@ namespace BruntTest\Testobjects;
 
 
 use Brunt\Injectable;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
 
 class Controller extends Injectable
 {

@@ -4,14 +4,14 @@
 namespace Brunt\Provider\Lazy\T;
 
 use Brunt\Injector;
-use Brunt\Provider\I\ClassProvider;
-use Brunt\Provider\Provider;
+use Brunt\Provider\Classes\ClassProvider;
+use Brunt\Provider\I\ProviderInterface;
 
 
 trait ProxyTrait
 {
     /**
-     * @var Provider
+     * @var ProviderInterface
      */
     private $provider_9a5f1a83;
     /**
@@ -26,10 +26,10 @@ trait ProxyTrait
 
     /**
      * LazyProxyTrait constructor.
-     * @param Provider $provider
+     * @param ProviderInterface $provider
      * @param Injector $injector
      */
-    public function __construct(Provider $provider, Injector $injector)
+    public function __construct(ProviderInterface $provider, Injector $injector)
     {
         if ($provider instanceof ClassProvider) {
             $reflectionClass = $provider->getReflector()->getReflectionClass();

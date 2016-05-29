@@ -1,18 +1,30 @@
 <?php
 
 
-namespace Brunt\Provider;
+namespace Brunt\Provider\Singleton;
 
 
-use Brunt\Provider\I\ClassProvider as ClassProviderInterface;
+use Brunt\Injector;
+use Brunt\Provider\Classes\ClassProvider;
+use Brunt\Provider\I\ClassProviderInterface;
+use Brunt\Provider\Lazy\LazyClassProvider;
 use Reflector;
 
 class SingletonClassProvider extends SingletonProvider implements ClassProviderInterface
 {
     /**
-     * @var ClassProvider
+     * @var ClassProviderInterface
      */
     protected $provider;
+    /**
+     * SingletonProvider constructor.
+     * @param ClassProviderInterface $provider
+     */
+    public function __construct(ClassProviderInterface $provider)
+    {
+        parent::__construct($provider);
+        $this->provider = $provider;
+    }
 
     /**
      * @return Reflector
@@ -34,4 +46,7 @@ class SingletonClassProvider extends SingletonProvider implements ClassProviderI
     public function lazy(){
         return new LazyClassProvider($this);
     }
+
+  
+
 }

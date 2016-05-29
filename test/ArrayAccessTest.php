@@ -10,7 +10,7 @@ namespace BruntTest;
 
 
 use Brunt\Injector;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
 use Brunt\Provider\Lazy\LazyProxyBuilder;
 use BruntTest\Testobjects\ArrayAccessTestObject;
 

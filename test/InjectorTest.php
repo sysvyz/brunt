@@ -4,7 +4,8 @@ namespace BruntTest;
 use Brunt\Exception\ProviderNotFoundException;
 use Brunt\Injector;
 use Brunt\Provider;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
+use Brunt\Provider\Singleton\SingletonProvider;
 use BruntTest\Testobjects\Car;
 use BruntTest\Testobjects\Engine;
 use BruntTest\Testobjects\FastCar;
@@ -12,7 +13,7 @@ use BruntTest\Testobjects\HeavyEngine;
 use BruntTest\Testobjects\HeavyTire;
 use BruntTest\Testobjects\SmallTire;
 use PHPUnit_Framework_TestCase;
-use function Brunt\binding;
+use function Brunt\bind;
 
 class InjectorTest extends PHPUnit_Framework_TestCase
 {
@@ -135,7 +136,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
 
         /** @var ClassProvider $provider */
         $provider = ClassProvider::init(Engine::class);
-        $singletonProvider = new Provider\SingletonProvider($provider);
+        $singletonProvider = new SingletonProvider($provider);
 
         $this->assertSame($singletonProvider($injector), $singletonProvider($injector));
 
@@ -209,8 +210,8 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         // Arrange
         $injector = new Injector(null);
         $injector->bind(
-            binding(Car::class)->toClass(FastCar::class),
-            binding(Engine::class)->toClass(Engine::class)->singleton()
+            bind(Car::class)->toClass(FastCar::class),
+            bind(Engine::class)->toClass(Engine::class)->singleton()
         );
 
         /** @var Car $car */

@@ -3,11 +3,11 @@
 namespace Brunt {
 
     use Brunt\Exception\ProviderNotFoundException;
-    use Brunt\Provider\ClassFactoryProvider;
-    use Brunt\Provider\ClassProvider;
+    use Brunt\Provider\Classes\ClassFactoryProvider;
+    use Brunt\Provider\Classes\ClassProvider;
     use Brunt\Provider\ConcreteProvider;
     use Brunt\Provider\FactoryProvider;
-    use Brunt\Provider\Provider;
+    use Brunt\Provider\I\ProviderInterface;
     use Brunt\Provider\ValueFactoryProvider;
     use Brunt\Provider\ValueProvider;
 
@@ -133,7 +133,7 @@ namespace Brunt {
 
 
         /**
-         * @return Provider
+         * @return ProviderInterface
          */
         public function getProvider()
         {

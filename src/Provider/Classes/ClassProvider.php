@@ -1,12 +1,15 @@
 <?php
 
 
-namespace Brunt\Provider {
+namespace Brunt\Provider\Classes {
 
     use Brunt\Exception\CircularDependencyException;
     use Brunt\Injector;
+    use Brunt\Provider\ConcreteProvider;
+    use Brunt\Provider\Lazy\LazyClassProvider;
+    use Brunt\Provider\Singleton\SingletonClassProvider;
     use Brunt\Reflection\Reflector;
-    use \Brunt\Provider\I\ClassProvider as ClassProviderInterface;
+    use Brunt\Provider\I\ClassProviderInterface ;
 
 
     class ClassProvider extends ConcreteProvider implements ClassProviderInterface
@@ -96,7 +99,7 @@ namespace Brunt\Provider {
             $providers = $this->reflector->getProviders();
             $childInjector = $injector->getChild($providers);
 
-            $dependencies = $this->reflector->resolveDependencies();
+            $dependencies = $this->reflector->resolveDependencies($this->reflector->getConstructorParams());
             //recursive build dependencies
             $params = (array_map(function ($dependency) use ($childInjector) {
                 return $childInjector->get($dependency['token']);

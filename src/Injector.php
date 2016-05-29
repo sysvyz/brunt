@@ -4,7 +4,7 @@ namespace Brunt {
 
     use Brunt\Exception\InjectableException;
     use Brunt\Exception\ProviderNotFoundException;
-    use Brunt\Provider\ClassProvider;
+    use Brunt\Provider\Classes\ClassProvider;
     use Brunt\Provider\Lazy\LazyProxyBuilder;
 
     class Injector

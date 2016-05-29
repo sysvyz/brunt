@@ -4,8 +4,9 @@
 namespace Brunt\Provider\Lazy;
 
 
+use Brunt\Exception\ProxyBuildErrorException;
 use Brunt\Injector;
-use Brunt\Provider\I\ClassProvider;
+use Brunt\Provider\I\ClassProviderInterface;
 
 class LazyProxyBuilder
 {
@@ -20,7 +21,7 @@ class LazyProxyBuilder
     {
     }
 
-    public function create(Injector $injector, ClassProvider $provider)
+    public function create(Injector $injector, ClassProviderInterface $provider)
     {
 
 

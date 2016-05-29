@@ -1,7 +1,7 @@
 <?php
 
 namespace Brunt;
-use Brunt\Provider\ClassProvider;
+use Brunt\Provider\Classes\ClassProvider;
 use BruntTest\Testobjects\Car;
 use BruntTest\Testobjects\Controller;
 use BruntTest\Testobjects\ControllerA;

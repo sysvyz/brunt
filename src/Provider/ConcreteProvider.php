@@ -3,7 +3,10 @@
 namespace Brunt\Provider {
 
 
-    abstract class ConcreteProvider implements Provider
+    use Brunt\Provider\I\ProviderInterface;
+    use Brunt\Provider\Lazy\LazyProvider;
+
+    abstract class ConcreteProvider implements ProviderInterface
     {
         
         public function singleton(){
