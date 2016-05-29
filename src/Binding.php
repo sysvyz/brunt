@@ -28,10 +28,21 @@ namespace Brunt {
          * @var ConcreteProvider
          */
         private $provider;
+        /**
+         * @var bool
+         */
         private $isSingleton = false;
+        /**
+         * @var bool
+         */
         private $isLazy = false;
-
+        /**
+         * @var bool
+         */
         private $isTokenIsClass = false;
+        /**
+         * @var bool
+         */
         private $isValue = false;
 
         /**
@@ -139,7 +150,6 @@ namespace Brunt {
                 $this->provider = $this->provider->lazy();
             }
 
-
             return $this->provider;
         }
 
@@ -161,7 +171,6 @@ namespace Brunt {
     /**
      * convenience function for bindings
      * @param string $token
-     * @deprecated
      * @return Binding
      */
     function bind(string $token)
@@ -169,14 +178,5 @@ namespace Brunt {
         return new Binding($token);
     }
 
-    /**
-     * convenience function for bindings
-     * @param string $token
-     * @return Binding
-     */
-    function binding(string $token)
-    {
-        return new Binding($token);
-    }
 
 }
