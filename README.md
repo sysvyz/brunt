@@ -68,7 +68,7 @@ $engine = $injector->get(Engine::class);
 
 Bindings are a more convenient way to define Providers 
 
-```
+```php
 $injector->bind([
 
     bind('%SomeValue%')
@@ -104,7 +104,7 @@ $engine = $injector->get(Engine::class);
 
 or as binding
 
-```
+```php
 
 $injector = new Injector(null);
 $injector->bind([
@@ -138,7 +138,7 @@ $engine = $injector->get(Engine::class); //returns a proxy object
 
 or as binding
 
-```
+```php
 
 $injector = new Injector(null);
 $injector->bind([
@@ -160,7 +160,7 @@ the proxy object inherits from the actual class, so it can be used as if it was 
 
 combine lazy and singleton (order doesn't matter)
 
-```
+```php
 
 bind(Car::class)
     ->lazy()
@@ -177,7 +177,7 @@ ClassProvider::init(Car::class)
 
 ... alias
 
-```
+```php
     
 $injector->addProviders([
     HeavyEngine::class => ClassProvider::init(HeavyEngine::class)->lazy()
