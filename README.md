@@ -52,12 +52,10 @@ $engine = $injector->{Engine::class};
 
 ```php
 
-
 $injector = new Injector(null);
 
 //                          TOKEN           PROVIDER            CLASS
 $injector->addProviders([Engine::class => ClassProvider::init(HeavyEngine::class)]);
-
 
 /** @var Engine $engine */
 $engine = $injector->get(Engine::class);
@@ -91,11 +89,9 @@ Just call ``singleton()`` and the provider always returns the same object.
 
 
 ```php
-
-
 $injector = new Injector(null);
 
-//                          TOKEN           PROVIDER            CLASS
+//                          TOKEN           PROVIDER            CLASS              SINGLETON
 $injector->addProviders([Engine::class => ClassProvider::init(HeavyEngine::class)->singleton()]);
 
 /** @var Engine $engine */
@@ -105,7 +101,6 @@ $engine = $injector->get(Engine::class);
 or as binding
 
 ```php
-
 $injector = new Injector(null);
 $injector->bind([
     
@@ -114,8 +109,6 @@ $injector->bind([
     
 ]);
 $car = $injector->get(Car::class)
-   
-
 ```
 
 
@@ -125,11 +118,9 @@ Just call ``lazy()`` and the provider returns a proxy object the real object wil
 
 
 ```php
-
-
 $injector = new Injector(null);
 
-//                          TOKEN           PROVIDER            CLASS
+//                          TOKEN           PROVIDER            CLASS              LAZY
 $injector->addProviders([Engine::class => ClassProvider::init(HeavyEngine::class)->lazy()]);
 
 /** @var Engine $engine */
@@ -139,7 +130,6 @@ $engine = $injector->get(Engine::class); //returns a proxy object
 or as binding
 
 ```php
-
 $injector = new Injector(null);
 $injector->bind([
     
@@ -150,7 +140,6 @@ $injector->bind([
 $car = $injector->get(Car::class) //returns a proxy object 
 
 $car->honk() //creates the actual car and honks
-
 ```
 
 the proxy object inherits from the actual class, so it can be used as if it was the object it passes instanceof and function parameter type declarations
@@ -162,13 +151,11 @@ combine lazy and singleton (order doesn't matter)
 
 ```php
 
-bind(Car::class)
-    ->lazy()
-    ->singleton()
-    
-ClassProvider::init(Car::class)
-    ->lazy()
-    ->singleton()
+bind(Car::class)->lazy()->singleton()
+```
+
+```php
+ClassProvider::init(Car::class)->lazy()->singleton();
 
 ```
 
@@ -178,19 +165,17 @@ ClassProvider::init(Car::class)
 ... alias
 
 ```php
-    
 $injector->addProviders([
     HeavyEngine::class => ClassProvider::init(HeavyEngine::class)->lazy()
     Engine::class => AliasProvider::init(Engine::class)
 ]);
-   
-
-$heavyEngine = $injector->get(Engine::class) //returns a proxy object for HeavyEngine
-     
+$heavyEngine = $injector->get(Engine::class); //returns a proxy object for HeavyEngine
 
 ```
 
+#### Example 7: Hierarchy
 
+coming up...
 
 #### Example Repo:
 
