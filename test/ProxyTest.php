@@ -12,6 +12,7 @@ use Brunt\Provider\Lazy\ProxyRenderer;
 use Brunt\Provider\Lazy\T\ProxyTrait;
 use Brunt\Provider\ValueFactoryProvider;
 use Brunt\Reflection\Reflector;
+use BruntTest\Testobjects\Car;
 use BruntTest\Testobjects\MethodReflectionTestObject;
 use PHPUnit_Framework_TestCase;
 
@@ -48,6 +49,10 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testProxyBuilder(){
+        $builder =  new LazyProxyBuilder();
+        $this->assertEquals('BruntTest_Testobjects_Car_Brunt_Proxy',$builder->proxifyClassName(Car::class));
+    }
 
     public function testProxyByBuilder()
     {

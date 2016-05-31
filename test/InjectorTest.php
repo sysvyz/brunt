@@ -54,8 +54,9 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         /** @var Engine $engine */
         $engine = $injector->get(Engine::class);
 
+        $this->assertInstanceOf(Engine::class,$engine);
         $this->assertTrue(true);
-      
+
     }
 
     public function testGet()

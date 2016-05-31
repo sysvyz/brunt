@@ -56,7 +56,7 @@ this should never happen, therefore it is a major issue"
      * @param string $getClassName
      * @return string
      */
-    private function proxifyClassName(string $getClassName)
+    public function proxifyClassName(string $getClassName)
     {
 
         return $this->sanitizeClassName($getClassName) . '_Brunt_Proxy';

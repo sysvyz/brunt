@@ -3,10 +3,10 @@
 namespace Brunt {
 
     use Brunt\Exception\ProviderNotFoundException;
+    use Brunt\Provider\AliasProvider;
     use Brunt\Provider\Classes\ClassFactoryProvider;
     use Brunt\Provider\Classes\ClassProvider;
     use Brunt\Provider\ConcreteProvider;
-    use Brunt\Provider\FactoryProvider;
     use Brunt\Provider\I\ProviderInterface;
     use Brunt\Provider\ValueFactoryProvider;
     use Brunt\Provider\ValueProvider;
@@ -44,6 +44,10 @@ namespace Brunt {
          * @var bool
          */
         private $isValue = false;
+        /**
+         * @var bool
+         */
+        private $isAlias = false;
 
         /**
          * Binding constructor.
@@ -57,28 +61,22 @@ namespace Brunt {
         }
 
         /**
+         * @param $name
+         * @param $arguments
+         * @return Binding
+         */
+        public static function __callStatic($name, $arguments)
+        {
+            return Binding::init($name);
+        }
+
+        /**
          * @param $token
          * @return Binding
          */
         public static function init($token)
         {
             return new self($token);
-        }
-
-        /**
-         * @param $implementation
-         * @return Binding
-         */
-        public function toClass($implementation)
-        {
-            if(is_callable($implementation)){
-                $this->provider = new ClassFactoryProvider($this->token,$implementation);
-            }else{
-                $this->provider = new ClassProvider($implementation);
-            }
-
-
-            return $this;
         }
 
         /**
@@ -94,10 +92,20 @@ namespace Brunt {
         /**
          * @return Binding
          */
+        public function toAlias($alias)
+        {
+            $this->isAlias = true;
+            $this->provider = new AliasProvider($alias);
+            return $this;
+        }
+
+        /**
+         * @return Binding
+         */
         public function toFactory(callable $callable)
         {
             if ($this->isTokenIsClass) {
-                $this->provider = new ClassFactoryProvider($this->token,$callable);
+                $this->provider = new ClassFactoryProvider($this->token, $callable);
             } else {
                 $this->provider = new ValueFactoryProvider($callable);
             }
@@ -153,15 +161,20 @@ namespace Brunt {
             return $this->provider;
         }
 
-
         /**
-         * @param $name
-         * @param $arguments
+         * @param $implementation
          * @return Binding
          */
-        public static function __callStatic($name, $arguments)
+        public function toClass($implementation)
         {
-            return Binding::init($name);
+            if (is_callable($implementation)) {
+                $this->provider = new ClassFactoryProvider($this->token, $implementation);
+            } else {
+                $this->provider = new ClassProvider($implementation);
+            }
+
+
+            return $this;
         }
 
 

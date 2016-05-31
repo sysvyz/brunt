@@ -94,7 +94,7 @@ class ClassFactoryProviderTest extends \PHPUnit_Framework_TestCase
         $p = ClassFactoryProvider::init(HeavyTire::class,function (Injector $injector) {//no HeavyTire
             return new HeavyTire();
         })->singleton();
-        var_dump($p);
+     
         $injector->providers([
             Tire::class => $p->lazy()
         ]);
