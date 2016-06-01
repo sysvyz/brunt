@@ -76,31 +76,22 @@ namespace Brunt {
          */
         public function getProvider(string $token)
         {
-            //if provider exists this injector is responsible
             if (isset($this->providers[$token])) {
+                //if provider exists this injector is responsible
                 //execute provider
                 $provider = $this->providers[$token];
             } else if ($this->injector) {
                 //if parent injector exists
-                //then recursive search in parent injector
+                //recursive search in parent injector
                 $provider = $this->injector->getProvider($token);
             } else {
-                //until root injector has no provider
-
+                //root injector has no provider
+                
                 if (class_exists($token)) {
-                    $object = new ClassProvider($token);
-                    return $object;
-                    try {
-
-                        return function (Injector $injector) use ($object){
-                            return $object;
-                        };
-                    } catch (InjectableException $e) {
-                        print_r('aaaaaaaaaaaaaaaaaaa');
-                        throw new ProviderNotFoundException($token . '...provider not found', $e);
-                    }
+                    $provider = new ClassProvider($token);
+                    $this->provide($token,$provider);
+                    return $provider;
                 }
-
                 throw new ProviderNotFoundException($token . '...provider not found');
             }
 
