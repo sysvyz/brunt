@@ -7,6 +7,7 @@ use Brunt\Injector;
 use Brunt\Provider\Classes\ClassProvider;
 use Brunt\Provider\I\ClassProviderInterface;
 use Brunt\Provider\I\ProviderInterface;
+use Brunt\Provider\Singleton\SingletonClassProvider;
 use Brunt\Provider\Singleton\SingletonProvider;
 
 class LazyClassProvider extends LazyProvider implements ClassProviderInterface
@@ -42,8 +43,7 @@ class LazyClassProvider extends LazyProvider implements ClassProviderInterface
      */
     public function singleton()
     {
-        $this->provider = $this->provider->singleton();
-        return $this;
+        return new SingletonClassProvider($this);
     }
 
     public function getClass()
