@@ -6,7 +6,7 @@ namespace Brunt {
     use Brunt\Provider\AliasProvider;
     use Brunt\Provider\Classes\ClassFactoryProvider;
     use Brunt\Provider\Classes\ClassProvider;
-    use Brunt\Provider\ConcreteProvider;
+    use Brunt\Provider\AbstractProvider;
     use Brunt\Provider\I\ProviderInterface;
     use Brunt\Provider\ValueFactoryProvider;
     use Brunt\Provider\ValueProvider;
@@ -25,7 +25,7 @@ namespace Brunt {
         private $token;
 
         /**
-         * @var ConcreteProvider
+         * @var AbstractProvider
          */
         private $provider;
         /**

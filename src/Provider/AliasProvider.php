@@ -7,7 +7,7 @@ namespace Brunt\Provider {
     use Brunt\Injector;
     use Brunt\Provider\I\ProviderInterface;
 
-    class AliasProvider extends ConcreteProvider  implements ProviderInterface
+    class AliasProvider extends AbstractProvider  implements ProviderInterface
     {
         /**
          * @var mixed

@@ -8,7 +8,7 @@ namespace Brunt\Provider {
     use Brunt\Provider\Lazy\LazyProvider;
     use Brunt\Provider\Singleton\SingletonProvider;
 
-    abstract class ConcreteProvider implements ProviderInterface
+    abstract class AbstractProvider implements ProviderInterface
     {
         
         public function singleton(){
@@ -18,10 +18,6 @@ namespace Brunt\Provider {
             return new LazyProvider($this);
         }
 
-//        function __invoke(Injector $injector)
-//        {
-//            return $this->get($injector);
-//        }
 
     }
 }

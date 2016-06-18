@@ -3,7 +3,7 @@ namespace Brunt\Provider {
 
     use Brunt\Injector;
 
-    abstract class FactoryProvider extends ConcreteProvider
+    abstract class FactoryProvider extends AbstractProvider
     {
 
         private $callable = [];

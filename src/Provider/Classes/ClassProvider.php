@@ -5,7 +5,7 @@ namespace Brunt\Provider\Classes {
 
     use Brunt\Exception\CircularDependencyException;
     use Brunt\Injector;
-    use Brunt\Provider\ConcreteProvider;
+    use Brunt\Provider\AbstractProvider;
     use Brunt\Provider\I\ClassProviderInterface;
     use Brunt\Provider\Lazy\LazyClassProvider;
     use Brunt\Provider\Singleton\SingletonClassProvider;
@@ -14,7 +14,7 @@ namespace Brunt\Provider\Classes {
     use Brunt\Reflection\ReflectorFactory;
 
 
-    class ClassProvider extends ConcreteProvider implements ClassProviderInterface
+    class ClassProvider extends AbstractProvider implements ClassProviderInterface
     {
 
 
@@ -110,6 +110,7 @@ namespace Brunt\Provider\Classes {
         {
             $className = $this->reflector->getClassName();
             $dependencies = $this->_getDependencies($className);
+      //      print_r($dependencies);
             if (!empty($dependencies)) {
 
                 $childInjector = $injector->getChild($this->_getProviders($className));

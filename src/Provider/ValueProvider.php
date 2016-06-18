@@ -6,7 +6,7 @@ namespace Brunt\Provider {
 
     use Brunt\Injector;
 
-    class ValueProvider  extends ConcreteProvider
+    class ValueProvider  extends AbstractProvider
     {
         /**
          * @var mixed
