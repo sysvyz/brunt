@@ -45,12 +45,12 @@ class ProxyCache
         if (self::$config) {
             return;
         }
-        if ($this->fs->exists(self::PATH . '/'.self::PATH )) {
-            self::$config = unserialize(include(self::PATH . '/'.self::PATH ));
+        if ($this->fs->exists(self::PATH . '/'.self::FILENAME )) {
+            self::$config = (include(self::PATH . '/'.self::FILENAME ));
         } else {
             self::$config = [];
         }
-        //   print_r($this->config);
+           print_r(self::$config);
     }
 
     public static function init()
@@ -66,7 +66,7 @@ class ProxyCache
     public function write($class, Reflector $reflector, $proxyClassName)
     {
 
-//        print_r('write' . PHP_EOL);
+       print_r('write' . PHP_EOL);
         $e = $this->fs->exists(self::PATH);
 
         $this->fs->dumpFile(self::PATH . '/' . $proxyClassName . '.php', '<?php ' . $class);
@@ -103,7 +103,7 @@ class ProxyCache
 //        print_r('read' . PHP_EOL);
 
         if (!isset(self::$config[$reflector->getClassName()])) {
-
+            print_r('read !isset' . PHP_EOL);
             return false;
         }
         $cfg = self::$config[$reflector->getClassName()];
