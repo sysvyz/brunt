@@ -3,75 +3,36 @@
 
 namespace Brunt\Reflection\CR;
 
-use Reflection;
-
-class CRField
+interface CRField
 {
 
-    /**
-     * @var \ReflectionProperty
-     */
-    private $property;
-
-
-    /**
-     * RMethod constructor.
-     * @param \ReflectionProperty $property
-     */
-    public function __construct(\ReflectionProperty $property)
-    {
-        $this->property = $property;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPropertyName():string
-    {
-        return $this->property->getName();
-    }
-
-
+    public function getName():string;
 
     /**
      * @return boolean
      */
-    public function isPrivate():boolean
-    {
-        return $this->property->isPrivate();
-    }
+    public function isPrivate();
 
     /**
      * @return boolean
      */
-    public function isPublic():boolean
-    {
-        return $this->property->isPublic();
-    }
+    public function isPublic();
 
     /**
      * @return boolean
      */
-    public function isProtected():boolean
-    {
-        return $this->property->isProtected();
-    }
+    public function isProtected();
 
     /**
      * @return boolean
      */
-    public function isStatic():boolean
-    {
-        return $this->property->isStatic();
-    }
+    public function isStatic();
 
     /**
      * @return string[]
      */
-    public function getModifieres():array
-    {
-        return Reflection::getModifierNames($this->property->getModifiers());
-    }
+    public function getModifieres():array;
 
+    public function toArray();
 
 }

@@ -17,12 +17,13 @@ namespace Brunt\Provider {
             $this->callable[0] = $callable;
         }
 
-    
+      
+
         /**
          * @param Injector $injector
          * @return mixed
          */
-        function __invoke(Injector $injector)
+        function get(Injector $injector)
         {
             return $this->callable[0]($injector);
         }

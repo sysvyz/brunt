@@ -33,17 +33,21 @@ class SingletonProvider implements ProviderInterface
      * @param Injector $injector
      * @return mixed
      */
-    function __invoke(Injector $injector)
+    function get(Injector $injector)
     {
      
         if ($this->instance === null) {
             $p = $this->provider;
-            $this->instance = $p($injector);
+            $this->instance = $p->get($injector);
         }
         return $this->instance;
 
     }
 
+//    function __invoke(Injector $injector)
+//    {
+//        return $this->get($injector);
+//    }
     /**
      * @return SingletonProvider
      */

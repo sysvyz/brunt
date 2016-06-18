@@ -6,10 +6,11 @@ namespace Brunt\Provider\Classes {
     use Brunt\Exception\CircularDependencyException;
     use Brunt\Injector;
     use Brunt\Provider\ConcreteProvider;
+    use Brunt\Provider\I\ClassProviderInterface;
     use Brunt\Provider\Lazy\LazyClassProvider;
     use Brunt\Provider\Singleton\SingletonClassProvider;
     use Brunt\Reflection\Reflector;
-    use Brunt\Provider\I\ClassProviderInterface ;
+    use Brunt\Reflection\ReflectorFactory;
 
 
     class ClassProvider extends ConcreteProvider implements ClassProviderInterface
@@ -24,18 +25,6 @@ namespace Brunt\Provider\Classes {
          */
         protected $class;
 
-
-        /**
-         *
-         * convenience function wrapper for constructor
-         *
-         * @param $class
-         * @return ClassProvider
-         */
-        public static function init($class)
-        {
-            return new self($class);
-        }
         /**
          * ClassProvider constructor.
          * @param string $class
@@ -43,7 +32,7 @@ namespace Brunt\Provider\Classes {
          */
         public function __construct($class)
         {
-            $this->reflector = new Reflector($class);
+            $this->reflector = ReflectorFactory::buildReflectorByClassName($class);
             $this->class = $class;
 
             //todo disable for production?
@@ -75,14 +64,24 @@ namespace Brunt\Provider\Classes {
             }
             array_push($path, $reflector->getClassName());
             foreach ($reflector->getConstructorParams() as $dependency) {
-                if ($dependency->getType() && !$dependency->getType()->isBuiltin()) {
-                    $nextReflector = new Reflector($dependency->getType() . '');
+                if ($dependency->hasType() && !$dependency->isBuiltin()) {
+                    $nextReflector = ReflectorFactory::buildReflectorByClassName($dependency->getType() . '');
                     self::validate($nextReflector, $path);
                 }
             }
         }
 
-
+        /**
+         *
+         * convenience function wrapper for constructor
+         *
+         * @param $class
+         * @return ClassProvider
+         */
+        public static function init($class)
+        {
+            return new self($class);
+        }
 
         /**
          * Read Dependencies And Providers
@@ -93,20 +92,27 @@ namespace Brunt\Provider\Classes {
          * @param Injector $injector
          * @return mixed
          */
-        function __invoke(Injector $injector)
+        function get(Injector $injector)
         {
 
-            $providers = $this->reflector->getProviders();
-            $childInjector = $injector->getChild($providers);
 
             $dependencies = $this->reflector->resolveDependencies($this->reflector->getConstructorParams());
-            //recursive build dependencies
-            $params = (array_map(function ($dependency) use ($childInjector) {
-                return $childInjector->get($dependency['token']);
-            }, $dependencies));
+
+            if (!empty($dependencies)) {
+                $providers = $this->reflector->getProviders();
+                $childInjector = $injector->getChild($providers);
+
+                //recursive build dependencies
+                $params = (array_map(function ($dependency) use ($childInjector) {
+                    return $childInjector->get($dependency['token']);
+                }, $dependencies));
+            } else {
+                $params = [];
+            }
+
 
             $className = $this->reflector->getClassName();
-            return new $className(...$params);
+            return new $className(... array_values($params));
         }
 
         /**
@@ -125,12 +131,15 @@ namespace Brunt\Provider\Classes {
             return $this->reflector;
         }
 
-        public function lazy(){
+        public function lazy()
+        {
             return new LazyClassProvider($this);
         }
-        public function singleton(){
+
+        public function singleton()
+        {
             return new SingletonClassProvider($this);
         }
-        
+
     }
 }

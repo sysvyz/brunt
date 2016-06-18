@@ -6,6 +6,7 @@ namespace Brunt\Provider\Classes {
     use Brunt\Provider\Lazy\LazyClassProvider;
     use Brunt\Provider\Singleton\SingletonClassProvider;
     use Brunt\Reflection\Reflector;
+    use Brunt\Reflection\ReflectorFactory;
 
 
     class ClassFactoryProvider extends FactoryProvider implements ClassProviderInterface{
@@ -34,7 +35,7 @@ namespace Brunt\Provider\Classes {
         {
             parent::__construct($callable);
 
-            $this->reflector = new Reflector($class);
+            $this->reflector = ReflectorFactory::buildReflectorByClassName($class);
             $this->class = $class;
 
         }

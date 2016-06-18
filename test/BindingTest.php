@@ -41,7 +41,7 @@ class BindingTest extends \PHPUnit_Framework_TestCase
         $binding->toClass(Tire::class);
 
         $provider = $binding->getProvider();
-        $entity = $provider($injector);
+        $entity = $provider->get($injector);
 
         $this->assertInstanceOf(ClassProvider::class, $provider);
         $this->assertInstanceOf(Tire::class, $entity);
@@ -56,7 +56,7 @@ class BindingTest extends \PHPUnit_Framework_TestCase
         $binding->toClass(Tire::class)->lazy();
 
         $provider = $binding->getProvider();
-        $entity = $provider($injector);
+        $entity = $provider->get($injector);
 
         $this->assertInstanceOf(LazyProvider::class, $provider);
         $this->assertInstanceOf(Tire::class, $entity);
@@ -71,7 +71,7 @@ class BindingTest extends \PHPUnit_Framework_TestCase
         $value = new Tire();
         $binding->toValue($value);
         $provider = $binding->getProvider();
-        $entity = $provider($injector);
+        $entity = $provider->get($injector);
 
         $this->assertInstanceOf(ValueProvider::class, $provider);
         $this->assertInstanceOf(Tire::class, $entity);
@@ -90,7 +90,7 @@ class BindingTest extends \PHPUnit_Framework_TestCase
         };
         $binding->toValue($func);
         $provider = $binding->getProvider();
-        $injectedFunc = $provider($injector);
+        $injectedFunc = $provider->get($injector);
         $this->assertInstanceOf(ValueProvider::class, $provider);
         $this->assertInstanceOf(\Closure::class, $injectedFunc);
         $this->assertEquals($injectedFunc(5), 15);
@@ -107,7 +107,7 @@ class BindingTest extends \PHPUnit_Framework_TestCase
             return $value;
         });
         $provider = $binding->getProvider();
-        $entity = $provider($injector);
+        $entity = $provider->get($injector);
 
         $this->assertInstanceOf(FactoryProvider::class, $provider);
         $this->assertInstanceOf(Tire::class, $entity);
@@ -122,7 +122,7 @@ class BindingTest extends \PHPUnit_Framework_TestCase
         $binding = Binding::$className();
         $binding->toClass($className);
         $provider = $binding->getProvider();
-        $engine = $provider(new Injector());
+        $engine = $provider->get(new Injector());
         $this->assertInstanceOf(Engine::class, $engine);
 
     }
@@ -138,7 +138,7 @@ class BindingTest extends \PHPUnit_Framework_TestCase
         })->lazy();
 
         $provider = $binding->getProvider();
-        $entity = $provider($injector);
+        $entity = $provider->get($injector);
 
         $this->assertInstanceOf(LazyProvider::class, $provider);
         $this->assertInstanceOf(Tire::class, $entity);

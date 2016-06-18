@@ -37,7 +37,7 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
     {
         $injector = new Injector(null);
         $provider = ClassProvider::init(ArrayAccessTestObject::class);
-        $builder = new LazyProxyBuilder();
+        $builder = LazyProxyBuilder::init();
         /** @var ArrayAccessTestObject $arr */
         $arr = $builder->create($injector, $provider);
 

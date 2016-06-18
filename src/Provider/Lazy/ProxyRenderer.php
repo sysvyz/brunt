@@ -9,7 +9,7 @@ use Brunt\Reflection\CR\CRClass;
 use Brunt\Reflection\CR\CRField;
 use Brunt\Reflection\CR\CRMethod;
 use Brunt\Reflection\CR\CRParam;
-use Brunt\Reflection\CR\Renderer\CRRenderer;
+use Brunt\Reflection\CR\CRRenderer;
 use Brunt\Reflection\Reflector;
 
 class ProxyRenderer extends CRRenderer
@@ -32,10 +32,12 @@ class ProxyRenderer extends CRRenderer
      * @param Reflector $reflector
      * @param string $proxyClassName
      */
-    public function __construct(Reflector $reflector, string $proxyClassName)
+    public function __construct(CRClass $class, string $proxyClassName)
     {
-        $this->class = $reflector->getCompactReferenceClass();
-        $this->reflector = $reflector;
+        $this->class = $class;
+
+
+     //   $this->reflector = $reflector;
 
         $this->proxyClassName = $proxyClassName;
     }
@@ -45,14 +47,15 @@ class ProxyRenderer extends CRRenderer
      */
     public function render()
     {
+//        print_r('ProxyRenderer::render');
         return $this->renderClass($this->class, 0, '    ');
     }
 
     protected function renderClass(CRClass $class, $depth = 0, $indent = " ")
     {
         return
-            'class ' . $this->proxyClassName .
-            ' extends ' . $class->getClassName() .
+            'namespace Brunt\ProxyObject; use Brunt\Provider\Lazy\T\ProxyTrait; class ' . $this->proxyClassName .
+            ' extends \\' . $class->getClassName() .
             $this->braces(
                 '',
                 $this->renderTraits($class, $depth + 1, $indent),
@@ -72,8 +75,7 @@ class ProxyRenderer extends CRRenderer
 
     protected function renderTraits(CRClass $class, $depth = 0, $indent = " ")
     {
-        $r = $class->getReflectionClass();
-        $traits = [ ProxyTrait::class  ];
+        $traits = [ 'ProxyTrait'  ];
 
         return implode($this->statementSeperator(), array_map(function ($trait) {
             return 'use ' . $trait . ';';
@@ -136,7 +138,7 @@ class ProxyRenderer extends CRRenderer
     protected function renderMethod(CRMethod $method, $depth = 0, $indent = " ")
     {
         return            //function and name
-            'public function ' . $method->getMethodName() .
+            'public function ' . $method->getName() .
             //params
             $this->parentheses(
                 $this->renderParams($method->getParams(), $depth, $indent)
@@ -149,7 +151,7 @@ class ProxyRenderer extends CRRenderer
 
     protected function renderMethodBody(CRMethod $method, $depth = 0, $indent = " ")
     {
-        return $this->renderDepth($depth, $indent) . 'return $' . "this->" . $this->getInstanceVariableName() . "->" . $method->getMethodName() . '(... func_get_args());';
+        return $this->renderDepth($depth, $indent) . 'return $' . "this->" . $this->getInstanceVariableName() . "->" . $method->getName() . '(... func_get_args());';
     }
 
 
@@ -183,15 +185,16 @@ class ProxyRenderer extends CRRenderer
 
         $s = "";
         if ($param->hasType()) {
-            $s .= $param->getType() . ' ';
+
+            $s .= ($param->isBuiltin()?'':'\\').$param->getType() . ' ';
         }
-          if ($param->getParameter()->isPassedByReference()) {
+          if ($param->isPassedByReference()) {
               $s .= '&';
           }
 
 
         $s .= "$" . $param->getName();
-        if ($param->getParameter()->isOptional()) {
+        if ($param->isOptional()) {
 //REALLY?
 //            if ($param->getParameter()->isDefaultValueAvailable()) {
 //                $default = $this->renderParamDefaultValue($param);
@@ -256,7 +259,7 @@ class ProxyRenderer extends CRRenderer
 
     private function isExcludedFromRenderingMethod(CRMethod $method)
     {
-        return $this->isExcludedFromRenderingMethodName($method->getMethodName());
+        return $this->isExcludedFromRenderingMethodName($method->getName());
     }
 
     private function isExcludedFromRenderingMethodName($methodName)
@@ -316,12 +319,12 @@ class ProxyRenderer extends CRRenderer
 
     //---------------------------
 
-    protected function serializeContent(... $content)
+    protected function serializeContent( $content)
     {
         $v = implode($this->blockSeperator(), array_map(function ($item) {
             if (is_array($item)) {
 
-                return $this->serializeContent(... $item);
+                return $this->serializeContent($item);
             } else {
                 return $item;
             }

@@ -30,10 +30,10 @@ class LazyClassProvider extends LazyProvider implements ClassProviderInterface
      * @param Injector $injector
      * @return mixed
      */
-    function __invoke(Injector $injector)
+    function get(Injector $injector)
     {
         /** @var LazyProxyBuilder $builder */
-        $builder = $injector->{LazyProxyBuilder::class};
+        $builder = LazyProxyBuilder::init();
         return $builder->create($injector, $this->provider);
     }
 

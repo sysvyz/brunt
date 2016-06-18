@@ -6,6 +6,7 @@ namespace BruntTest\Testobjects;
 use Brunt\Injectable;
 use Brunt\Injector;
 use Brunt\Provider\Classes\ClassProvider;
+use Brunt\Provider\ValueProvider;
 
 class Service extends Injectable
 {
@@ -93,9 +94,7 @@ class ServiceZ extends Service
     {
         return [
             //   requestService::class => ClassProvider::init(requestService::class),
-            '%BASE_URL%' => function (Injector $i) {
-                return 'http://www.sysvyz.org';
-            },
+            '%BASE_URL%' => ValueProvider::init('http://www.sysvyz.org'),
             ServiceY::class => ClassProvider::init(ServiceY::class),
         ] + parent::_DI_PROVIDERS();
     }

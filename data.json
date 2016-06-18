@@ -1,0 +1,602 @@
+[
+  {
+    "buildLazyAndGetInstance": 1.2523651123047,
+    "buildNormal": 1.2318079471588,
+    "buildSingleton": 0.0046579837799072,
+    "buildLazy": 0.055737972259521
+  },
+  {
+    "buildLazyAndGetInstance": 1.2063028812408,
+    "buildNormal": 1.1562058925629,
+    "buildSingleton": 0.0045981407165527,
+    "buildLazy": 0.055730819702148
+  },
+  {
+    "buildLazyAndGetInstance": 1.2055549621582,
+    "buildNormal": 1.1517660617828,
+    "buildSingleton": 0.0046079158782959,
+    "buildLazy": 0.057600975036621
+  },
+  {
+    "buildLazyAndGetInstance": 1.204213142395,
+    "buildNormal": 1.1527669429779,
+    "buildSingleton": 0.0046021938323975,
+    "buildLazy": 0.055594921112061
+  },
+  {
+    "buildLazyAndGetInstance": 1.2087070941925,
+    "buildNormal": 1.1513519287109,
+    "buildSingleton": 0.0045740604400635,
+    "buildLazy": 0.056676149368286
+  },
+  {
+    "buildLazyAndGetInstance": 1.2056128978729,
+    "buildNormal": 1.163106918335,
+    "buildSingleton": 0.0046188831329346,
+    "buildLazy": 0.057792901992798
+  },
+  {
+    "buildLazyAndGetInstance": 1.2029519081116,
+    "buildNormal": 1.1518721580505,
+    "buildSingleton": 0.0045790672302246,
+    "buildLazy": 0.055728912353516
+  },
+  {
+    "buildLazyAndGetInstance": 1.2063629627228,
+    "buildNormal": 1.1533198356628,
+    "buildSingleton": 0.0047900676727295,
+    "buildLazy": 0.056838989257812
+  },
+  {
+    "buildLazyAndGetInstance": 1.2018768787384,
+    "buildNormal": 1.1561222076416,
+    "buildSingleton": 0.004626989364624,
+    "buildLazy": 0.057071924209595
+  },
+  {
+    "buildLazyAndGetInstance": 1.2052850723267,
+    "buildNormal": 1.1552770137787,
+    "buildSingleton": 0.0045931339263916,
+    "buildLazy": 0.056005954742432
+  },
+  {
+    "buildLazyAndGetInstance": 1.2017350196838,
+    "buildNormal": 1.1526410579681,
+    "buildSingleton": 0.004688024520874,
+    "buildLazy": 0.056340932846069
+  },
+  {
+    "buildLazyAndGetInstance": 1.2055730819702,
+    "buildNormal": 1.1623749732971,
+    "buildSingleton": 0.0046370029449463,
+    "buildLazy": 0.055934906005859
+  },
+  {
+    "buildLazyAndGetInstance": 1.2098960876465,
+    "buildNormal": 1.1544268131256,
+    "buildSingleton": 0.0046241283416748,
+    "buildLazy": 0.056840896606445
+  },
+  {
+    "buildLazyAndGetInstance": 1.2085909843445,
+    "buildNormal": 1.1616640090942,
+    "buildSingleton": 0.0046219825744629,
+    "buildLazy": 0.056873083114624
+  },
+  {
+    "buildLazyAndGetInstance": 1.2050518989563,
+    "buildNormal": 1.156054019928,
+    "buildSingleton": 0.0048661231994629,
+    "buildLazy": 0.055382966995239
+  },
+  {
+    "buildLazyAndGetInstance": 1.2098670005798,
+    "buildNormal": 1.1578688621521,
+    "buildSingleton": 0.0046241283416748,
+    "buildLazy": 0.056033849716187
+  },
+  {
+    "buildLazyAndGetInstance": 1.2029819488525,
+    "buildNormal": 1.1521308422089,
+    "buildSingleton": 0.0048220157623291,
+    "buildLazy": 0.056169033050537
+  },
+  {
+    "buildLazyAndGetInstance": 1.2095279693604,
+    "buildNormal": 1.1577839851379,
+    "buildSingleton": 0.004662036895752,
+    "buildLazy": 0.056566953659058
+  },
+  {
+    "buildLazyAndGetInstance": 1.2089929580688,
+    "buildNormal": 1.1537320613861,
+    "buildSingleton": 0.0046701431274414,
+    "buildLazy": 0.055662155151367
+  },
+  {
+    "buildLazyAndGetInstance": 1.2082848548889,
+    "buildNormal": 1.1542241573334,
+    "buildSingleton": 0.0045919418334961,
+    "buildLazy": 0.056156158447266
+  },
+  {
+    "buildLazyAndGetInstance": 1.2065420150757,
+    "buildNormal": 1.1554811000824,
+    "buildSingleton": 0.0047390460968018,
+    "buildLazy": 0.057565212249756
+  },
+  {
+    "buildLazyAndGetInstance": 1.2096619606018,
+    "buildNormal": 1.1588160991669,
+    "buildSingleton": 0.0046389102935791,
+    "buildLazy": 0.057144165039062
+  },
+  {
+    "buildLazyAndGetInstance": 1.2074890136719,
+    "buildNormal": 1.1583650112152,
+    "buildSingleton": 0.0046100616455078,
+    "buildLazy": 0.057726860046387
+  },
+  {
+    "buildLazyAndGetInstance": 1.2030482292175,
+    "buildNormal": 1.1592390537262,
+    "buildSingleton": 0.0047650337219238,
+    "buildLazy": 0.056068181991577
+  },
+  {
+    "buildLazyAndGetInstance": 1.211993932724,
+    "buildNormal": 1.1548941135406,
+    "buildSingleton": 0.0046970844268799,
+    "buildLazy": 0.055953025817871
+  },
+  {
+    "buildLazyAndGetInstance": 1.2090878486633,
+    "buildNormal": 1.1609120368958,
+    "buildSingleton": 0.0048010349273682,
+    "buildLazy": 0.056910991668701
+  },
+  {
+    "buildLazyAndGetInstance": 1.2079980373383,
+    "buildNormal": 1.1678910255432,
+    "buildSingleton": 0.0046331882476807,
+    "buildLazy": 0.055486917495728
+  },
+  {
+    "buildLazyAndGetInstance": 1.2056801319122,
+    "buildNormal": 1.1517980098724,
+    "buildSingleton": 0.0046899318695068,
+    "buildLazy": 0.055341958999634
+  },
+  {
+    "buildLazyAndGetInstance": 1.2036199569702,
+    "buildNormal": 1.1568200588226,
+    "buildSingleton": 0.0045909881591797,
+    "buildLazy": 0.057155132293701
+  },
+  {
+    "buildLazyAndGetInstance": 1.2259910106659,
+    "buildNormal": 1.1602799892426,
+    "buildSingleton": 0.0045998096466064,
+    "buildLazy": 0.056680202484131
+  },
+  {
+    "buildLazyAndGetInstance": 1.2540769577026,
+    "buildNormal": 1.1666469573975,
+    "buildSingleton": 0.0047099590301514,
+    "buildLazy": 0.056575059890747
+  },
+  {
+    "buildLazyAndGetInstance": 1.2389121055603,
+    "buildNormal": 1.1856679916382,
+    "buildSingleton": 0.0047240257263184,
+    "buildLazy": 0.058296918869019
+  },
+  {
+    "buildLazyAndGetInstance": 1.2310330867767,
+    "buildNormal": 1.2007801532745,
+    "buildSingleton": 0.004796028137207,
+    "buildLazy": 0.056437969207764
+  },
+  {
+    "buildLazyAndGetInstance": 1.2891571521759,
+    "buildNormal": 1.2166290283203,
+    "buildSingleton": 0.0046720504760742,
+    "buildLazy": 0.058799982070923
+  },
+  {
+    "buildLazyAndGetInstance": 1.2933149337769,
+    "buildNormal": 1.210382938385,
+    "buildSingleton": 0.0047550201416016,
+    "buildLazy": 0.072516918182373
+  },
+  {
+    "buildLazyAndGetInstance": 1.2779920101166,
+    "buildNormal": 1.2364602088928,
+    "buildSingleton": 0.0047831535339355,
+    "buildLazy": 0.058893918991089
+  },
+  {
+    "buildLazyAndGetInstance": 1.3015987873077,
+    "buildNormal": 1.234317779541,
+    "buildSingleton": 0.0045859813690186,
+    "buildLazy": 0.056560039520264
+  },
+  {
+    "buildLazyAndGetInstance": 1.3100531101227,
+    "buildNormal": 1.2361190319061,
+    "buildSingleton": 0.0046968460083008,
+    "buildLazy": 0.083155870437622
+  },
+  {
+    "buildLazyAndGetInstance": 1.2924230098724,
+    "buildNormal": 1.2285258769989,
+    "buildSingleton": 0.0046789646148682,
+    "buildLazy": 0.062567949295044
+  },
+  {
+    "buildLazyAndGetInstance": 1.3144199848175,
+    "buildNormal": 1.244204044342,
+    "buildSingleton": 0.0046391487121582,
+    "buildLazy": 0.068820953369141
+  },
+  {
+    "buildLazyAndGetInstance": 1.3052818775177,
+    "buildNormal": 1.2359158992767,
+    "buildSingleton": 0.0046441555023193,
+    "buildLazy": 0.057183980941772
+  },
+  {
+    "buildLazyAndGetInstance": 1.3363430500031,
+    "buildNormal": 1.2471079826355,
+    "buildSingleton": 0.0046730041503906,
+    "buildLazy": 0.069683074951172
+  },
+  {
+    "buildLazyAndGetInstance": 1.3154499530792,
+    "buildNormal": 1.2414610385895,
+    "buildSingleton": 0.0046381950378418,
+    "buildLazy": 0.066647052764893
+  },
+  {
+    "buildLazyAndGetInstance": 1.3394520282745,
+    "buildNormal": 1.2406408786774,
+    "buildSingleton": 0.0049319267272949,
+    "buildLazy": 0.083086967468262
+  },
+  {
+    "buildLazyAndGetInstance": 1.3410830497742,
+    "buildNormal": 1.2570989131927,
+    "buildSingleton": 0.0046830177307129,
+    "buildLazy": 0.071364879608154
+  },
+  {
+    "buildLazyAndGetInstance": 1.3402500152588,
+    "buildNormal": 1.2735090255737,
+    "buildSingleton": 0.004662036895752,
+    "buildLazy": 0.069121122360229
+  },
+  {
+    "buildLazyAndGetInstance": 1.3243210315704,
+    "buildNormal": 1.2666738033295,
+    "buildSingleton": 0.0046420097351074,
+    "buildLazy": 0.074718952178955
+  },
+  {
+    "buildLazyAndGetInstance": 1.3354868888855,
+    "buildNormal": 1.2687411308289,
+    "buildSingleton": 0.0046939849853516,
+    "buildLazy": 0.075315952301025
+  },
+  {
+    "buildLazyAndGetInstance": 1.3499450683594,
+    "buildNormal": 1.2939410209656,
+    "buildSingleton": 0.0046570301055908,
+    "buildLazy": 0.056051969528198
+  },
+  {
+    "buildLazyAndGetInstance": 1.3716340065002,
+    "buildNormal": 1.2909500598907,
+    "buildSingleton": 0.0046851634979248,
+    "buildLazy": 0.078999042510986
+  },
+  {
+    "buildLazyAndGetInstance": 1.3614459037781,
+    "buildNormal": 1.274493932724,
+    "buildSingleton": 0.0046801567077637,
+    "buildLazy": 0.07477593421936
+  },
+  {
+    "buildLazyAndGetInstance": 1.3716080188751,
+    "buildNormal": 1.3057408332825,
+    "buildSingleton": 0.0046451091766357,
+    "buildLazy": 0.056532859802246
+  },
+  {
+    "buildLazyAndGetInstance": 1.3582859039307,
+    "buildNormal": 1.2920668125153,
+    "buildSingleton": 0.0049219131469727,
+    "buildLazy": 0.07464599609375
+  },
+  {
+    "buildLazyAndGetInstance": 1.3722238540649,
+    "buildNormal": 1.295637845993,
+    "buildSingleton": 0.0046169757843018,
+    "buildLazy": 0.068625926971436
+  },
+  {
+    "buildLazyAndGetInstance": 1.3710029125214,
+    "buildNormal": 1.3072869777679,
+    "buildSingleton": 0.0045790672302246,
+    "buildLazy": 0.072908163070679
+  },
+  {
+    "buildLazyAndGetInstance": 1.3662600517273,
+    "buildNormal": 1.3114950656891,
+    "buildSingleton": 0.004655122756958,
+    "buildLazy": 0.068866014480591
+  },
+  {
+    "buildLazyAndGetInstance": 1.3923270702362,
+    "buildNormal": 1.3088510036469,
+    "buildSingleton": 0.0046510696411133,
+    "buildLazy": 0.056378841400146
+  },
+  {
+    "buildLazyAndGetInstance": 1.4097499847412,
+    "buildNormal": 1.3088271617889,
+    "buildSingleton": 0.0047290325164795,
+    "buildLazy": 0.056886911392212
+  },
+  {
+    "buildLazyAndGetInstance": 1.4003119468689,
+    "buildNormal": 1.3329498767853,
+    "buildSingleton": 0.0046470165252686,
+    "buildLazy": 0.070237159729004
+  },
+  {
+    "buildLazyAndGetInstance": 1.3856289386749,
+    "buildNormal": 1.3245770931244,
+    "buildSingleton": 0.0046029090881348,
+    "buildLazy": 0.077316999435425
+  },
+  {
+    "buildLazyAndGetInstance": 1.4029879570007,
+    "buildNormal": 1.3102581501007,
+    "buildSingleton": 0.0046401023864746,
+    "buildLazy": 0.073531866073608
+  },
+  {
+    "buildLazyAndGetInstance": 1.3977890014648,
+    "buildNormal": 1.3307130336761,
+    "buildSingleton": 0.0048139095306396,
+    "buildLazy": 0.079508781433105
+  },
+  {
+    "buildLazyAndGetInstance": 1.4196040630341,
+    "buildNormal": 1.3191080093384,
+    "buildSingleton": 0.0047979354858398,
+    "buildLazy": 0.066658973693848
+  },
+  {
+    "buildLazyAndGetInstance": 1.4187850952148,
+    "buildNormal": 1.3479759693146,
+    "buildSingleton": 0.0046248435974121,
+    "buildLazy": 0.077265977859497
+  },
+  {
+    "buildLazyAndGetInstance": 1.4062070846558,
+    "buildNormal": 1.3317940235138,
+    "buildSingleton": 0.0047261714935303,
+    "buildLazy": 0.072933912277222
+  },
+  {
+    "buildLazyAndGetInstance": 1.4378969669342,
+    "buildNormal": 1.3460140228271,
+    "buildSingleton": 0.0055069923400879,
+    "buildLazy": 0.068326950073242
+  },
+  {
+    "buildLazyAndGetInstance": 1.4304101467133,
+    "buildNormal": 1.344624042511,
+    "buildSingleton": 0.0054030418395996,
+    "buildLazy": 0.070795059204102
+  },
+  {
+    "buildLazyAndGetInstance": 1.4277019500732,
+    "buildNormal": 1.3523509502411,
+    "buildSingleton": 0.0053648948669434,
+    "buildLazy": 0.097486019134521
+  },
+  {
+    "buildLazyAndGetInstance": 1.4129190444946,
+    "buildNormal": 1.3625600337982,
+    "buildSingleton": 0.005526065826416,
+    "buildLazy": 0.082590818405151
+  },
+  {
+    "buildLazyAndGetInstance": 1.4228172302246,
+    "buildNormal": 1.3321611881256,
+    "buildSingleton": 0.0053339004516602,
+    "buildLazy": 0.072403907775879
+  },
+  {
+    "buildLazyAndGetInstance": 1.4290058612823,
+    "buildNormal": 1.3558619022369,
+    "buildSingleton": 0.0054469108581543,
+    "buildLazy": 0.071805953979492
+  },
+  {
+    "buildLazyAndGetInstance": 1.4364049434662,
+    "buildNormal": 1.34534907341,
+    "buildSingleton": 0.0054349899291992,
+    "buildLazy": 0.072378873825073
+  },
+  {
+    "buildLazyAndGetInstance": 1.4435279369354,
+    "buildNormal": 1.3444850444794,
+    "buildSingleton": 0.0054788589477539,
+    "buildLazy": 0.064682006835938
+  },
+  {
+    "buildLazyAndGetInstance": 1.4311189651489,
+    "buildNormal": 1.3657958507538,
+    "buildSingleton": 0.0053379535675049,
+    "buildLazy": 0.072697877883911
+  },
+  {
+    "buildLazyAndGetInstance": 1.4283471107483,
+    "buildNormal": 1.3675119876862,
+    "buildSingleton": 0.0054371356964111,
+    "buildLazy": 0.073578834533691
+  },
+  {
+    "buildLazyAndGetInstance": 1.4258708953857,
+    "buildNormal": 1.358845949173,
+    "buildSingleton": 0.0053439140319824,
+    "buildLazy": 0.074993848800659
+  },
+  {
+    "buildLazyAndGetInstance": 1.4389908313751,
+    "buildNormal": 1.3535249233246,
+    "buildSingleton": 0.0053420066833496,
+    "buildLazy": 0.077733993530273
+  },
+  {
+    "buildLazyAndGetInstance": 1.4398620128632,
+    "buildNormal": 1.3532650470734,
+    "buildSingleton": 0.0057339668273926,
+    "buildLazy": 0.067422151565552
+  },
+  {
+    "buildLazyAndGetInstance": 1.4344871044159,
+    "buildNormal": 1.3659129142761,
+    "buildSingleton": 0.0057170391082764,
+    "buildLazy": 0.075325965881348
+  },
+  {
+    "buildLazyAndGetInstance": 1.4426929950714,
+    "buildNormal": 1.3810110092163,
+    "buildSingleton": 0.0054001808166504,
+    "buildLazy": 0.07211709022522
+  },
+  {
+    "buildLazyAndGetInstance": 1.4273171424866,
+    "buildNormal": 1.3851251602173,
+    "buildSingleton": 0.0054070949554443,
+    "buildLazy": 0.074971914291382
+  },
+  {
+    "buildLazyAndGetInstance": 1.4680190086365,
+    "buildNormal": 1.3503911495209,
+    "buildSingleton": 0.0055510997772217,
+    "buildLazy": 0.069811105728149
+  },
+  {
+    "buildLazyAndGetInstance": 1.4312400817871,
+    "buildNormal": 1.3698079586029,
+    "buildSingleton": 0.0053839683532715,
+    "buildLazy": 0.07739782333374
+  },
+  {
+    "buildLazyAndGetInstance": 1.4330899715424,
+    "buildNormal": 1.386470079422,
+    "buildSingleton": 0.0052530765533447,
+    "buildLazy": 0.074176073074341
+  },
+  {
+    "buildLazyAndGetInstance": 1.425372838974,
+    "buildNormal": 1.4120411872864,
+    "buildSingleton": 0.0054178237915039,
+    "buildLazy": 0.071966886520386
+  },
+  {
+    "buildLazyAndGetInstance": 1.4746468067169,
+    "buildNormal": 1.3788230419159,
+    "buildSingleton": 0.0053970813751221,
+    "buildLazy": 0.076560974121094
+  },
+  {
+    "buildLazyAndGetInstance": 1.453506231308,
+    "buildNormal": 1.3568379878998,
+    "buildSingleton": 0.0053951740264893,
+    "buildLazy": 0.082996845245361
+  },
+  {
+    "buildLazyAndGetInstance": 1.4925198554993,
+    "buildNormal": 1.4102830886841,
+    "buildSingleton": 0.0053169727325439,
+    "buildLazy": 0.083870887756348
+  },
+  {
+    "buildLazyAndGetInstance": 1.4511070251465,
+    "buildNormal": 1.3737828731537,
+    "buildSingleton": 0.0054779052734375,
+    "buildLazy": 0.071249961853027
+  },
+  {
+    "buildLazyAndGetInstance": 1.4591660499573,
+    "buildNormal": 1.3682999610901,
+    "buildSingleton": 0.0054459571838379,
+    "buildLazy": 0.082518100738525
+  },
+  {
+    "buildLazyAndGetInstance": 1.4241919517517,
+    "buildNormal": 1.3807158470154,
+    "buildSingleton": 0.005446195602417,
+    "buildLazy": 0.073373794555664
+  },
+  {
+    "buildLazyAndGetInstance": 1.4753301143646,
+    "buildNormal": 1.4550740718842,
+    "buildSingleton": 0.0054099559783936,
+    "buildLazy": 0.094161033630371
+  },
+  {
+    "buildLazyAndGetInstance": 1.4849519729614,
+    "buildNormal": 1.3863730430603,
+    "buildSingleton": 0.0053641796112061,
+    "buildLazy": 0.081359148025513
+  },
+  {
+    "buildLazyAndGetInstance": 1.4508788585663,
+    "buildNormal": 1.4015600681305,
+    "buildSingleton": 0.0054128170013428,
+    "buildLazy": 0.072252035140991
+  },
+  {
+    "buildLazyAndGetInstance": 1.4793689250946,
+    "buildNormal": 1.3868591785431,
+    "buildSingleton": 0.0057718753814697,
+    "buildLazy": 0.072048902511597
+  },
+  {
+    "buildLazyAndGetInstance": 1.4845039844513,
+    "buildNormal": 1.4274590015411,
+    "buildSingleton": 0.0053780078887939,
+    "buildLazy": 0.073155879974365
+  },
+  {
+    "buildLazyAndGetInstance": 1.5030620098114,
+    "buildNormal": 1.3837668895721,
+    "buildSingleton": 0.0053369998931885,
+    "buildLazy": 0.074547052383423
+  },
+  {
+    "buildLazyAndGetInstance": 1.4954419136047,
+    "buildNormal": 1.4157018661499,
+    "buildSingleton": 0.0054769515991211,
+    "buildLazy": 0.067975044250488
+  },
+  {
+    "buildLazyAndGetInstance": 1.5050580501556,
+    "buildNormal": 1.4074380397797,
+    "buildSingleton": 0.0055959224700928,
+    "buildLazy": 0.077386140823364
+  },
+  {
+    "buildLazyAndGetInstance": 1.4830958843231,
+    "buildNormal": 1.3967869281769,
+    "buildSingleton": 0.0067250728607178,
+    "buildLazy": 0.057525873184204
+  }
+]

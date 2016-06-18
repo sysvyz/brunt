@@ -42,7 +42,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
 
         /** @var ClassProvider $provider */
         $provider = ClassProvider::init(Engine::class);
-        $engine = $provider($injector);
+        $engine = $provider->get($injector);
         $this->assertInstanceOf(Engine::class, $engine);
 
     }
@@ -139,7 +139,7 @@ class InjectorTest extends PHPUnit_Framework_TestCase
         $provider = ClassProvider::init(Engine::class);
         $singletonProvider = new SingletonProvider($provider);
 
-        $this->assertSame($singletonProvider($injector), $singletonProvider($injector));
+        $this->assertSame($singletonProvider->get($injector), $singletonProvider->get($injector));
 
     }
 

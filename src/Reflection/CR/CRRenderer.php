@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Brunt\Reflection\CR\Renderer;
+namespace Brunt\Reflection\CR;
 
 
 abstract class CRRenderer

@@ -7,7 +7,7 @@ namespace Brunt\Provider {
     use Brunt\Injector;
     use Brunt\Provider\I\ProviderInterface;
 
-    class AliasProvider  implements ProviderInterface
+    class AliasProvider extends ConcreteProvider  implements ProviderInterface
     {
         /**
          * @var mixed
@@ -27,7 +27,7 @@ namespace Brunt\Provider {
          * @param Injector $injector
          * @return mixed
          */
-        function __invoke(Injector $injector)
+        function get(Injector $injector)
         {
             return $injector->get($this->alias);
         }

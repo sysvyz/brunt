@@ -3,6 +3,7 @@
 namespace Brunt\Provider {
 
 
+    use Brunt\Injector;
     use Brunt\Provider\I\ProviderInterface;
     use Brunt\Provider\Lazy\LazyProvider;
     use Brunt\Provider\Singleton\SingletonProvider;
@@ -17,6 +18,10 @@ namespace Brunt\Provider {
             return new LazyProvider($this);
         }
 
+//        function __invoke(Injector $injector)
+//        {
+//            return $this->get($injector);
+//        }
 
     }
 }

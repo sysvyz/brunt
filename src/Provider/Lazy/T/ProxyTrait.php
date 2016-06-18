@@ -32,8 +32,8 @@ trait ProxyTrait
     public function __construct(ProviderInterface $provider, Injector $injector)
     {
         if ($provider instanceof ClassProvider) {
-            $reflectionClass = $provider->getReflector()->getReflectionClass();
-            foreach ($reflectionClass->getProperties() as $item) {
+          //  $reflectionClass = $provider->getReflector()->getReflectionClass();
+            foreach ($provider->getReflector()->getProperties() as $item) {
                 if (!$item->isPrivate() && !$item->isStatic()) {
                     unset($this->{$item->getName()});
                 }
@@ -65,7 +65,7 @@ trait ProxyTrait
     {
         if ($this->instance_eae9cc3e == null) {
             $provider = $this->provider_9a5f1a83;
-            $this->instance_eae9cc3e = $provider($this->injector_b291a118);
+            $this->instance_eae9cc3e = $provider->get($this->injector_b291a118);
         }
         return $this->instance_eae9cc3e;
     }

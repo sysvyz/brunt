@@ -10,7 +10,8 @@ namespace BruntTest;
 
 
 use Brunt\Injector;
-use Brunt\Reflection\Invoker;
+use Brunt\Invoker;
+use Brunt\Provider\ValueProvider;
 
 class InvokerTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +23,7 @@ class InvokerTest extends \PHPUnit_Framework_TestCase
     {
         $injector = new Injector();
 
-        $injector->provide('%VALUE%',function(){return 5;});
+        $injector->provide('%VALUE%',ValueProvider::init(5));
 
         $obj = $injector->{InvokableObject::class};
 

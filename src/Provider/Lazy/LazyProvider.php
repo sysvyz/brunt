@@ -38,7 +38,7 @@ class LazyProvider implements ProviderInterface
      * @param Injector $injector
      * @return mixed
      */
-    function __invoke(Injector $injector):LazyProxyObject
+    function get(Injector $injector):LazyProxyObject
     {
         return new LazyProxyObject($this->provider, $injector);
     }
@@ -56,4 +56,8 @@ class LazyProvider implements ProviderInterface
     {
         return $this;
     }
+//    function __invoke(Injector $injector)
+//    {
+//        return $this->get($injector);
+//    }
 }

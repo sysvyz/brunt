@@ -2,10 +2,12 @@
 
 namespace Brunt {
 
-    use Brunt\Exception\InjectableException;
+    use Brunt\Cache\ProxyCache;
     use Brunt\Exception\ProviderNotFoundException;
     use Brunt\Provider\Classes\ClassProvider;
+    use Brunt\Provider\I\ProviderInterface;
     use Brunt\Provider\Lazy\LazyProxyBuilder;
+    use function Brunt\bind;
 
     class Injector
     {
@@ -20,26 +22,24 @@ namespace Brunt {
         public function __construct(Injector $injector = null)
         {
             $this->injector = $injector;
-
-            $this->providers([LazyProxyBuilder::class => ClassProvider::init(LazyProxyBuilder::class)->singleton()]);
-        }
-
-        public function providers(array $providers = [])
-        {
-            foreach ($providers as $name => $provider) {
-                if (is_int($name) && is_string($provider)) {
-                    $this->provide($provider, ClassProvider::init($provider));
-                } else if (is_callable($provider)) {
-                    $this->provide($name, $provider);
-                } else if (is_string($provider)) {
-                    $this->provide($name, ClassProvider::init($provider));
-                }
+            if (!$injector) {
+                $this->bind(
+                    Binding::init(LazyProxyBuilder::class)->toValue(LazyProxyBuilder::init()),
+                    bind(ProxyCache::class)->toValue(ProxyCache::init())
+                );
             }
         }
 
-        public function provide(string $token, callable $callable)
+        public function bind(... $bindings)
         {
-            $this->providers[$token] = $callable;
+            foreach ($bindings as $binding) {
+                if (is_array($binding)) {
+                    array_walk($binding, [$this, 'bind']);
+                } else if ($binding instanceof Binding) {
+                    $this->providers[$binding->getToken()] = $binding->getProvider();
+                }
+            }
+
         }
 
         /**
@@ -67,12 +67,12 @@ namespace Brunt {
 
             $provider = $this->getProvider($token);
 
-            return $provider($this);
+            return $provider->get($this);
         }
 
         /**
          * @param string $token
-         * @return mixed instance
+         * @return ProviderInterface instance
          */
         public function getProvider(string $token)
         {
@@ -84,18 +84,25 @@ namespace Brunt {
                 //if parent injector exists
                 //recursive search in parent injector
                 $provider = $this->injector->getProvider($token);
-            } else {
+                $this->providers[$token] = $provider;
+            } else if (class_exists($token)) {
                 //root injector has no provider
-                
-                if (class_exists($token)) {
-                    $provider = new ClassProvider($token);
-                    $this->provide($token,$provider);
-                    return $provider;
-                }
+
+
+                $provider = new ClassProvider($token);
+                $this->provide($token, $provider);
+                $this->providers[$token] = $provider;
+            } else {
                 throw new ProviderNotFoundException($token . '...provider not found');
+
             }
 
             return $provider;
+        }
+
+        public function provide(string $token, ProviderInterface $callable)
+        {
+            $this->providers[$token] = $callable;
         }
 
         public function getChild($providers = [])
@@ -103,6 +110,19 @@ namespace Brunt {
             $child = new self($this);
             $child->providers($providers);
             return $child;
+        }
+
+        public function providers(array $providers = [])
+        {
+            foreach ($providers as $name => $provider) {
+                if (is_int($name) && is_string($provider)) {
+                    $this->provide($provider, ClassProvider::init($provider));
+                } else if ($provider instanceof ProviderInterface) {
+                    $this->provide($name, $provider);
+                } else if (is_string($provider) && class_exists($provider)) {
+                    $this->provide($name, ClassProvider::init($provider));
+                }
+            }
         }
 
         function __call($name, $arguments)
@@ -116,18 +136,6 @@ namespace Brunt {
         function __invoke(... $bindings)
         {
             $this->bind($bindings);
-        }
-
-        public function bind(... $bindings)
-        {
-            foreach ($bindings as $binding) {
-                if (is_array($binding)) {
-                    array_walk($binding, [$this, 'bind']);
-                } else if ($binding instanceof Binding) {
-                    $this->providers[$binding->getToken()] = $binding->getProvider();
-                }
-            }
-
         }
     }
 }

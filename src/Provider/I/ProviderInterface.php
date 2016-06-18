@@ -7,7 +7,8 @@ namespace Brunt\Provider\I {
 
     interface  ProviderInterface
     {
-        function __invoke(Injector $injector);
+//        function __invoke(Injector $injector);
+        function get(Injector $injector);
 
         /**
          * @return SingletonProviderInterface

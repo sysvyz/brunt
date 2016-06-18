@@ -14,6 +14,8 @@ use Brunt\Exception\InjectableException;
 use Brunt\Injector;
 use Brunt\Provider\Classes\ClassFactoryProvider;
 use Brunt\Provider\Classes\ClassProvider;
+use Brunt\Provider\ValueFactoryProvider;
+use Brunt\Provider\ValueProvider;
 use BruntTest\Testobjects\CircA;
 use BruntTest\Testobjects\CircB;
 use BruntTest\Testobjects\CircC;
@@ -34,9 +36,9 @@ class ClassProviderTest extends \PHPUnit_Framework_TestCase
         $injector = new Injector(null);
         $injector->providers([
             Controller::class => ClassProvider::init(ControllerA::class),
-            '%BASE_URL%' => function () {
+            '%BASE_URL%' => ValueFactoryProvider::init(function () {
                 return 'http://sysvyz.org/';
-            }
+            })
         ]);
 
         /** @var ControllerA $ctrl */
@@ -56,9 +58,7 @@ class ClassProviderTest extends \PHPUnit_Framework_TestCase
         $injector = new Injector(null);
         $injector->providers([
             Controller::class => ClassProvider::init(ControllerA::class)->lazy(),
-            '%BASE_URL%' => function () {
-                return 'http://sysvyz.org/';
-            }
+            '%BASE_URL%' => ValueProvider::init('http://sysvyz.org/')
         ]);
 
         /** @var ControllerA $ctrl */
@@ -187,7 +187,7 @@ class ClassProviderTest extends \PHPUnit_Framework_TestCase
         $injector->providers(
             [
                 NonInjectableWrapper::class => ClassProvider::init(NonInjectableWrapper::class),
-                NonInjectable::class => ClassFactoryProvider::init(NonInjectable::class,function () {
+                NonInjectable::class => ClassFactoryProvider::init(NonInjectable::class, function () {
                     return new NonInjectable(5);
                 }),
             ]

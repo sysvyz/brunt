@@ -11,10 +11,18 @@ use Brunt\Provider\Lazy\LazyProxyObject;
 use Brunt\Provider\Lazy\ProxyRenderer;
 use Brunt\Provider\Lazy\T\ProxyTrait;
 use Brunt\Provider\ValueFactoryProvider;
-use Brunt\Reflection\Reflector;
+use Brunt\Provider\ValueProvider;
+use Brunt\Reflection\ReflectorFactory;
 use BruntTest\Testobjects\Car;
+use BruntTest\Testobjects\ControllerA;
 use BruntTest\Testobjects\MethodReflectionTestObject;
+use BruntTest\Testobjects\Request;
+use BruntTest\Testobjects\RequestService;
+use BruntTest\Testobjects\ServiceY;
+use BruntTest\Testobjects\ServiceZ;
+use BruntTest\Testobjects\Tire;
 use PHPUnit_Framework_TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ProxyTest extends PHPUnit_Framework_TestCase
 {
@@ -33,8 +41,13 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
     public function testProxyRenderer()
     {
-        $ref1 = new Reflector(MethodReflectionTestObject::class);
-        $renderer = new ProxyRenderer($ref1, 'RandomProxyName_ds8bfgFHGTG4');
+
+        $ref1 = ReflectorFactory::buildReflectorByClassName(MethodReflectionTestObject::class);
+        $crclass = $ref1->getCompactReferenceClass();
+
+//        print_r($crclass->toArray());
+
+        $renderer = new ProxyRenderer($crclass, 'RandomProxyName_ds8bfgFHGTG4');
 
         $renderedClass = $renderer->render();
 
@@ -44,21 +57,22 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         /** @var MethodReflectionTestObject $proxy */
         $proxy = null;
 
-        eval($renderedClass . '$proxy = new RandomProxyName_ds8bfgFHGTG4($provider, $injector);');
+        eval($renderedClass . '$proxy = new \Brunt\ProxyObject\RandomProxyName_ds8bfgFHGTG4($provider, $injector);');
         $this->assertInstanceOf(MethodReflectionTestObject::class, $proxy);
 
     }
 
-    public function testProxyBuilder(){
-        $builder =  new LazyProxyBuilder();
-        $this->assertEquals('BruntTest_Testobjects_Car_Brunt_Proxy',$builder->proxifyClassName(Car::class));
+    public function testProxyBuilder()
+    {
+        $builder = LazyProxyBuilder::init();
+        $this->assertEquals('BruntTest_Testobjects_Car_Brunt_Proxy', $builder->getProxyClassName(Car::class));
     }
 
     public function testProxyByBuilder()
     {
         $injector = new Injector(null);
         $provider = ClassProvider::init(MethodReflectionTestObject::class);
-        $builder = new LazyProxyBuilder();
+        $builder = LazyProxyBuilder::init();
         /** @var MethodReflectionTestObject $proxy */
         $proxy = $builder->create($injector, $provider);
 
@@ -77,13 +91,14 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($testFunction($proxy));
 
     }
+
     public function testProxyByLazyMethod()
     {
         $injector = new Injector(null);
         $provider = ClassProvider::init(MethodReflectionTestObject::class)->lazy();
-      
+
         /** @var MethodReflectionTestObject $proxy */
-        $proxy = $provider($injector);
+        $proxy = $provider->get($injector);
 
 
         $testFunction = function (MethodReflectionTestObject $a) {
@@ -109,13 +124,13 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         })->lazy();
 
         /** @var MethodReflectionTestObject $proxy */
-        $proxy = $provider($injector);
+        $proxy = $provider->get($injector);
         $testFunction = function (LazyProxyObject $a) {
             $this->assertInstanceOf(LazyProxyObject::class, $a);
             return true;
         };
         $this->assertEquals($proxy->getPri(), 409);
-        $this->assertEquals($proxy->privateMethod(), "__call:privateMethod"); //private cant be called, call -> __call instead
+        $this->assertEquals($proxy->privateMethod(), "__call:privateMethod"); //private cant be called, calls -> __call instead
         $this->assertEquals($proxy->publicMethod(), 'publicMethod');
         $this->assertEquals($proxy->publicMethodWithoutModifier(), 'publicMethodWithoutModifier');
         $this->assertEquals($proxy . "", '_TO_STRING_');
@@ -123,6 +138,113 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($testFunction($proxy));
 
+    }
+
+    public function testTimings()
+    {
+        $count = 1000;
+        $repeat = 10;
+
+        $data = [];
+        for ($i = 0; $i < $repeat; $i++) {
+            $data  [] = [
+                'buildLazyAndGetInstance' => $this->buildLazyAndGetInstance($count) * 1,
+                'buildNormal' => $this->buildNormal($count) * 1,
+                'buildSingleton' => $this->buildSingleton($count) * 1,
+                'buildLazy' => $this->buildLazy($count) * 1,
+                'buildVanilla' => $this->buildVanilla($count) * 1
+            ];
+
+        }
+        print_r($data);
+        print_r(json_encode($data));
+        print_r([LazyProxyBuilder::$t1, LazyProxyBuilder::$t2, LazyProxyBuilder::$t2_, LazyProxyBuilder::$t3]);
+    }
+
+    private function buildLazyAndGetInstance($count)
+    {
+
+        $injector = new Injector();
+        $injector->provide(ControllerA::class, ClassProvider::init(ControllerA::class)->lazy());
+        $injector->provide('%BASE_URL%', ValueProvider::init('%BASE_URL%'));
+
+        $t = microtime(true);
+        $arr = [];
+        for ($i = 0; $i < $count; $i++) {
+            $arr[] = $injector->get(ControllerA::class)->getInstance();
+
+        }
+        return microtime(true) - $t;
+    }
+
+
+
+    private function buildNormal($count)
+    {
+
+        $injector = new Injector();
+        $injector->provide('%BASE_URL%', ValueProvider::init('%BASE_URL%'));
+
+        $arr = [];
+        $t = microtime(true);
+        for ($i = 0; $i < $count; $i++) {
+            $arr[] = $injector->get(ControllerA::class);
+
+        }
+        return microtime(true) - $t;
+    }
+
+    private function buildSingleton($count)
+    {
+
+        $injector = new Injector();
+        $injector->provide(ControllerA::class, ClassProvider::init(ControllerA::class)->singleton());
+        $injector->provide('%BASE_URL%', ValueProvider::init('%BASE_URL%'));
+
+        $t = microtime(true);
+        $arr = [];
+        for ($i = 0; $i < $count; $i++) {
+            $arr[] = $injector->get(ControllerA::class);
+
+        }
+        return microtime(true) - $t;
+    }
+
+    private function buildLazy($count)
+    {
+        $t = microtime(true);
+
+        $injector = new Injector();
+        $injector->provide(ControllerA::class, ClassProvider::init(ControllerA::class)->lazy());
+        $injector->provide('%BASE_URL%', ValueProvider::init('%BASE_URL%'));
+
+        $arr = [];
+        for ($i = 0; $i < $count; $i++) {
+            $arr[] = $injector->get(ControllerA::class);
+
+        }
+        return microtime(true) - $t;
+    }
+
+    private function buildVanilla($count)
+    {
+        $t = microtime(true);
+
+
+        $arr = [];
+        for ($i = 0; $i < $count; $i++) {
+
+            $url1= 'a';
+            $url2= 'b';
+            $request = new Request();
+            $rs = new RequestService($url1);
+            $rs2 = new RequestService($url2);
+            $sy = new ServiceY($rs2);
+            $sz =   new ServiceZ($rs,$sy);
+            $arr[] = new ControllerA($request,$rs, $sz);
+
+        }
+        return microtime(true) - $t;
     }
 
 

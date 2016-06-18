@@ -6,64 +6,36 @@ namespace Brunt\Reflection\CR;
 
 use ReflectionParameter;
 
-class CRParam
+interface CRParam
 {
-    /**
-     * @var string
-     */
-    private $name;
-    /**
-     * @var \ReflectionType
-     */
-    private $type;
-    /**
-     * @var ReflectionParameter
-     */
-    private $parameter;
 
-    /**
-     * CRParam constructor.
-     * @param string $name
-     * @param ReflectionParameter $parameter
-     */
-    public function __construct(string $name, ReflectionParameter $parameter = null)
-    {
-        $this->name = $name;
-        $this->type = $parameter->getType();
-        $this->parameter = $parameter;
-    }
 
     /**
      * @return boolean
      */
-    public function hasType()
-    {
-        return $this->type && true ;
-    }
-
-    /**
-     * @return \ReflectionType
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+    public function hasType();
 
     /**
      * @return string
      */
-    public function getName()
-    {
-        return $this->name;
-    }
+    public function getType();
 
     /**
-     * @return ReflectionParameter
+     * @return string
      */
-    public function getParameter()
-    {
-        return $this->parameter;
-    }
+    public function getName();
 
+    public function isBuiltin();
+
+    /**
+     * @return bool
+     */
+    public function isPassedByReference();
+
+    /**
+     * @return bool
+     */
+    public function isOptional();
+    public function toArray();
 
 }
