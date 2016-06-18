@@ -26,8 +26,9 @@ class ReflectorFactory
         $reflectionCache = ReflectionCache::init();
 
         if (isset(self::$reflectors[$className])) {
-            $reflector = self::$reflectors[$className];
-        } else if ($reflectionCache->isCached($className)) {
+            return self::$reflectors[$className];
+        }
+        if ($reflectionCache->isCached($className)) {
 
             $data = $reflectionCache->read($className);
 
@@ -37,7 +38,7 @@ class ReflectorFactory
         } else {
             $reflector = new Reflector(self::buildReflectiveCRClass($className));
             $reflectionCache->write($reflector);
-           // self::$reflectors[$className] = $reflector;
+            // self::$reflectors[$className] = $reflector;
         }
 
 

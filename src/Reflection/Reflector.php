@@ -4,13 +4,7 @@ namespace Brunt\Reflection {
 
     use Brunt\Exception\InjectableException;
     use Brunt\Reflection\CR\CRClass;
-    use Brunt\Reflection\CR\CRField;
-    use Brunt\Reflection\CR\CRMethod;
     use Brunt\Reflection\CR\CRParam;
-    use Brunt\Reflection\CR\Reflective\ReflectiveCRClass;
-    use Brunt\Reflection\CR\Reflective\ReflectiveCRField;
-    use Brunt\Reflection\CR\Reflective\ReflectiveCRMethod;
-    use Brunt\Reflection\CR\Reflective\ReflectiveCRParam;
 
 
     class Reflector
@@ -28,44 +22,11 @@ namespace Brunt\Reflection {
          */
         public function __construct(CRClass $class)
         {
-            
-//            if (is_string($class)) {
-//                $this->reflectionClass = new \ReflectionClass($class);
-//
-//            } else  {
-//               print_r('ERROR');die;
-//
-//            }
+
             $this->cRClass = $class;
-        //    $this->_getCompactReferenceClass();
+
         }
-//
-//        /**
-//         * @return CRClass
-//         */
-//        private function _getCompactReferenceClass()
-//        {
-//
-//            $methods = $this->reflectionClass->getMethods();
-//            $ms = [];
-//            foreach ($methods as $method) {
-//                $params = $method->getParameters();
-//                $ps = [];
-//                foreach ($params as $param) {
-//                    $ps  [$param->getName()] = new ReflectiveCRParam($param->getName() . "", $param);
-//                }
-//                $ms [$method->getName()] = new ReflectiveCRMethod($method, $ps);
-//            }
-//            $fields = $this->reflectionClass->getProperties();
-//            $fs = [];
-//            foreach ($fields as $field) {
-//                $fs[$field->getName()] = new ReflectiveCRField($field);
-//
-//            }
-//
-//            return new ReflectiveCRClass($this->reflectionClass, $ms, $fs);
-//
-//        }
+
 
         /**
          * @return \ReflectionProperty[]
@@ -131,10 +92,7 @@ namespace Brunt\Reflection {
 
             return array_map(function (CRParam $param) use ($dependencies, $prefix) {
                 $paramName = ($prefix ? $prefix . '.' : '') . $param->getName();
-
                 $type = $param->getType();
-
-
                 $native = !$param->hasType() || $param->isBuiltin();
                 if ($native) {
                     if (isset($dependencies[$paramName])) {
@@ -146,9 +104,7 @@ namespace Brunt\Reflection {
                 } else {
                     $token = $type . '';
                 }
-
                 return ['param' => $paramName, 'token' => $token, 'isNative' => $native];
-
             }, $params);
         }
 
@@ -178,23 +134,18 @@ namespace Brunt\Reflection {
         }
 
         /**
-         * @return \ReflectionParameter[]
+         * @return CRParam[]
          */
         public function getConstructorParams()
         {
-            /** @var CRMethod $c */
-            $c = $this->cRClass->getConstructor();
-
-
-            return $c->getParams();
-
-
+            return $this->cRClass->getConstructor()->getParams();
         }
 
         public function getCompactReferenceClass()
         {
             return $this->cRClass;
         }
+
         public function toArray()
         {
             return [

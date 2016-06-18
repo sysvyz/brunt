@@ -9,12 +9,24 @@ namespace Brunt\Provider\Classes {
     use Brunt\Provider\I\ClassProviderInterface;
     use Brunt\Provider\Lazy\LazyClassProvider;
     use Brunt\Provider\Singleton\SingletonClassProvider;
+    use Brunt\Reflection\CR\CRParam;
     use Brunt\Reflection\Reflector;
     use Brunt\Reflection\ReflectorFactory;
 
 
     class ClassProvider extends ConcreteProvider implements ClassProviderInterface
     {
+
+
+        /**
+         * @var ClassProviderInterface[]
+         */
+        protected static $PROVIDER_MAPPING = [];
+        /**
+         * @var ClassProviderInterface[]
+         */
+        protected static $DEPENDENCY_MAPPING = [];
+
         /**
          * @var Reflector
          */
@@ -36,7 +48,7 @@ namespace Brunt\Provider\Classes {
             $this->class = $class;
 
             //todo disable for production?
-            self::validate($this->reflector);
+            //self::validate($this->reflector);
         }
 
         /**
@@ -63,6 +75,8 @@ namespace Brunt\Provider\Classes {
                 throw new CircularDependencyException ($className . ' must not depend on it self');
             }
             array_push($path, $reflector->getClassName());
+
+            /** @var CRParam $dependency */
             foreach ($reflector->getConstructorParams() as $dependency) {
                 if ($dependency->hasType() && !$dependency->isBuiltin()) {
                     $nextReflector = ReflectorFactory::buildReflectorByClassName($dependency->getType() . '');
@@ -94,25 +108,53 @@ namespace Brunt\Provider\Classes {
          */
         function get(Injector $injector)
         {
-
-
-            $dependencies = $this->reflector->resolveDependencies($this->reflector->getConstructorParams());
-
+            $className = $this->reflector->getClassName();
+            $dependencies = $this->_getDependencies($className);
             if (!empty($dependencies)) {
-                $providers = $this->reflector->getProviders();
-                $childInjector = $injector->getChild($providers);
+
+                $childInjector = $injector->getChild($this->_getProviders($className));
 
                 //recursive build dependencies
                 $params = (array_map(function ($dependency) use ($childInjector) {
                     return $childInjector->get($dependency['token']);
                 }, $dependencies));
+
             } else {
                 $params = [];
             }
-
-
-            $className = $this->reflector->getClassName();
             return new $className(... array_values($params));
+        }
+
+        /**
+         * @param $className
+         * @return array|ClassProviderInterface
+         */
+        protected function _getDependencies($className)
+        {
+            if (isset(self::$DEPENDENCY_MAPPING[$className])) {
+                $dependencies = self::$DEPENDENCY_MAPPING[$className];
+                return $dependencies;
+            } else {
+                $dependencies = $this->reflector->resolveDependencies($this->reflector->getConstructorParams());
+                self::$DEPENDENCY_MAPPING[$className] = $dependencies;
+                return $dependencies;
+            }
+        }
+
+        /**
+         * @param $className
+         * @return array|ClassProviderInterface
+         */
+        protected function _getProviders($className)
+        {
+            if (isset(self::$PROVIDER_MAPPING[$className])) {
+                $providers = self::$PROVIDER_MAPPING[$className];
+                return $providers;
+            } else {
+                $providers = $this->reflector->getProviders();
+                self::$PROVIDER_MAPPING[$className] = $providers;
+                return $providers;
+            }
         }
 
         /**
