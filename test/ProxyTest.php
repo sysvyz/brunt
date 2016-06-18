@@ -163,11 +163,9 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
     private function buildLazyAndGetInstance($count)
     {
-
         $injector = new Injector();
         $injector->provide(ControllerA::class, ClassProvider::init(ControllerA::class)->lazy());
         $injector->provide('%BASE_URL%', ValueProvider::init('%BASE_URL%'));
-
         $t = microtime(true);
         $arr = [];
         for ($i = 0; $i < $count; $i++) {
@@ -181,8 +179,8 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
     private function buildNormal($count)
     {
-
         $injector = new Injector();
+        $injector->provide(ControllerA::class, ClassProvider::init(ControllerA::class));
         $injector->provide('%BASE_URL%', ValueProvider::init('%BASE_URL%'));
 
         $arr = [];
@@ -196,7 +194,6 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
     private function buildSingleton($count)
     {
-
         $injector = new Injector();
         $injector->provide(ControllerA::class, ClassProvider::init(ControllerA::class)->singleton());
         $injector->provide('%BASE_URL%', ValueProvider::init('%BASE_URL%'));
@@ -205,7 +202,6 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         $arr = [];
         for ($i = 0; $i < $count; $i++) {
             $arr[] = $injector->get(ControllerA::class);
-
         }
         return microtime(true) - $t;
     }
@@ -229,11 +225,8 @@ class ProxyTest extends PHPUnit_Framework_TestCase
     private function buildVanilla($count)
     {
         $t = microtime(true);
-
-
         $arr = [];
         for ($i = 0; $i < $count; $i++) {
-
             $url1= 'a';
             $url2= 'b';
             $request = new Request();
@@ -242,7 +235,6 @@ class ProxyTest extends PHPUnit_Framework_TestCase
             $sy = new ServiceY($rs2);
             $sz =   new ServiceZ($rs,$sy);
             $arr[] = new ControllerA($request,$rs, $sz);
-
         }
         return microtime(true) - $t;
     }

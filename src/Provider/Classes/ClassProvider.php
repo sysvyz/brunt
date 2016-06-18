@@ -19,6 +19,10 @@ namespace Brunt\Provider\Classes {
 
 
         /**
+         * @var ClassProvider[]
+         */
+        protected static $INSTANCE_MAPPING = [];
+        /**
          * @var ClassProviderInterface[]
          */
         protected static $PROVIDER_MAPPING = [];
@@ -44,11 +48,31 @@ namespace Brunt\Provider\Classes {
          */
         public function __construct($class)
         {
+            if(isset(self::$INSTANCE_MAPPING[$class])){
+                print_r("ISSET: ".$class);
+            }
+
             $this->reflector = ReflectorFactory::buildReflectorByClassName($class);
             $this->class = $class;
 
             //todo disable for production?
             //self::validate($this->reflector);
+        }
+
+        /**
+         *
+         * convenience function wrapper for constructor
+         *
+         * @param $class
+         * @return ClassProvider
+         */
+        public static function init($class)
+        {
+            if (!isset(self::$INSTANCE_MAPPING[$class])) {
+                self::$INSTANCE_MAPPING[$class] = new self($class);
+            }
+
+            return self::$INSTANCE_MAPPING[$class];
         }
 
         /**
@@ -86,18 +110,6 @@ namespace Brunt\Provider\Classes {
         }
 
         /**
-         *
-         * convenience function wrapper for constructor
-         *
-         * @param $class
-         * @return ClassProvider
-         */
-        public static function init($class)
-        {
-            return new self($class);
-        }
-
-        /**
          * Read Dependencies And Providers
          * Make a new (Child)Injector for the requested Object with Providers
          * Build Dependencies recursively
@@ -110,7 +122,7 @@ namespace Brunt\Provider\Classes {
         {
             $className = $this->reflector->getClassName();
             $dependencies = $this->_getDependencies($className);
-      //      print_r($dependencies);
+            //      print_r($dependencies);
             if (!empty($dependencies)) {
 
                 $childInjector = $injector->getChild($this->_getProviders($className));
