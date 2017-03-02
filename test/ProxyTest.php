@@ -156,9 +156,7 @@ class ProxyTest extends PHPUnit_Framework_TestCase
             ];
 
         }
-        print_r($data);
-        print_r(json_encode($data));
-        print_r([LazyProxyBuilder::$t1, LazyProxyBuilder::$t2, LazyProxyBuilder::$t2_, LazyProxyBuilder::$t3]);
+
     }
 
     private function buildLazyAndGetInstance($count)

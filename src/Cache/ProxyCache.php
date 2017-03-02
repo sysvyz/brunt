@@ -120,7 +120,6 @@ class ProxyCache
 //        print_r('read' . PHP_EOL);
 
         if (!isset(self::$config[$reflector->getClassName()])) {
-            print_r('read !isset' . PHP_EOL);
             return false;
         }
         $cfg = self::$config[$reflector->getClassName()];

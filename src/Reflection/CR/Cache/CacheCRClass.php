@@ -20,8 +20,6 @@ class CacheCRClass implements CRClass
      */
     public function __construct($data)
     {
-        print_r($data['getClassName']);
-        echo PHP_EOL;
 
         $this->data = $data;
 

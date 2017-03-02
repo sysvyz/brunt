@@ -33,7 +33,6 @@ class ReflectiveCRClass implements CRClass
      */
     public function __construct(\ReflectionClass $class, array $methods, array $fields)
     {
-        print_r(['build']);
         $this->class = $class;
         $this->methods = $methods;
         $this->fields = $fields;

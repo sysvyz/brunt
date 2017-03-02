@@ -44,13 +44,9 @@ namespace Brunt\Provider\Classes {
         /**
          * ClassProvider constructor.
          * @param string $class
-         * @param bool $singleton
          */
         public function __construct($class)
         {
-            if(isset(self::$INSTANCE_MAPPING[$class])){
-                print_r("ISSET: ".$class);
-            }
 
             $this->reflector = ReflectorFactory::buildReflectorByClassName($class);
             $this->class = $class;
