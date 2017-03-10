@@ -7,12 +7,11 @@ namespace Brunt {
     use Brunt\Provider\Classes\ClassProvider;
     use Brunt\Provider\I\ProviderInterface;
     use Brunt\Provider\Lazy\LazyProxyBuilder;
-    use function Brunt\bind;
 
     class Injector
     {
 
-        private $injector;
+        private $injector = null;
         private $providers = [];
 
         /**
@@ -21,12 +20,14 @@ namespace Brunt {
          */
         public function __construct(Injector $injector = null)
         {
-            $this->injector = $injector;
+
             if (!$injector) {
                 $this->bind(
                     Binding::init(LazyProxyBuilder::class)->toValue(LazyProxyBuilder::init()),
                     bind(ProxyCache::class)->toValue(ProxyCache::init())
                 );
+            }else{
+                $this->injector = $injector;
             }
         }
 
@@ -87,8 +88,6 @@ namespace Brunt {
                 $this->providers[$token] = $provider;
             } else if (class_exists($token)) {
                 //root injector has no provider
-
-
                 $provider = new ClassProvider($token);
                 $this->provide($token, $provider);
                 $this->providers[$token] = $provider;

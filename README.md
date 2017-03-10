@@ -9,7 +9,7 @@ Since php7, reflection can be used to analyze constructors properly.
 
 ```json
   "require": {
-    "sysvyz/brunt": "dev-master",
+    "sysvyz/brunt": "1.0.*",
   },
 ```
 

@@ -181,15 +181,6 @@ namespace Brunt {
     }
 
 
-    /**
-     * convenience function for bindings
-     * @param string $token
-     * @return Binding
-     */
-    function bind(string $token)
-    {
-        return new Binding($token);
-    }
 
 
 }

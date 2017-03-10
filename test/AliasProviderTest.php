@@ -8,13 +8,13 @@
 
 namespace BruntTest;
 
-use function \Brunt\bind;
 use Brunt\Binding;
 use Brunt\Injector;
 use Brunt\Provider\AliasProvider;
 use Brunt\Provider\Classes\ClassProvider;
 use BruntTest\Testobjects\Engine;
 use BruntTest\Testobjects\HeavyEngine;
+use function \Brunt\bind;
 
 class AliasProviderTest extends \PHPUnit_Framework_TestCase
 {

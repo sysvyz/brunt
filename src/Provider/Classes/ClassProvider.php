@@ -52,7 +52,7 @@ namespace Brunt\Provider\Classes {
             $this->class = $class;
 
             //todo disable for production?
-            //self::validate($this->reflector);
+            self::validate($this->reflector);
         }
 
         /**

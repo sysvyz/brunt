@@ -46,6 +46,21 @@ class BindingTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ClassProvider::class, $provider);
         $this->assertInstanceOf(Tire::class, $entity);
     }
+    public function testClassProvider2()
+    {
+        $injector = new Injector(null);
+
+        $binding = new Binding(Tire::class);
+
+        $binding->toClass(HeavyTire::class);
+
+        $provider = $binding->getProvider();
+        $entity = $provider->get($injector);
+
+        $this->assertInstanceOf(ClassProvider::class, $provider);
+        $this->assertInstanceOf(HeavyTire::class, $entity);
+        $this->assertInstanceOf(Tire::class, $entity);
+    }
 
     public function testLazyClassProvider()
     {

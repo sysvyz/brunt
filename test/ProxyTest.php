@@ -20,9 +20,7 @@ use BruntTest\Testobjects\Request;
 use BruntTest\Testobjects\RequestService;
 use BruntTest\Testobjects\ServiceY;
 use BruntTest\Testobjects\ServiceZ;
-use BruntTest\Testobjects\Tire;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\Filesystem\Filesystem;
 
 class ProxyTest extends PHPUnit_Framework_TestCase
 {
@@ -142,7 +140,7 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
     public function testTimings()
     {
-        $count = 1000;
+        $count = 10;
         $repeat = 10;
 
         $data = [];
@@ -156,7 +154,7 @@ class ProxyTest extends PHPUnit_Framework_TestCase
             ];
 
         }
-
+      //  print_r($data);
     }
 
     private function buildLazyAndGetInstance($count)

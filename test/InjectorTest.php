@@ -3,7 +3,6 @@ namespace BruntTest;
 
 use Brunt\Exception\ProviderNotFoundException;
 use Brunt\Injector;
-use Brunt\Provider;
 use Brunt\Provider\Classes\ClassProvider;
 use Brunt\Provider\Singleton\SingletonProvider;
 use BruntTest\Testobjects\Car;

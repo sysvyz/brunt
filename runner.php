@@ -9,7 +9,7 @@ use BruntTest\Testobjects\Engine;
 use BruntTest\Testobjects\FastCar;
 use BruntTest\Testobjects\HeavyEngine;
 
-include_once 'fileloader.php';
+include_once 'init.php';
 
 
 $inj = new Injector();
