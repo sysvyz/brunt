@@ -38,7 +38,7 @@ interface CRMethod
     /**
      * @return array
      */
-    public function getModifieres();
+    public function getModifiers();
 
     public function toArray();
 }

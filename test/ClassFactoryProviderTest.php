@@ -12,7 +12,7 @@ namespace BruntTest;
 use Brunt\Injector;
 use Brunt\Provider\Classes\ClassFactoryProvider;
 use Brunt\Provider\Classes\ClassProvider;
-use Brunt\Provider\Lazy\T\ProxyTrait;
+use Brunt\Provider\Lazy\Mixin\ProxyTrait;
 use BruntTest\Testobjects\HeavyTire;
 use BruntTest\Testobjects\Tire;
 

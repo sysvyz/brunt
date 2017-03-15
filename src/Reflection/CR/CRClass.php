@@ -1,17 +1,8 @@
-<?php
+<?php namespace Brunt\Reflection\CR;
 
-
-namespace Brunt\Reflection\CR;
-
-
-use Reflection;
 
 interface CRClass
 {
-
-
-
-
     public function toArray();
 
     /**

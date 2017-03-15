@@ -16,7 +16,7 @@ class ReflectionCache
 
     const PATH = 'tmp/cache/reflector';
 
-    const ALGO = 'sha256'; // 'sha1','sha256','gost','sha512','md5','haval128,3';
+    const HASH_ALGORITHM = 'sha256'; // 'sha1','sha256','gost','sha512','md5','haval128,3';
     private static $instance;
     private static $config;
 
@@ -44,7 +44,6 @@ class ReflectionCache
         } else {
             self::$config = [];
         }
-        //   print_r($this->config);
     }
 
     public static function init()
@@ -67,7 +66,7 @@ class ReflectionCache
 
         $fileSize = filesize($c_fileName);
 
-        if($fileSize != $c_fileSize || $c_fileHash != hash_file(self::ALGO, $c_fileName)){
+        if($fileSize != $c_fileSize || $c_fileHash != hash_file(self::HASH_ALGORITHM, $c_fileName)){
             return false;
         }
 
@@ -83,7 +82,7 @@ class ReflectionCache
     public function write(Reflector $reflector)
     {
         $data = $reflector->toArray();
-        $hash = hash_file(self::ALGO, $data['getFileName']);
+        $hash = hash_file(self::HASH_ALGORITHM, $data['getFileName']);
         $fileSize = filesize($data['getFileName']);
 
         self::$config = [

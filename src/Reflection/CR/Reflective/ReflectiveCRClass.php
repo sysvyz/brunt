@@ -121,7 +121,7 @@ class ReflectiveCRClass implements CRClass
     }
 
     /**
-     * @return CRField[]
+     * @return string
      */
     public function getFileName()
     {
@@ -143,7 +143,7 @@ class ReflectiveCRClass implements CRClass
         if(!$method){
             return new CacheCRMethod([
                 'getParams'=>[],
-                'getModifieres'=>[],
+                'getModifiers'=>[],
                 'isStatic'=>false,
                 'getName'=>'__construct',
                 'isProtected'=>false,

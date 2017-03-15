@@ -68,7 +68,7 @@ class ReflectiveCRField implements CRField
     /**
      * @return string[]
      */
-    public function getModifieres():array
+    public function getModifiers():array
     {
         return Reflection::getModifierNames($this->property->getModifiers());
     }
@@ -76,7 +76,7 @@ class ReflectiveCRField implements CRField
     public function toArray()
     {
     return [
-        'getModifieres' => $this->getModifieres(),
+        'getModifiers' => $this->getModifiers(),
         'isStatic'=>$this->isStatic(),
         'isProtected'=>$this->isProtected(),
         'isPublic'=>$this->isPublic(),

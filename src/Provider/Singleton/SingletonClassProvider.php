@@ -6,7 +6,7 @@ namespace Brunt\Provider\Singleton;
 
 use Brunt\Injector;
 use Brunt\Provider\Classes\ClassProvider;
-use Brunt\Provider\I\ClassProviderInterface;
+use Brunt\Provider\Contract\ClassProviderInterface;
 use Brunt\Provider\Lazy\LazyClassProvider;
 use Reflector;
 

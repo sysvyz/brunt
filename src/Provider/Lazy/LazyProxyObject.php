@@ -4,7 +4,7 @@
 namespace Brunt\Provider\Lazy;
 
 
-use Brunt\Provider\Lazy\T\ProxyTrait;
+use Brunt\Provider\Lazy\Mixin\ProxyTrait;
 
 
 

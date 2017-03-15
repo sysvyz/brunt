@@ -5,8 +5,8 @@ namespace Brunt\Provider\Lazy;
 
 use Brunt\Injector;
 use Brunt\Provider\Classes\ClassProvider;
-use Brunt\Provider\I\ClassProviderInterface;
-use Brunt\Provider\I\ProviderInterface;
+use Brunt\Provider\Contract\ClassProviderInterface;
+use Brunt\Provider\Contract\ProviderInterface;
 use Brunt\Provider\Singleton\SingletonClassProvider;
 use Brunt\Provider\Singleton\SingletonProvider;
 

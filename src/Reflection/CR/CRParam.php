@@ -1,10 +1,4 @@
-<?php
-
-
-namespace Brunt\Reflection\CR;
-
-
-use ReflectionParameter;
+<?php namespace Brunt\Reflection\CR;
 
 interface CRParam
 {

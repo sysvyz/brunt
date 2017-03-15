@@ -4,7 +4,7 @@ namespace Brunt\Provider\Singleton;
 
 
 use Brunt\Injector;
-use Brunt\Provider\I\ProviderInterface;
+use Brunt\Provider\Contract\ProviderInterface;
 use Brunt\Provider\Lazy\LazyProvider;
 
 class SingletonProvider implements ProviderInterface

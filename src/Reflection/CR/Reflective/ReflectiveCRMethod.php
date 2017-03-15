@@ -82,7 +82,7 @@ class ReflectiveCRMethod  implements CRMethod
     /**
      * @return array
      */
-    public function getModifieres()
+    public function getModifiers()
     {
         return Reflection::getModifierNames($this->method->getModifiers());
     }
@@ -90,7 +90,7 @@ class ReflectiveCRMethod  implements CRMethod
     public function toArray()
     {
         return [
-            'getModifieres' => $this->getModifieres(),
+            'getModifiers' => $this->getModifiers(),
             'getParams' =>  array_map( function (CRParam $param) {
                 return $param->toArray();
             },$this->getParams()),

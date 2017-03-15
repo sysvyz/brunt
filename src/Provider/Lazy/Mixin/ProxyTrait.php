@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Brunt\Provider\Lazy\T;
+namespace Brunt\Provider\Lazy\Mixin;
 
 use Brunt\Injector;
 use Brunt\Provider\Classes\ClassProvider;
-use Brunt\Provider\I\ProviderInterface;
+use Brunt\Provider\Contract\ProviderInterface;
 
 
 trait ProxyTrait

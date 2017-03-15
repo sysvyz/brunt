@@ -4,7 +4,7 @@ namespace Brunt\Provider {
 
 
     use Brunt\Injector;
-    use Brunt\Provider\I\ProviderInterface;
+    use Brunt\Provider\Contract\ProviderInterface;
     use Brunt\Provider\Lazy\LazyProvider;
     use Brunt\Provider\Singleton\SingletonProvider;
 

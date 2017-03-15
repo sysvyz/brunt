@@ -167,7 +167,7 @@ ClassProvider::init(Car::class)->lazy()->singleton();
 ```php
 $injector->addProviders([
     HeavyEngine::class => ClassProvider::init(HeavyEngine::class)->lazy()
-    Engine::class => AliasProvider::init(Engine::class)
+    Engine::class => AliasProvider::init(HeavyEngine::class)
 ]);
 $heavyEngine = $injector->get(Engine::class); //returns a proxy object for HeavyEngine
 

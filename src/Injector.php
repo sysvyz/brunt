@@ -5,7 +5,7 @@ namespace Brunt {
     use Brunt\Cache\ProxyCache;
     use Brunt\Exception\ProviderNotFoundException;
     use Brunt\Provider\Classes\ClassProvider;
-    use Brunt\Provider\I\ProviderInterface;
+    use Brunt\Provider\Contract\ProviderInterface;
     use Brunt\Provider\Lazy\LazyProxyBuilder;
 
     class Injector

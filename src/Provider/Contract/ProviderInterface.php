@@ -1,6 +1,6 @@
 <?php
 
-namespace Brunt\Provider\I {
+namespace Brunt\Provider\Contract {
 
 
     use Brunt\Injector;

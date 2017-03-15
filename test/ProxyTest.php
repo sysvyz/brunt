@@ -9,7 +9,7 @@ use Brunt\Provider\Classes\ClassProvider;
 use Brunt\Provider\Lazy\LazyProxyBuilder;
 use Brunt\Provider\Lazy\LazyProxyObject;
 use Brunt\Provider\Lazy\ProxyRenderer;
-use Brunt\Provider\Lazy\T\ProxyTrait;
+use Brunt\Provider\Lazy\Mixin\ProxyTrait;
 use Brunt\Provider\ValueFactoryProvider;
 use Brunt\Provider\ValueProvider;
 use Brunt\Reflection\ReflectorFactory;
@@ -37,13 +37,13 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         self::assertTrue(empty(array_intersect([ProxyTrait::class], $r->getTraitNames())));
     }
 
+
     public function testProxyRenderer()
     {
 
         $ref1 = ReflectorFactory::buildReflectorByClassName(MethodReflectionTestObject::class);
         $crclass = $ref1->getCompactReferenceClass();
 
-//        print_r($crclass->toArray());
 
         $renderer = new ProxyRenderer($crclass, 'RandomProxyName_ds8bfgFHGTG4');
 
@@ -55,7 +55,10 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         /** @var MethodReflectionTestObject $proxy */
         $proxy = null;
 
-        eval($renderedClass . '$proxy = new \Brunt\ProxyObject\RandomProxyName_ds8bfgFHGTG4($provider, $injector);');
+        eval($renderedClass . '');
+
+        /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+        $proxy = new \Brunt\ProxyObject\RandomProxyName_ds8bfgFHGTG4($provider, $injector);
         $this->assertInstanceOf(MethodReflectionTestObject::class, $proxy);
 
     }
@@ -73,7 +76,6 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         $builder = LazyProxyBuilder::init();
         /** @var MethodReflectionTestObject $proxy */
         $proxy = $builder->create($injector, $provider);
-
 
         $testFunction = function (MethodReflectionTestObject $a) {
             $this->assertInstanceOf(MethodReflectionTestObject::class, $a);
@@ -152,9 +154,7 @@ class ProxyTest extends PHPUnit_Framework_TestCase
                 'buildLazy' => $this->buildLazy($count) * 1,
                 'buildVanilla' => $this->buildVanilla($count) * 1
             ];
-
         }
-      //  print_r($data);
     }
 
     private function buildLazyAndGetInstance($count)
@@ -166,7 +166,6 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         $arr = [];
         for ($i = 0; $i < $count; $i++) {
             $arr[] = $injector->get(ControllerA::class)->getInstance();
-
         }
         return microtime(true) - $t;
     }
@@ -183,7 +182,6 @@ class ProxyTest extends PHPUnit_Framework_TestCase
         $t = microtime(true);
         for ($i = 0; $i < $count; $i++) {
             $arr[] = $injector->get(ControllerA::class);
-
         }
         return microtime(true) - $t;
     }

@@ -5,7 +5,7 @@ namespace Brunt\Provider {
 
 
     use Brunt\Injector;
-    use Brunt\Provider\I\ProviderInterface;
+    use Brunt\Provider\Contract\ProviderInterface;
 
     class AliasProvider extends AbstractProvider  implements ProviderInterface
     {

@@ -1,8 +1,4 @@
-<?php
-
-
-namespace Brunt\Reflection\CR;
-
+<?php namespace Brunt\Reflection\CR;
 
 abstract class CRRenderer
 {

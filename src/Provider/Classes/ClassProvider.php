@@ -6,7 +6,7 @@ namespace Brunt\Provider\Classes {
     use Brunt\Exception\CircularDependencyException;
     use Brunt\Injector;
     use Brunt\Provider\AbstractProvider;
-    use Brunt\Provider\I\ClassProviderInterface;
+    use Brunt\Provider\Contract\ClassProviderInterface;
     use Brunt\Provider\Lazy\LazyClassProvider;
     use Brunt\Provider\Singleton\SingletonClassProvider;
     use Brunt\Reflection\CR\CRParam;

@@ -2,7 +2,7 @@
 namespace Brunt\Provider\Classes {
 
     use Brunt\Provider\FactoryProvider;
-    use Brunt\Provider\I\ClassProviderInterface;
+    use Brunt\Provider\Contract\ClassProviderInterface;
     use Brunt\Provider\Lazy\LazyClassProvider;
     use Brunt\Provider\Singleton\SingletonClassProvider;
     use Brunt\Reflection\Reflector;

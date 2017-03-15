@@ -31,7 +31,7 @@ interface CRField
     /**
      * @return string[]
      */
-    public function getModifieres():array;
+    public function getModifiers():array;
 
     public function toArray();
 

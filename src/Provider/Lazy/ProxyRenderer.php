@@ -4,7 +4,7 @@
 namespace Brunt\Provider\Lazy;
 
 
-use Brunt\Provider\Lazy\T\ProxyTrait;
+use Brunt\Provider\Lazy\Mixin\ProxyTrait;
 use Brunt\Reflection\CR\CRClass;
 use Brunt\Reflection\CR\CRField;
 use Brunt\Reflection\CR\CRMethod;
@@ -54,7 +54,7 @@ class ProxyRenderer extends CRRenderer
     protected function renderClass(CRClass $class, $depth = 0, $indent = " ")
     {
         return
-            'namespace Brunt\ProxyObject; use Brunt\Provider\Lazy\T\ProxyTrait; class ' . $this->proxyClassName .
+            'namespace Brunt\ProxyObject; use Brunt\Provider\Lazy\Mixin\ProxyTrait; class ' . $this->proxyClassName .
             ' extends \\' . $class->getClassName() .
             $this->braces(
                 '',

@@ -64,15 +64,15 @@ class CacheCRField implements CRField
     /**
      * @return string[]
      */
-    public function getModifieres():array
+    public function getModifiers():array
     {
-        return $this->property['getModifieres'];
+        return $this->property['getModifiers'];
     }
 
     public function toArray()
     {
     return [
-        'getModifieres' => $this->getModifieres(),
+        'getModifiers' => $this->getModifiers(),
         'isStatic'=>$this->isStatic(),
         'isProtected'=>$this->isProtected(),
         'isPublic'=>$this->isPublic(),

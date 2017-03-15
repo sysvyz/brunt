@@ -7,7 +7,7 @@ namespace Brunt\Provider\Lazy;
 use Brunt\Cache\ProxyCache;
 use Brunt\Exception\ProxyBuildErrorException;
 use Brunt\Injector;
-use Brunt\Provider\I\ClassProviderInterface;
+use Brunt\Provider\Contract\ClassProviderInterface;
 
 class LazyProxyBuilder
 {

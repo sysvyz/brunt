@@ -7,7 +7,7 @@ namespace Brunt {
     use Brunt\Provider\Classes\ClassFactoryProvider;
     use Brunt\Provider\Classes\ClassProvider;
     use Brunt\Provider\AbstractProvider;
-    use Brunt\Provider\I\ProviderInterface;
+    use Brunt\Provider\Contract\ProviderInterface;
     use Brunt\Provider\ValueFactoryProvider;
     use Brunt\Provider\ValueProvider;
 
