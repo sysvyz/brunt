@@ -18,12 +18,15 @@ Since php7, reflection can be used to analyze constructors properly.
 
 Unit tests in ``/test/``
 
-``phpunit --bootstrap fileloader.php test``
+``phpunit``
+``php vendor/bin/phpunit``
 
 
 ### Include
 
 simply use ``composer dump-autoload``
+
+then ``require __DIR__ . '/vendor/autoload.php';``
 
 
 ### Examples
