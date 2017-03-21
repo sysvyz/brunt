@@ -1,6 +1,6 @@
 {
   "name": "sysvyz/brunt",
-  "version":"1.0.1",
+  "version":"1.0.2",
   "description": "PHP7 Dependency Injection Framework",
   "type": "library",
   "keywords": [
