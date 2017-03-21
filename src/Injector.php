@@ -1,5 +1,7 @@
 <?php
-
+namespace {
+    require_once __DIR__.'/functions.php';
+}
 namespace Brunt {
 
     use Brunt\Cache\ProxyCache;

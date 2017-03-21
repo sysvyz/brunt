@@ -26,7 +26,7 @@ Unit tests in ``/test/``
 
 simply use ``composer dump-autoload``
 
-then ``require __DIR__ . '/vendor/autoload.php';``
+then ``include __DIR__ . '/vendor/autoload.php';``
 
 
 ### Examples
